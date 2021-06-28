@@ -4,9 +4,11 @@
 
     using InTheAction.Data.Common.Models;
 
-    public class Review : BaseDeletableModel<int>
+    public class News : BaseDeletableModel<int>
     {
         public string Title { get; set; }
+
+        public string SubDescription { get; set; }
 
         public string Description { get; set; }
 

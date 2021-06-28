@@ -12,17 +12,43 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
+    public class InTheActionDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         private static readonly MethodInfo SetIsDeletedQueryFilterMethod =
-            typeof(ApplicationDbContext).GetMethod(
+            typeof(InTheActionDbContext).GetMethod(
                 nameof(SetIsDeletedQueryFilter),
                 BindingFlags.NonPublic | BindingFlags.Static);
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public InTheActionDbContext(DbContextOptions<InTheActionDbContext> options)
             : base(options)
         {
         }
+
+        public DbSet<Actor> Actors { get; set; }
+
+        public DbSet<Country> Countries { get; set; }
+
+        public DbSet<Genre> Genres { get; set; }
+
+        public DbSet<Movie> Movies { get; set; }
+
+        public DbSet<MovieActor> MoviesActors { get; set; }
+
+        public DbSet<MovieCountry> MoviesCountries { get; set; }
+
+        public DbSet<MovieDirector> MoviesDirectors { get; set; }
+
+        public DbSet<MovieGenre> MoviesGenres { get; set; }
+
+        public DbSet<MovieProducer> MoviesProducers { get; set; }
+
+        public DbSet<News> News { get; set; }
+
+        public DbSet<Producer> Producers { get; set; }
+
+        public DbSet<Rating> Ratings { get; set; }
+
+        public DbSet<Review> Reviews { get; set; }
 
         public DbSet<Setting> Settings { get; set; }
 
