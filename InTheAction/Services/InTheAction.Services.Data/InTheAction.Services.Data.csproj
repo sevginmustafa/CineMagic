@@ -24,4 +24,8 @@
     <ProjectReference Include="..\InTheAction.Services.Mapping\InTheAction.Services.Mapping.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\" />
+  </ItemGroup>
+
 </Project>

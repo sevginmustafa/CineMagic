@@ -1,9 +1,8 @@
 ﻿namespace InTheAction.Web.ViewModels.Settings
 {
+    using AutoMapper;
     using InTheAction.Data.Models;
     using InTheAction.Services.Mapping;
-
-    using AutoMapper;
 
     public class SettingViewModel : IMapFrom<Setting>, IHaveCustomMappings
     {

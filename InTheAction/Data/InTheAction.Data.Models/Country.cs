@@ -1,6 +1,7 @@
 ﻿namespace InTheAction.Data.Models
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     using InTheAction.Data.Common.Models;
 
@@ -8,11 +9,12 @@
     {
         public Country()
         {
-            this.Movies = new HashSet<MovieCountry>();
+            this.Cities = new HashSet<City>();
         }
 
+        [Required]
         public string Name { get; set; }
 
-        public virtual ICollection<MovieCountry> Movies { get; set; }
+        public virtual ICollection<City> Cities { get; set; }
     }
 }

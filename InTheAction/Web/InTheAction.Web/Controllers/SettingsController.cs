@@ -7,7 +7,6 @@
     using InTheAction.Data.Models;
     using InTheAction.Services.Data;
     using InTheAction.Web.ViewModels.Settings;
-
     using Microsoft.AspNetCore.Mvc;
 
     public class SettingsController : BaseController

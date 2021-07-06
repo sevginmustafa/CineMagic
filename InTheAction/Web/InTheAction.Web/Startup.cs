@@ -11,6 +11,7 @@
     using InTheAction.Services.Data;
     using InTheAction.Services.Mapping;
     using InTheAction.Services.Messaging;
+    using InTheAction.Services.Scraping;
     using InTheAction.Web.ViewModels;
 
     using Microsoft.AspNetCore.Builder;
@@ -65,7 +66,7 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
-            services.AddTransient<IGetBestRatedMoviesService, GetBestRatedMoviesService>();
+            services.AddTransient<ITheMovieDbOrgScraperService, TheMovieDbOrgScraperService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

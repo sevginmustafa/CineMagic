@@ -2,24 +2,37 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     using InTheAction.Data.Common.Models;
+    using InTheAction.Data.Models.Enums;
 
     public class Director : BaseDeletableModel<int>
     {
         public Director()
         {
-            this.Movies = new HashSet<MovieDirector>();
+            this.Movies = new HashSet<Movie>();
         }
 
-        public string FirstName { get; set; }
+        [Required]
+        public string Name { get; set; }
 
-        public string LastName { get; set; }
+        [Required]
+        public string CoverImageUrl { get; set; }
 
-        public DateTime DateOfBirth { get; set; }
+        [Required]
+        public string Biography { get; set; }
 
-        public string Birthplace { get; set; }
+        public Gender Gender { get; set; }
 
-        public virtual ICollection<MovieDirector> Movies { get; set; }
+        public DateTime Birthday { get; set; }
+
+        public DateTime? Deathday { get; set; }
+
+        public int CityId { get; set; }
+
+        public virtual City City { get; set; }
+
+        public virtual ICollection<Movie> Movies { get; set; }
     }
 }
