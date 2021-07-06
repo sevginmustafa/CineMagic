@@ -22,7 +22,7 @@
 
         public async Task<IActionResult> GatherData()
         {
-            await this.theMovieDbOrgScraperService.GetMovieData(98, 98);
+            await this.theMovieDbOrgScraperService.GetMovieData(101, 110);
 
             return this.View();
         }

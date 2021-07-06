@@ -179,17 +179,6 @@
                                 CoverImageUrl = actor.CoverImageUrl,
                             };
 
-                            var findCity = this.citiesRepository.All().FirstOrDefault(x => x.Name == actor.Birthplace);
-
-                            if (findCity == null)
-                            {
-                                findCity = new City { Name = actor.Birthplace };
-                                await this.citiesRepository.AddAsync(findCity);
-                                await this.citiesRepository.SaveChangesAsync();
-                            }
-
-                            findActor.City = findCity;
-
                             var findCountry = this.countriesRepository.All().FirstOrDefault(x => x.Name == actor.Country);
 
                             if (findCountry == null)
@@ -199,10 +188,15 @@
                                 await this.countriesRepository.SaveChangesAsync();
                             }
 
-                            if (!this.countriesRepository.All().Any(x => x.Cities.Any(x => x.Id == findCity.Id)))
+                            var findCity = findCountry.Cities.FirstOrDefault(x => x.Name == actor.Birthplace);
+
+                            if (findCity == null)
                             {
-                                findCity.Country = findCountry;
+                                findCity = new City { Name = actor.Birthplace };
+                                findCountry.Cities.Add(findCity);
                             }
+
+                            findActor.City = findCity;
 
                             await this.actorsRepository.AddAsync(findActor);
                             await this.actorsRepository.SaveChangesAsync();
@@ -210,8 +204,9 @@
 
                         movie.Cast.Add(new MovieActor { Actor = findActor, CharacterName = characters[i].TextContent });
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
+                        string exception = ex.ToString();
                     }
                 }
 
@@ -236,17 +231,6 @@
                         CoverImageUrl = director.CoverImageUrl,
                     };
 
-                    var findCity = this.citiesRepository.All().FirstOrDefault(x => x.Name == director.Birthplace);
-
-                    if (findCity == null)
-                    {
-                        findCity = new City { Name = director.Birthplace };
-                        await this.citiesRepository.AddAsync(findCity);
-                        await this.citiesRepository.SaveChangesAsync();
-                    }
-
-                    findDirector.City = findCity;
-
                     var findCountry = this.countriesRepository.All().FirstOrDefault(x => x.Name == director.Country);
 
                     if (findCountry == null)
@@ -256,15 +240,19 @@
                         await this.countriesRepository.SaveChangesAsync();
                     }
 
-                    if (!this.countriesRepository.All().Any(x => x.Cities.Any(x => x.Id == findCity.Id)))
+                    var findCity = findCountry.Cities.FirstOrDefault(x => x.Name == director.Birthplace);
+
+                    if (findCity == null)
                     {
-                        findCity.Country = findCountry;
+                        findCity = new City { Name = director.Birthplace };
+                        findCountry.Cities.Add(findCity);
                     }
+
+                    findDirector.City = findCity;
 
                     movie.Director = findDirector;
 
                     await this.moviesRepository.AddAsync(movie);
-
                     await this.moviesRepository.SaveChangesAsync();
                 }
             }
