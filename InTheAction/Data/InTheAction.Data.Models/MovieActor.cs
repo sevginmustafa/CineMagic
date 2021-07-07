@@ -1,8 +1,10 @@
 ﻿namespace InTheAction.Data.Models
 {
-    using InTheAction.Data.Common.Models;
-    
     using System.ComponentModel.DataAnnotations;
+
+    using InTheAction.Data.Common.Models;
+
+    using static InTheAction.Data.Common.DataValidation.Character;
 
     public class MovieActor : BaseDeletableModel<int>
     {
@@ -15,6 +17,7 @@
         public virtual Actor Actor { get; set; }
 
         [Required]
+        [MaxLength(CharacterNameMaxLength)]
         public string CharacterName { get; set; }
     }
 }

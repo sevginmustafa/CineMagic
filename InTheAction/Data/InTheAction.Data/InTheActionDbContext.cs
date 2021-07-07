@@ -26,11 +26,15 @@
 
         public DbSet<Actor> Actors { get; set; }
 
+        public DbSet<ActorComment> ActorComments { get; set; }
+
         public DbSet<City> Cities { get; set; }
 
         public DbSet<Country> Countries { get; set; }
 
         public DbSet<Director> Directors { get; set; }
+
+        public DbSet<DirectorComment> DirectorComments { get; set; }
 
         public DbSet<Genre> Genres { get; set; }
 
@@ -38,9 +42,9 @@
 
         public DbSet<MovieActor> MoviesActors { get; set; }
 
-        public DbSet<MovieGenre> MoviesGenres { get; set; }
+        public DbSet<MovieComment> MovieComments { get; set; }
 
-        public DbSet<News> News { get; set; }
+        public DbSet<MovieGenre> MoviesGenres { get; set; }
 
         public DbSet<Rating> Ratings { get; set; }
 

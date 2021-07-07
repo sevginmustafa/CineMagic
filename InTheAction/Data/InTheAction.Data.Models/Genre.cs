@@ -5,6 +5,8 @@
 
     using InTheAction.Data.Common.Models;
 
+    using static InTheAction.Data.Common.DataValidation.Genre;
+
     public class Genre : BaseDeletableModel<int>
     {
         public Genre()
@@ -13,6 +15,7 @@
         }
 
         [Required]
+        [MaxLength(NameMaxLength)]
         public string Name { get; set; }
 
         public virtual ICollection<MovieGenre> Movies { get; set; }

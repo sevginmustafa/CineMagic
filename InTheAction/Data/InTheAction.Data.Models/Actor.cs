@@ -7,17 +7,22 @@
     using InTheAction.Data.Common.Models;
     using InTheAction.Data.Models.Enums;
 
+    using static InTheAction.Data.Common.DataValidation.Person;
+
     public class Actor : BaseDeletableModel<int>
     {
         public Actor()
         {
             this.Movies = new HashSet<MovieActor>();
+            this.Comments = new HashSet<ActorComment>();
         }
 
         [Required]
+        [MaxLength(NameMaxLength)]
         public string Name { get; set; }
 
         [Required]
+        [MaxLength(CoverImageUrlMaxLength)]
         public string CoverImageUrl { get; set; }
 
         [Required]
@@ -34,5 +39,7 @@
         public virtual City City { get; set; }
 
         public virtual ICollection<MovieActor> Movies { get; set; }
+
+        public virtual ICollection<ActorComment> Comments { get; set; }
     }
 }

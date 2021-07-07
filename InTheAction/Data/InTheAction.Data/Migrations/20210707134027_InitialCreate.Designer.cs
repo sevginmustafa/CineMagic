@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InTheAction.Data.Migrations
 {
     [DbContext(typeof(InTheActionDbContext))]
-    [Migration("20210706135627_InitialCreate")]
+    [Migration("20210707134027_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,7 +40,8 @@ namespace InTheAction.Data.Migrations
 
                     b.Property<string>("CoverImageUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -62,7 +63,8 @@ namespace InTheAction.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -71,6 +73,45 @@ namespace InTheAction.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Actors");
+                });
+
+            modelBuilder.Entity("InTheAction.Data.Models.ActorComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ActorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("AuthorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActorId");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("ActorComments");
                 });
 
             modelBuilder.Entity("InTheAction.Data.Models.ApplicationRole", b =>
@@ -217,7 +258,8 @@ namespace InTheAction.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(90)
+                        .HasColumnType("nvarchar(90)");
 
                     b.HasKey("Id");
 
@@ -249,7 +291,8 @@ namespace InTheAction.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -266,7 +309,6 @@ namespace InTheAction.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Biography")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Birthday")
@@ -277,7 +319,8 @@ namespace InTheAction.Data.Migrations
 
                     b.Property<string>("CoverImageUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -299,7 +342,8 @@ namespace InTheAction.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -308,6 +352,45 @@ namespace InTheAction.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Directors");
+                });
+
+            modelBuilder.Entity("InTheAction.Data.Models.DirectorComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AuthorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DirectorId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("DirectorId");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("DirectorComments");
                 });
 
             modelBuilder.Entity("InTheAction.Data.Models.Genre", b =>
@@ -331,7 +414,8 @@ namespace InTheAction.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
@@ -352,7 +436,8 @@ namespace InTheAction.Data.Migrations
 
                     b.Property<string>("CoverImageUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -362,7 +447,8 @@ namespace InTheAction.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(700)
+                        .HasColumnType("nvarchar(700)");
 
                     b.Property<int>("DirectorId")
                         .HasColumnType("int");
@@ -372,16 +458,11 @@ namespace InTheAction.Data.Migrations
 
                     b.Property<string>("Language")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("NumberOfVotes")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Rating")
-                        .HasColumnType("float");
 
                     b.Property<short>("ReleaseYear")
                         .HasColumnType("smallint");
@@ -391,15 +472,23 @@ namespace InTheAction.Data.Migrations
 
                     b.Property<string>("Runtime")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("TMDBLink")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("TrailerUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -422,7 +511,8 @@ namespace InTheAction.Data.Migrations
 
                     b.Property<string>("CharacterName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -448,6 +538,45 @@ namespace InTheAction.Data.Migrations
                     b.HasIndex("MovieId");
 
                     b.ToTable("MoviesActors");
+                });
+
+            modelBuilder.Entity("InTheAction.Data.Models.MovieComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AuthorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("MovieId");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("MovieComments");
                 });
 
             modelBuilder.Entity("InTheAction.Data.Models.MovieGenre", b =>
@@ -484,49 +613,6 @@ namespace InTheAction.Data.Migrations
                     b.HasIndex("MovieId");
 
                     b.ToTable("MoviesGenres");
-                });
-
-            modelBuilder.Entity("InTheAction.Data.Models.News", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SubDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("News");
                 });
 
             modelBuilder.Entity("InTheAction.Data.Models.Rating", b =>
@@ -570,20 +656,20 @@ namespace InTheAction.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AuthorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .IsRequired()
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -592,11 +678,13 @@ namespace InTheAction.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IsDeleted");
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("MovieId");
 
@@ -750,6 +838,31 @@ namespace InTheAction.Data.Migrations
                     b.Navigation("City");
                 });
 
+            modelBuilder.Entity("InTheAction.Data.Models.ActorComment", b =>
+                {
+                    b.HasOne("InTheAction.Data.Models.Actor", "Actor")
+                        .WithMany("Comments")
+                        .HasForeignKey("ActorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("InTheAction.Data.Models.ApplicationUser", "Author")
+                        .WithMany("ActorComments")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("InTheAction.Data.Models.ActorComment", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Actor");
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Parent");
+                });
+
             modelBuilder.Entity("InTheAction.Data.Models.City", b =>
                 {
                     b.HasOne("InTheAction.Data.Models.Country", "Country")
@@ -770,6 +883,31 @@ namespace InTheAction.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("City");
+                });
+
+            modelBuilder.Entity("InTheAction.Data.Models.DirectorComment", b =>
+                {
+                    b.HasOne("InTheAction.Data.Models.ApplicationUser", "Author")
+                        .WithMany("DirectorComments")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("InTheAction.Data.Models.Director", "Director")
+                        .WithMany("Comments")
+                        .HasForeignKey("DirectorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("InTheAction.Data.Models.DirectorComment", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Director");
+
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("InTheAction.Data.Models.Movie", b =>
@@ -802,6 +940,31 @@ namespace InTheAction.Data.Migrations
                     b.Navigation("Movie");
                 });
 
+            modelBuilder.Entity("InTheAction.Data.Models.MovieComment", b =>
+                {
+                    b.HasOne("InTheAction.Data.Models.ApplicationUser", "Author")
+                        .WithMany("MovieComments")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("InTheAction.Data.Models.Movie", "Movie")
+                        .WithMany("Comments")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("InTheAction.Data.Models.MovieComment", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("Parent");
+                });
+
             modelBuilder.Entity("InTheAction.Data.Models.MovieGenre", b =>
                 {
                     b.HasOne("InTheAction.Data.Models.Genre", "Genre")
@@ -821,21 +984,10 @@ namespace InTheAction.Data.Migrations
                     b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("InTheAction.Data.Models.News", b =>
-                {
-                    b.HasOne("InTheAction.Data.Models.Movie", "Movie")
-                        .WithMany("News")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
-                });
-
             modelBuilder.Entity("InTheAction.Data.Models.Rating", b =>
                 {
                     b.HasOne("InTheAction.Data.Models.Movie", "Movie")
-                        .WithMany()
+                        .WithMany("Ratings")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -845,11 +997,19 @@ namespace InTheAction.Data.Migrations
 
             modelBuilder.Entity("InTheAction.Data.Models.Review", b =>
                 {
+                    b.HasOne("InTheAction.Data.Models.ApplicationUser", "Author")
+                        .WithMany("Reviews")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("InTheAction.Data.Models.Movie", "Movie")
                         .WithMany("Reviews")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Author");
 
                     b.Navigation("Movie");
                 });
@@ -907,14 +1067,24 @@ namespace InTheAction.Data.Migrations
 
             modelBuilder.Entity("InTheAction.Data.Models.Actor", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("Movies");
                 });
 
             modelBuilder.Entity("InTheAction.Data.Models.ApplicationUser", b =>
                 {
+                    b.Navigation("ActorComments");
+
                     b.Navigation("Claims");
 
+                    b.Navigation("DirectorComments");
+
                     b.Navigation("Logins");
+
+                    b.Navigation("MovieComments");
+
+                    b.Navigation("Reviews");
 
                     b.Navigation("Roles");
                 });
@@ -933,6 +1103,8 @@ namespace InTheAction.Data.Migrations
 
             modelBuilder.Entity("InTheAction.Data.Models.Director", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("Movies");
                 });
 
@@ -945,9 +1117,11 @@ namespace InTheAction.Data.Migrations
                 {
                     b.Navigation("Cast");
 
+                    b.Navigation("Comments");
+
                     b.Navigation("Genres");
 
-                    b.Navigation("News");
+                    b.Navigation("Ratings");
 
                     b.Navigation("Reviews");
                 });

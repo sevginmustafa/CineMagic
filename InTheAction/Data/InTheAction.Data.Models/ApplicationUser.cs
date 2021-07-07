@@ -13,6 +13,10 @@ namespace InTheAction.Data.Models
         public ApplicationUser()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Reviews = new HashSet<Review>();
+            this.MovieComments = new HashSet<MovieComment>();
+            this.ActorComments = new HashSet<ActorComment>();
+            this.DirectorComments = new HashSet<DirectorComment>();
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
@@ -27,6 +31,14 @@ namespace InTheAction.Data.Models
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
+
+        public virtual ICollection<Review> Reviews { get; set; }
+
+        public virtual ICollection<MovieComment> MovieComments { get; set; }
+
+        public virtual ICollection<ActorComment> ActorComments { get; set; }
+
+        public virtual ICollection<DirectorComment> DirectorComments { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 

@@ -5,6 +5,8 @@
 
     using InTheAction.Data.Common.Models;
 
+    using static InTheAction.Data.Common.DataValidation.City;
+
     public class City : BaseDeletableModel<int>
     {
         public City()
@@ -14,6 +16,7 @@
         }
 
         [Required]
+        [MaxLength(NameMaxLength)]
         public string Name { get; set; }
 
         public int CountryId { get; set; }

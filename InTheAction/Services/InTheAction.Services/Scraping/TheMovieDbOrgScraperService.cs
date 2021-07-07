@@ -20,7 +20,6 @@
         private readonly IDeletableEntityRepository<Director> directorsRepository;
         private readonly IDeletableEntityRepository<Actor> actorsRepository;
         private readonly IDeletableEntityRepository<Genre> genresRepository;
-        private readonly IDeletableEntityRepository<City> citiesRepository;
         private readonly IDeletableEntityRepository<Country> countriesRepository;
 
         public TheMovieDbOrgScraperService(
@@ -28,7 +27,6 @@
             IDeletableEntityRepository<Director> directorsRepository,
             IDeletableEntityRepository<Actor> actorsRepository,
             IDeletableEntityRepository<Genre> genresRepository,
-            IDeletableEntityRepository<City> citiesRepository,
             IDeletableEntityRepository<Country> countriesRepository)
         {
             this.config = Configuration.Default.WithDefaultLoader();
@@ -38,23 +36,15 @@
             this.directorsRepository = directorsRepository;
             this.actorsRepository = actorsRepository;
             this.genresRepository = genresRepository;
-            this.citiesRepository = citiesRepository;
             this.countriesRepository = countriesRepository;
         }
 
         public async Task GetMovieData(int startIndex, int endIndex)
         {
-            //Parallel.For(1, 101, (i, state) =>
-            //{
-            //    var movie = GetMovieProperties(context, i);
-
-            //    if (movie != null)
-            //    {
-            //        movies.Add(movie);
-            //    }
-
-            //    Console.WriteLine(i);
-            //});
+            //Parallel.For(startIndex, endIndex + 1, (i, state) =>
+            //  {
+            //      this.GetMovieData(i);
+            //  });
 
             for (int i = startIndex; i <= endIndex; i++)
             {
@@ -66,9 +56,36 @@
         {
             try
             {
-                var document = this.context.OpenAsync($"https://www.themoviedb.org/movie/{id}")
+                var link = $"https://www.themoviedb.org/movie/{id}";
+
+                var document = this.context.OpenAsync(link)
                     .GetAwaiter()
                     .GetResult();
+
+                var languageBudgetRevenue = document.QuerySelector(".facts.left_column").TextContent
+                   .Trim()
+                   .Split("\n")
+                   .Where(x => x.Contains("Budget") || x.Contains("Language") || x.Contains("Revenue"))
+                   .ToArray();
+
+                // Get Language
+                var language = languageBudgetRevenue[0].Split().LastOrDefault();
+
+                if (language != "English")
+                {
+                    return;
+                }
+
+                // Get Budget
+                var budget = double.Parse(languageBudgetRevenue[1].Split()
+                    .LastOrDefault()
+                    .Replace("$", string.Empty)
+                    .Replace(",", string.Empty));
+
+                var revenue = double.Parse(languageBudgetRevenue[2].Split()
+                    .LastOrDefault()
+                    .Replace("$", string.Empty)
+                    .Replace(",", string.Empty));
 
                 // Get Title
                 var tryTitle = document.QuerySelector("div.title.ott_false > h2 > a");
@@ -106,26 +123,6 @@
                     document.QuerySelector("li.video.none > a")
                     .Attributes.FirstOrDefault(x => x.Name == "data-id").Value;
 
-                var languageBudgetRevenue = document.QuerySelector(".facts.left_column").TextContent
-                    .Trim()
-                    .Split("\n")
-                    .Where(x => x.Contains("Budget") || x.Contains("Language") || x.Contains("Revenue"))
-                    .ToArray();
-
-                // Get Language
-                var language = languageBudgetRevenue[0].Split().LastOrDefault();
-
-                // Get Budget
-                var budget = double.Parse(languageBudgetRevenue[1].Split()
-                    .LastOrDefault()
-                    .Replace("$", string.Empty)
-                    .Replace(",", string.Empty));
-
-                var revenue = double.Parse(languageBudgetRevenue[2].Split()
-                    .LastOrDefault()
-                    .Replace("$", string.Empty)
-                    .Replace(",", string.Empty));
-
                 // Get Actors
                 var actorsLinks = document.QuerySelectorAll(".people.scroller > .card > p > a");
                 var characters = document.QuerySelectorAll(".people.scroller > .card > .character");
@@ -141,6 +138,7 @@
                     Revenue = revenue,
                     CoverImageUrl = coverImageUrl,
                     TrailerUrl = trailerUrl,
+                    TMDBLink = link,
                 };
 
                 for (int i = 0; i < genres.Length; i++)
@@ -204,9 +202,8 @@
 
                         movie.Cast.Add(new MovieActor { Actor = findActor, CharacterName = characters[i].TextContent });
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        string exception = ex.ToString();
                     }
                 }
 
