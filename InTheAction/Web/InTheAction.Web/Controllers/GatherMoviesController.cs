@@ -2,17 +2,18 @@
 {
     using System.Threading.Tasks;
 
+    using InTheAction.Services.GetDataFromTMDB;
     using InTheAction.Services.Scraping;
     using Microsoft.AspNetCore.Mvc;
 
     // TODO: Move in administration area
     public class GatherMoviesController : BaseController
     {
-        private readonly ITheMovieDbOrgScraperService theMovieDbOrgScraperService;
+        private readonly IGetDataFromTMDBService getDataFromTMDBService;
 
-        public GatherMoviesController(ITheMovieDbOrgScraperService theMovieDbOrgScraperService)
+        public GatherMoviesController(IGetDataFromTMDBService getDataFromTMDBService)
         {
-            this.theMovieDbOrgScraperService = theMovieDbOrgScraperService;
+            this.getDataFromTMDBService = getDataFromTMDBService;
         }
 
         public IActionResult Index()
@@ -22,7 +23,7 @@
 
         public async Task<IActionResult> GatherData()
         {
-            await this.theMovieDbOrgScraperService.GetMovieData(11, 110);
+            await this.getDataFromTMDBService.GetMovieDataAsJSON(98,99);
 
             return this.View();
         }

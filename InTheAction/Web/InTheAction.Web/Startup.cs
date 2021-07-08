@@ -9,6 +9,7 @@
     using InTheAction.Data.Repositories;
     using InTheAction.Data.Seeding;
     using InTheAction.Services.Data;
+    using InTheAction.Services.GetDataFromTMDB;
     using InTheAction.Services.Mapping;
     using InTheAction.Services.Messaging;
     using InTheAction.Services.Scraping;
@@ -67,6 +68,7 @@
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<ITheMovieDbOrgScraperService, TheMovieDbOrgScraperService>();
+            services.AddTransient<IGetDataFromTMDBService, GetDataFromTMDBService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
