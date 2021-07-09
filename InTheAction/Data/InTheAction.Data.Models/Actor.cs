@@ -22,10 +22,9 @@
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(CoverImageUrlMaxLength)]
-        public string CoverImageUrl { get; set; }
+        [MaxLength(ProfilePathlMaxLength)]
+        public string ProfilePath { get; set; }
 
-        [Required]
         public string Biography { get; set; }
 
         public Gender Gender { get; set; }
@@ -34,9 +33,7 @@
 
         public DateTime? Deathday { get; set; }
 
-        public int CityId { get; set; }
-
-        public virtual City City { get; set; }
+        public string Birthplace { get; set; }
 
         public virtual ICollection<MovieActor> Movies { get; set; }
 

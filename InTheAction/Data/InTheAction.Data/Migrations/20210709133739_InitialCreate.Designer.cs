@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InTheAction.Data.Migrations
 {
     [DbContext(typeof(InTheActionDbContext))]
-    [Migration("20210707134027_InitialCreate")]
+    [Migration("20210709133739_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,19 +29,13 @@ namespace InTheAction.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Biography")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CoverImageUrl")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                    b.Property<string>("Birthplace")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -66,9 +60,12 @@ namespace InTheAction.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("ProfilePath")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
-                    b.HasIndex("CityId");
+                    b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
 
@@ -234,42 +231,6 @@ namespace InTheAction.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("InTheAction.Data.Models.City", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(90)
-                        .HasColumnType("nvarchar(90)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("Cities");
-                });
-
             modelBuilder.Entity("InTheAction.Data.Models.Country", b =>
                 {
                     b.Property<int>("Id")
@@ -314,13 +275,8 @@ namespace InTheAction.Data.Migrations
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CoverImageUrl")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                    b.Property<string>("Birthplace")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -345,9 +301,12 @@ namespace InTheAction.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("ProfilePath")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
-                    b.HasIndex("CityId");
+                    b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
 
@@ -434,24 +393,25 @@ namespace InTheAction.Data.Migrations
                     b.Property<double>("Budget")
                         .HasColumnType("float");
 
-                    b.Property<string>("CoverImageUrl")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<double>("CurrentAverageVote")
+                        .HasColumnType("float");
+
+                    b.Property<int>("CurrentNumberOfVotes")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(700)
-                        .HasColumnType("nvarchar(700)");
-
                     b.Property<int>("DirectorId")
                         .HasColumnType("int");
+
+                    b.Property<string>("IMDBLink")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -464,28 +424,32 @@ namespace InTheAction.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<short>("ReleaseYear")
-                        .HasColumnType("smallint");
+                    b.Property<string>("Overview")
+                        .IsRequired()
+                        .HasMaxLength(700)
+                        .HasColumnType("nvarchar(700)");
+
+                    b.Property<string>("PosterPath")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<double>("Revenue")
                         .HasColumnType("float");
 
-                    b.Property<string>("Runtime")
-                        .IsRequired()
+                    b.Property<int>("Runtime")
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("TMDBLink")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("TrailerUrl")
+                    b.Property<string>("TrailerPath")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -577,6 +541,42 @@ namespace InTheAction.Data.Migrations
                     b.HasIndex("ParentId");
 
                     b.ToTable("MovieComments");
+                });
+
+            modelBuilder.Entity("InTheAction.Data.Models.MovieCountry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("MoviesCountries");
                 });
 
             modelBuilder.Entity("InTheAction.Data.Models.MovieGenre", b =>
@@ -827,17 +827,6 @@ namespace InTheAction.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("InTheAction.Data.Models.Actor", b =>
-                {
-                    b.HasOne("InTheAction.Data.Models.City", "City")
-                        .WithMany("Actors")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("City");
-                });
-
             modelBuilder.Entity("InTheAction.Data.Models.ActorComment", b =>
                 {
                     b.HasOne("InTheAction.Data.Models.Actor", "Actor")
@@ -861,28 +850,6 @@ namespace InTheAction.Data.Migrations
                     b.Navigation("Author");
 
                     b.Navigation("Parent");
-                });
-
-            modelBuilder.Entity("InTheAction.Data.Models.City", b =>
-                {
-                    b.HasOne("InTheAction.Data.Models.Country", "Country")
-                        .WithMany("Cities")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Country");
-                });
-
-            modelBuilder.Entity("InTheAction.Data.Models.Director", b =>
-                {
-                    b.HasOne("InTheAction.Data.Models.City", "City")
-                        .WithMany("Directors")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("InTheAction.Data.Models.DirectorComment", b =>
@@ -963,6 +930,25 @@ namespace InTheAction.Data.Migrations
                     b.Navigation("Movie");
 
                     b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("InTheAction.Data.Models.MovieCountry", b =>
+                {
+                    b.HasOne("InTheAction.Data.Models.Country", "Country")
+                        .WithMany("Movies")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("InTheAction.Data.Models.Movie", "Movie")
+                        .WithMany("ProductionCountries")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Country");
+
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("InTheAction.Data.Models.MovieGenre", b =>
@@ -1089,16 +1075,9 @@ namespace InTheAction.Data.Migrations
                     b.Navigation("Roles");
                 });
 
-            modelBuilder.Entity("InTheAction.Data.Models.City", b =>
-                {
-                    b.Navigation("Actors");
-
-                    b.Navigation("Directors");
-                });
-
             modelBuilder.Entity("InTheAction.Data.Models.Country", b =>
                 {
-                    b.Navigation("Cities");
+                    b.Navigation("Movies");
                 });
 
             modelBuilder.Entity("InTheAction.Data.Models.Director", b =>
@@ -1120,6 +1099,8 @@ namespace InTheAction.Data.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("Genres");
+
+                    b.Navigation("ProductionCountries");
 
                     b.Navigation("Ratings");
 

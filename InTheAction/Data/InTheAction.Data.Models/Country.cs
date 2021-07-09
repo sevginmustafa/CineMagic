@@ -11,13 +11,13 @@
     {
         public Country()
         {
-            this.Cities = new HashSet<City>();
+            this.Movies = new HashSet<MovieCountry>();
         }
 
         [Required]
         [MaxLength(NameMaxLength)]
         public string Name { get; set; }
 
-        public virtual ICollection<City> Cities { get; set; }
+        public virtual ICollection<MovieCountry> Movies { get; set; }
     }
 }

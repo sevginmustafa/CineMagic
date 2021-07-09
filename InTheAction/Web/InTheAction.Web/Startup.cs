@@ -67,8 +67,8 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
-            services.AddTransient<ITheMovieDbOrgScraperService, TheMovieDbOrgScraperService>();
             services.AddTransient<IGetDataFromTMDBService, GetDataFromTMDBService>();
+            services.AddTransient<IFillDatabaseService, FillDatabaseService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

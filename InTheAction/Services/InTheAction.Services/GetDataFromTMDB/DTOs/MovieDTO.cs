@@ -13,11 +13,10 @@
         [JsonProperty("poster_path")]
         public string PosterPath { get; set; }
 
-        //[JsonProperty()]
-        //public string TrailerUrl { get; set; }
+        public string TrailerPath { get; set; }
 
         [JsonProperty("imdb_id")]
-        public string IMDBID { get; set; }
+        public string IMDBId { get; set; }
 
         [JsonProperty("release_date")]
         public string ReleaseDate { get; set; }
@@ -41,7 +40,7 @@
         public int NumberOfVotes { get; set; }
 
         [JsonProperty("production_countries")]
-        public ICollection<LanguageDTO> ProductionCountries { get; set; }
+        public ICollection<CountryDTO> ProductionCountries { get; set; }
 
         //public int DirectorId { get; set; }
 

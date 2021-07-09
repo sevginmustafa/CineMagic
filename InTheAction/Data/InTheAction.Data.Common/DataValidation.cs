@@ -5,18 +5,18 @@
         public static class Movie
         {
             public const int TitleMaxLength = 100;
-            public const int CoverImageUrlMaxLength = 200;
-            public const int TrailerUrlMaxLength = 200;
-            public const int TMDBLinkMaxLength = 100;
+            public const int PosterPathMaxLength = 200;
+            public const int TrailerPathMaxLength = 200;
+            public const int IMDBLinkMaxLength = 100;
             public const int RuntimeMaxLength = 10;
-            public const int DescriptionMaxLength = 700;
+            public const int OverviewMaxLength = 700;
             public const int LanguageMaxLength = 50;
         }
 
         public static class Person
         {
             public const int NameMaxLength = 100;
-            public const int CoverImageUrlMaxLength = 200;
+            public const int ProfilePathlMaxLength = 200;
         }
 
         public static class Country

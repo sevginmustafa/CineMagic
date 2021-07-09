@@ -1,9 +1,19 @@
 ﻿namespace InTheAction.Services.GetDataFromTMDB
 {
-    using System.Threading.Tasks;
+    using System.Collections.Generic;
+
+    using InTheAction.Services.GetDataFromTMDB.DTOs;
 
     public interface IGetDataFromTMDBService
     {
-        Task GetMovieDataAsJSON(int startIndex, int endIndex);
+        IEnumerable<MovieDTO> GetMovieDataAsJSON(int startIndex, int endIndex);
+
+        string GetMovieTrailerPathDataAsJSON(int movieId);
+
+        CastAndCrewDTO GetMovieCastAndCrewDataAsJSON(int movieId);
+
+        PersonDTO GetMovieActorDataAsJSON(int actorId);
+
+        PersonDTO GetMovieDirectorDataAsJSON(CastAndCrewDTO castAndCrew);
     }
 }

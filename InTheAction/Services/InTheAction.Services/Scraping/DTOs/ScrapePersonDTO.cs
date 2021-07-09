@@ -1,4 +1,4 @@
-﻿namespace InTheAction.Services.DTOs
+﻿namespace InTheAction.Services.Scraping.DTOs
 {
     public class ScrapePersonDTO
     {

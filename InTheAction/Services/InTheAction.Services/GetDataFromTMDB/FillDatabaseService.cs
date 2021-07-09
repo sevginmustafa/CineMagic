@@ -1,0 +1,152 @@
+﻿namespace InTheAction.Services.GetDataFromTMDB
+{
+    using System;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using InTheAction.Data.Common.Repositories;
+    using InTheAction.Data.Models;
+    using InTheAction.Data.Models.Enums;
+
+    public class FillDatabaseService : IFillDatabaseService
+    {
+        private readonly IDeletableEntityRepository<Movie> moviesRepository;
+        private readonly IDeletableEntityRepository<Director> directorsRepository;
+        private readonly IDeletableEntityRepository<Actor> actorsRepository;
+        private readonly IDeletableEntityRepository<Genre> genresRepository;
+        private readonly IDeletableEntityRepository<Country> countriesRepository;
+        private readonly IGetDataFromTMDBService getDataFromTMDBService;
+
+        public FillDatabaseService(
+            IDeletableEntityRepository<Movie> moviesRepository,
+            IDeletableEntityRepository<Director> directorsRepository,
+            IDeletableEntityRepository<Actor> actorsRepository,
+            IDeletableEntityRepository<Genre> genresRepository,
+            IDeletableEntityRepository<Country> countriesRepository,
+            IGetDataFromTMDBService getDataFromTMDBService)
+        {
+            this.moviesRepository = moviesRepository;
+            this.directorsRepository = directorsRepository;
+            this.actorsRepository = actorsRepository;
+            this.genresRepository = genresRepository;
+            this.countriesRepository = countriesRepository;
+            this.getDataFromTMDBService = getDataFromTMDBService;
+        }
+
+        public async Task AddDataToDBAsync(int startIndex, int endIndex)
+        {
+            var moviesDTO = this.getDataFromTMDBService.GetMovieDataAsJSON(startIndex, endIndex);
+
+            foreach (var movieDTO in moviesDTO)
+            {
+                var movie = new Movie
+                {
+                    Title = movieDTO.Title,
+                    PosterPath = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2" + movieDTO.PosterPath,
+                    TrailerPath = "https://www.youtube.com/watch?v=" + this.getDataFromTMDBService.GetMovieTrailerPathDataAsJSON(movieDTO.Id),
+                    IMDBLink = "https://www.imdb.com/title/" + movieDTO.IMDBId,
+                    ReleaseDate = DateTime.ParseExact(movieDTO.ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                    Runtime = movieDTO.Runtime,
+                    Overview = movieDTO.Overview,
+                    Language = movieDTO.Language.Select(x => x.Name).FirstOrDefault(),
+                    Budget = movieDTO.Budget,
+                    Revenue = movieDTO.Revenue,
+                    CurrentAverageVote = movieDTO.AverageVote,
+                    CurrentNumberOfVotes = movieDTO.NumberOfVotes,
+                };
+
+                foreach (var genre in movieDTO.Genres)
+                {
+                    var findGenre = this.genresRepository.AllAsNoTracking().FirstOrDefault(x => x.Name == genre.Name);
+
+                    if (findGenre == null)
+                    {
+                        findGenre = new Genre { Name = genre.Name };
+
+                        await this.genresRepository.AddAsync(findGenre);
+
+                        await this.genresRepository.SaveChangesAsync();
+                    }
+
+                    movie.Genres.Add(new MovieGenre { Genre = findGenre });
+                }
+
+                foreach (var country in movieDTO.ProductionCountries)
+                {
+                    var findCountry = this.countriesRepository.AllAsNoTracking().FirstOrDefault(x => x.Name == country.Name);
+
+                    if (findCountry == null)
+                    {
+                        findCountry = new Country { Name = country.Name };
+
+                        await this.countriesRepository.AddAsync(findCountry);
+
+                        await this.countriesRepository.SaveChangesAsync();
+                    }
+
+                    movie.ProductionCountries.Add(new MovieCountry { Country = findCountry });
+                }
+
+                var castAndCrew = this.getDataFromTMDBService.GetMovieCastAndCrewDataAsJSON(movieDTO.Id);
+
+                var director = this.getDataFromTMDBService.GetMovieDirectorDataAsJSON(castAndCrew);
+
+                var findDirector = this.directorsRepository.AllAsNoTracking().FirstOrDefault(x => x.Name == director.Name);
+
+                if (findDirector == null)
+                {
+                    findDirector = new Director
+                    {
+                        Name = director.Name,
+                        ProfilePath = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2" + director.ProfilePath,
+                        Biography = director.Biography,
+                        Gender = (Gender)director.Gender,
+                        Birthday = DateTime.ParseExact(director.Birthday, "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                        Deathday = director.Deathday != null ? DateTime.ParseExact(director.Deathday, "yyyy-MM-dd", CultureInfo.InvariantCulture) : null,
+                        Birthplace = director.Birthplace,
+                    };
+
+                    await this.directorsRepository.AddAsync(findDirector);
+
+                    await this.directorsRepository.SaveChangesAsync();
+                }
+
+                movie.Director = findDirector;
+
+                //var actors = this.getDataFromTMDBService.GetMovieActorsDataAsJSON(castAndCrew);
+
+                foreach (var cast in castAndCrew.Cast.Take(10))
+                {
+                    var actor = this.getDataFromTMDBService.GetMovieActorDataAsJSON(cast.ActorId);
+
+                    var findActor = this.actorsRepository.AllAsNoTracking().FirstOrDefault(x => x.Name == actor.Name);
+
+                    if (findActor == null)
+                    {
+                        findActor = new Actor
+                        {
+                            Name = actor.Name,
+                            ProfilePath = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2" + actor.ProfilePath,
+                            Biography = actor.Biography,
+                            Gender = (Gender)actor.Gender,
+                            Birthday = DateTime.ParseExact(actor.Birthday, "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                            Deathday = actor.Deathday != null ? DateTime.ParseExact(actor.Deathday, "yyyy-MM-dd", CultureInfo.InvariantCulture) : null,
+                            Birthplace = actor.Birthplace,
+                        };
+
+                        await this.actorsRepository.AddAsync(findActor);
+
+                        await this.actorsRepository.SaveChangesAsync();
+                    }
+
+                    movie.Cast.Add(new MovieActor { Actor = findActor, CharacterName = cast.CharacterName });
+                }
+
+                await this.moviesRepository.AddAsync(movie);
+
+                await this.moviesRepository.SaveChangesAsync();
+            }
+        }
+    }
+}
