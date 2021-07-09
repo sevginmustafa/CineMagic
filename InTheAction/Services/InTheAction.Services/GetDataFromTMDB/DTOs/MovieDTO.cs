@@ -13,15 +13,13 @@
         [JsonProperty("poster_path")]
         public string PosterPath { get; set; }
 
-        public string TrailerPath { get; set; }
-
         [JsonProperty("imdb_id")]
         public string IMDBId { get; set; }
 
         [JsonProperty("release_date")]
         public string ReleaseDate { get; set; }
 
-        public int Runtime { get; set; }
+        public int? Runtime { get; set; }
 
         [JsonProperty("overview")]
         public string Overview { get; set; }

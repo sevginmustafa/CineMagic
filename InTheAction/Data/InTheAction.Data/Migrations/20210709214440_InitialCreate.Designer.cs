@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InTheAction.Data.Migrations
 {
     [DbContext(typeof(InTheActionDbContext))]
-    [Migration("20210709133739_InitialCreate")]
+    [Migration("20210709214440_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,9 +29,10 @@ namespace InTheAction.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Biography")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Birthday")
+                    b.Property<DateTime?>("Birthday")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Birthplace")
@@ -60,8 +61,7 @@ namespace InTheAction.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("ProfilePath")
-                        .IsRequired()
+                    b.Property<string>("ProfilePicPath")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -270,9 +270,10 @@ namespace InTheAction.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Biography")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Birthday")
+                    b.Property<DateTime?>("Birthday")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Birthplace")
@@ -301,8 +302,7 @@ namespace InTheAction.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("ProfilePath")
-                        .IsRequired()
+                    b.Property<string>("ProfilePicPath")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -450,7 +450,6 @@ namespace InTheAction.Data.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("TrailerPath")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -475,8 +474,8 @@ namespace InTheAction.Data.Migrations
 
                     b.Property<string>("CharacterName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");

@@ -21,15 +21,15 @@
         [MaxLength(NameMaxLength)]
         public string Name { get; set; }
 
-        [Required]
-        [MaxLength(ProfilePathlMaxLength)]
-        public string ProfilePath { get; set; }
+        [MaxLength(ProfilePicPathMaxLength)]
+        public string ProfilePicPath { get; set; }
 
+        [Required]
         public string Biography { get; set; }
 
         public Gender Gender { get; set; }
 
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
 
         public DateTime? Deathday { get; set; }
 

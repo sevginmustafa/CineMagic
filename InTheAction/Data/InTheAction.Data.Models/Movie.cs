@@ -28,7 +28,6 @@
         [MaxLength(PosterPathMaxLength)]
         public string PosterPath { get; set; }
 
-        [Required]
         [MaxLength(TrailerPathMaxLength)]
         public string TrailerPath { get; set; }
 
@@ -38,7 +37,6 @@
 
         public DateTime ReleaseDate { get; set; }
 
-        [Required]
         [MaxLength(RuntimeMaxLength)]
         public int Runtime { get; set; }
 

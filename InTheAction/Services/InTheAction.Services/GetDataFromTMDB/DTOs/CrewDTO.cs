@@ -7,7 +7,6 @@
         [JsonProperty("id")]
         public int DirectorId { get; set; }
 
-        [JsonProperty("known_for_department")]
-        public string Department { get; set; }
+        public string Job { get; set; }
     }
 }

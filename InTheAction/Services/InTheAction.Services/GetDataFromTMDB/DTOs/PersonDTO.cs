@@ -7,7 +7,7 @@
         public string Name { get; set; }
 
         [JsonProperty("profile_path")]
-        public string ProfilePath { get; set; }
+        public string ProfilePicPath { get; set; }
 
         public string Biography { get; set; }
 

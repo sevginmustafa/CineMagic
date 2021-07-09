@@ -16,7 +16,7 @@
         public static class Person
         {
             public const int NameMaxLength = 100;
-            public const int ProfilePathlMaxLength = 200;
+            public const int ProfilePicPathMaxLength = 200;
         }
 
         public static class Country
@@ -41,7 +41,7 @@
 
         public static class Character
         {
-            public const int CharacterNameMaxLength = 100;
+            public const int CharacterNameMaxLength = 500;
         }
 
         public static class Review

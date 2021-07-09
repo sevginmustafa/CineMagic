@@ -40,14 +40,16 @@
 
             foreach (var movieDTO in moviesDTO)
             {
+                var trailer = this.getDataFromTMDBService.GetMovieTrailerPathDataAsJSON(movieDTO.Id);
+
                 var movie = new Movie
                 {
                     Title = movieDTO.Title,
                     PosterPath = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2" + movieDTO.PosterPath,
-                    TrailerPath = "https://www.youtube.com/watch?v=" + this.getDataFromTMDBService.GetMovieTrailerPathDataAsJSON(movieDTO.Id),
+                    TrailerPath = trailer != null ? "https://www.youtube.com/watch?v=" + trailer : null,
                     IMDBLink = "https://www.imdb.com/title/" + movieDTO.IMDBId,
                     ReleaseDate = DateTime.ParseExact(movieDTO.ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                    Runtime = movieDTO.Runtime,
+                    Runtime = movieDTO.Runtime.Value,
                     Overview = movieDTO.Overview,
                     Language = movieDTO.Language.Select(x => x.Name).FirstOrDefault(),
                     Budget = movieDTO.Budget,
@@ -69,7 +71,7 @@
                         await this.genresRepository.SaveChangesAsync();
                     }
 
-                    movie.Genres.Add(new MovieGenre { Genre = findGenre });
+                    movie.Genres.Add(new MovieGenre { GenreId = findGenre.Id });
                 }
 
                 foreach (var country in movieDTO.ProductionCountries)
@@ -85,7 +87,7 @@
                         await this.countriesRepository.SaveChangesAsync();
                     }
 
-                    movie.ProductionCountries.Add(new MovieCountry { Country = findCountry });
+                    movie.ProductionCountries.Add(new MovieCountry { CountryId = findCountry.Id });
                 }
 
                 var castAndCrew = this.getDataFromTMDBService.GetMovieCastAndCrewDataAsJSON(movieDTO.Id);
@@ -99,10 +101,10 @@
                     findDirector = new Director
                     {
                         Name = director.Name,
-                        ProfilePath = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2" + director.ProfilePath,
+                        ProfilePicPath = director.ProfilePicPath != null ? "https://www.themoviedb.org/t/p/w600_and_h900_bestv2" + director.ProfilePicPath : null,
                         Biography = director.Biography,
                         Gender = (Gender)director.Gender,
-                        Birthday = DateTime.ParseExact(director.Birthday, "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                        Birthday = director.Birthday != null ? DateTime.ParseExact(director.Birthday, "yyyy-MM-dd", CultureInfo.InvariantCulture) : null,
                         Deathday = director.Deathday != null ? DateTime.ParseExact(director.Deathday, "yyyy-MM-dd", CultureInfo.InvariantCulture) : null,
                         Birthplace = director.Birthplace,
                     };
@@ -112,9 +114,7 @@
                     await this.directorsRepository.SaveChangesAsync();
                 }
 
-                movie.Director = findDirector;
-
-                //var actors = this.getDataFromTMDBService.GetMovieActorsDataAsJSON(castAndCrew);
+                movie.DirectorId = findDirector.Id;
 
                 foreach (var cast in castAndCrew.Cast.Take(10))
                 {
@@ -127,10 +127,10 @@
                         findActor = new Actor
                         {
                             Name = actor.Name,
-                            ProfilePath = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2" + actor.ProfilePath,
+                            ProfilePicPath = actor.ProfilePicPath != null ? "https://www.themoviedb.org/t/p/w600_and_h900_bestv2" + actor.ProfilePicPath : null,
                             Biography = actor.Biography,
                             Gender = (Gender)actor.Gender,
-                            Birthday = DateTime.ParseExact(actor.Birthday, "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                            Birthday = actor.Birthday != null ? DateTime.ParseExact(actor.Birthday, "yyyy-MM-dd", CultureInfo.InvariantCulture) : null,
                             Deathday = actor.Deathday != null ? DateTime.ParseExact(actor.Deathday, "yyyy-MM-dd", CultureInfo.InvariantCulture) : null,
                             Birthplace = actor.Birthplace,
                         };
@@ -140,7 +140,7 @@
                         await this.actorsRepository.SaveChangesAsync();
                     }
 
-                    movie.Cast.Add(new MovieActor { Actor = findActor, CharacterName = cast.CharacterName });
+                    movie.Cast.Add(new MovieActor { ActorId = findActor.Id, CharacterName = cast.CharacterName });
                 }
 
                 await this.moviesRepository.AddAsync(movie);
