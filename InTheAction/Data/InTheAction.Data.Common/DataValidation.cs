@@ -9,7 +9,7 @@
             public const int TrailerPathMaxLength = 200;
             public const int IMDBLinkMaxLength = 100;
             public const int RuntimeMaxLength = 10;
-            public const int OverviewMaxLength = 700;
+            public const int OverviewMaxLength = 1000;
             public const int LanguageMaxLength = 50;
         }
 

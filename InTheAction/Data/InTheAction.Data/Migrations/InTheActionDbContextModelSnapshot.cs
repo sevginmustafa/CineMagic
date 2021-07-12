@@ -424,8 +424,8 @@ namespace InTheAction.Data.Migrations
 
                     b.Property<string>("Overview")
                         .IsRequired()
-                        .HasMaxLength(700)
-                        .HasColumnType("nvarchar(700)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("PosterPath")
                         .IsRequired()

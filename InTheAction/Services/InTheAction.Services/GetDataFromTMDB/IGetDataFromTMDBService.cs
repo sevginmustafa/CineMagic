@@ -1,12 +1,10 @@
 ﻿namespace InTheAction.Services.GetDataFromTMDB
 {
-    using System.Collections.Generic;
-
     using InTheAction.Services.GetDataFromTMDB.DTOs;
 
     public interface IGetDataFromTMDBService
     {
-        IEnumerable<MovieDTO> GetMovieDataAsJSON(int startIndex, int endIndex);
+        MovieDTO GetMovieDataAsJSON(int movieId);
 
         string GetMovieTrailerPathDataAsJSON(int movieId);
 

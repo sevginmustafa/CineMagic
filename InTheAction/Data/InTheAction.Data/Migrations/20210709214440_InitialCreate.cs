@@ -342,7 +342,7 @@ namespace InTheAction.Data.Migrations
                     IMDBLink = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Runtime = table.Column<int>(type: "int", maxLength: 10, nullable: false),
-                    Overview = table.Column<string>(type: "nvarchar(700)", maxLength: 700, nullable: false),
+                    Overview = table.Column<string>(type: "nvarchar(1000)", maxLength: 700, nullable: false),
                     Language = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Budget = table.Column<double>(type: "float", nullable: false),
                     Revenue = table.Column<double>(type: "float", nullable: false),
