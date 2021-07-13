@@ -9,6 +9,8 @@
     {
         Task<IEnumerable<T>> GetRecentMovies<T>(int count);
 
+        Task<IEnumerable<T>> GetPopularMovies<T>(int count);
+
         Task<IEnumerable<T>> GetTopRatedMovies<T>(int count);
     }
 }

@@ -31,6 +31,8 @@
 
         public double Revenue { get; set; }
 
+        public double Popularity { get; set; }
+
         [JsonProperty("vote_average")]
         public double AverageVote { get; set; }
 

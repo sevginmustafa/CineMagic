@@ -22,7 +22,7 @@
 
         public async Task<IActionResult> GatherData()
         {
-            await this.fillDatabaseService.AddDataToDBAsync(175, 175);
+            await this.fillDatabaseService.AddDataToDBAsync(80, 100);
 
             return this.View();
         }

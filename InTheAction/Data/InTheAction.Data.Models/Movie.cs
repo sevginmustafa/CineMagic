@@ -52,6 +52,8 @@
 
         public double Revenue { get; set; }
 
+        public double Popularity { get; set; }
+
         public double CurrentAverageVote { get; set; }
 
         public int CurrentNumberOfVotes { get; set; }

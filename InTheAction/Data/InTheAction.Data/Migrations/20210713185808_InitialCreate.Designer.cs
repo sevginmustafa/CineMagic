@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InTheAction.Data.Migrations
 {
     [DbContext(typeof(InTheActionDbContext))]
-    [Migration("20210709214440_InitialCreate")]
+    [Migration("20210713185808_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -426,8 +426,11 @@ namespace InTheAction.Data.Migrations
 
                     b.Property<string>("Overview")
                         .IsRequired()
-                        .HasMaxLength(700)
-                        .HasColumnType("nvarchar(700)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<double>("Popularity")
+                        .HasColumnType("float");
 
                     b.Property<string>("PosterPath")
                         .IsRequired()

@@ -427,6 +427,9 @@ namespace InTheAction.Data.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
+                    b.Property<double>("Popularity")
+                        .HasColumnType("float");
+
                     b.Property<string>("PosterPath")
                         .IsRequired()
                         .HasMaxLength(200)

@@ -21,6 +21,18 @@
             this.moviesRepository = moviesRepository;
         }
 
+        public async Task<IEnumerable<T>> GetPopularMovies<T>(int count)
+        {
+            var latestMovies = await this.moviesRepository
+                .AllAsNoTracking()
+                .OrderByDescending(x => x.Popularity)
+                .Take(count)
+                .To<T>()
+                .ToListAsync();
+
+            return latestMovies;
+        }
+
         public async Task<IEnumerable<T>> GetRecentMovies<T>(int count)
         {
             var latestMovies = await this.moviesRepository

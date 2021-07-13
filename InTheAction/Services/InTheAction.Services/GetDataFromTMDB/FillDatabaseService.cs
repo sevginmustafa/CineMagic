@@ -55,7 +55,7 @@
                     {
                         Title = movieDTO.Title,
                         PosterPath = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2" + movieDTO.PosterPath,
-                        TrailerPath = trailer != null ? "https://www.youtube.com/watch?v=" + trailer : null,
+                        TrailerPath = trailer,
                         IMDBLink = "https://www.imdb.com/title/" + movieDTO.IMDBId,
                         ReleaseDate = DateTime.ParseExact(movieDTO.ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
                         Runtime = movieDTO.Runtime.Value,
@@ -63,6 +63,7 @@
                         Language = movieDTO.Language.Select(x => x.Name).FirstOrDefault(),
                         Budget = movieDTO.Budget,
                         Revenue = movieDTO.Revenue,
+                        Popularity=movieDTO.Popularity,
                         CurrentAverageVote = movieDTO.AverageVote,
                         CurrentNumberOfVotes = movieDTO.NumberOfVotes,
                     };
