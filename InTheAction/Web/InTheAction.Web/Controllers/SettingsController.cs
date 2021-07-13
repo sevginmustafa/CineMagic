@@ -6,6 +6,7 @@
     using InTheAction.Data.Common.Repositories;
     using InTheAction.Data.Models;
     using InTheAction.Services.Data;
+    using InTheAction.Services.Data.Contracts;
     using InTheAction.Web.ViewModels.Settings;
     using Microsoft.AspNetCore.Mvc;
 

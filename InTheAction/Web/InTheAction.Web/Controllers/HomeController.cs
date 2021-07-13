@@ -1,15 +1,36 @@
 ﻿namespace InTheAction.Web.Controllers
 {
     using System.Diagnostics;
+    using System.Threading.Tasks;
 
+    using InTheAction.Services.Data.Contracts;
     using InTheAction.Web.ViewModels;
+    using InTheAction.Web.ViewModels.Movies;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : BaseController
     {
-        public IActionResult Index()
+        private readonly IMoviesService moviesService;
+
+        public HomeController(IMoviesService moviesService)
         {
-            return this.View();
+            this.moviesService = moviesService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var mostRecentMovie = await this.moviesService.GetRecentMovies<MostRecentMovieViewModel>(1);
+            var recentMovies = await this.moviesService.GetRecentMovies<RecentMoviesViewModel>(8);
+            var topRatedMovies = await this.moviesService.GetTopRatedMovies<RecentMoviesViewModel>(8);
+
+            var viewModels = new MoviesHomePageViewModelsList
+            {
+                RecentMovies = recentMovies,
+                MostRecentMovie = mostRecentMovie,
+                TopRatedMovies = topRatedMovies,
+            };
+
+            return this.View(viewModels);
         }
 
         public IActionResult Privacy()

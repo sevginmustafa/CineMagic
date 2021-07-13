@@ -1,4 +1,4 @@
-﻿namespace InTheAction.Services.Data
+﻿namespace InTheAction.Services.Data.Contracts
 {
     using System.Collections.Generic;
 

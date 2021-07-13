@@ -1,6 +1,7 @@
 ﻿namespace InTheAction.Web.Areas.Administration.Controllers
 {
     using InTheAction.Services.Data;
+    using InTheAction.Services.Data.Contracts;
     using InTheAction.Web.ViewModels.Administration.Dashboard;
 
     using Microsoft.AspNetCore.Mvc;
