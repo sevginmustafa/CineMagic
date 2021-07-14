@@ -71,6 +71,7 @@
             services.AddTransient<IGetDataFromTMDBService, GetDataFromTMDBService>();
             services.AddTransient<IFillDatabaseService, FillDatabaseService>();
             services.AddTransient<IMoviesService, MoviesService>();
+            services.AddTransient<IGenresService, GenresService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

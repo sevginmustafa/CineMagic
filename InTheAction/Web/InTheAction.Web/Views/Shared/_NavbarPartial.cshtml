@@ -1,0 +1,67 @@
+﻿@inject InTheAction.Services.Data.Contracts.IGenresService GenresService
+@using InTheAction.Web.ViewModels.Genres
+
+@{
+    var genres = await GenresService.GetAllAsync<GenreViewModel>();
+}
+
+<!-- navbar-header -->
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+        <li active-when="/Home/Index"><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Genre <b class="caret"></b></a>
+            <ul class="dropdown-menu multi-column columns-3">
+                <li>
+                    @foreach (var genre in genres)
+                    {
+                        <div class="col-sm-6">
+                            <ul class="multi-column-dropdown">
+                                <li>
+                                    <a asp-controller="Genres" asp-action="ByName" asp-route-name="@genre.Name">@genre.Name</a>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                    <div class="clearfix"></div>
+                </li>
+            </ul>
+        </li>
+        <li><a href="series.html">tv - series</a></li>
+        <li><a href="news.html">news</a></li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Country <b class="caret"></b></a>
+            <ul class="dropdown-menu multi-column columns-3">
+                <li>
+                    <div class="col-sm-4">
+                        <ul class="multi-column-dropdown">
+                            <li><a href="genre.html">Asia</a></li>
+                            <li><a href="genre.html">France</a></li>
+                            <li><a href="genre.html">Taiwan</a></li>
+                            <li><a href="genre.html">United States</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4">
+                        <ul class="multi-column-dropdown">
+                            <li><a href="genre.html">China</a></li>
+                            <li><a href="genre.html">HongCong</a></li>
+                            <li><a href="genre.html">Japan</a></li>
+                            <li><a href="genre.html">Thailand</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4">
+                        <ul class="multi-column-dropdown">
+                            <li><a href="genre.html">Euro</a></li>
+                            <li><a href="genre.html">India</a></li>
+                            <li><a href="genre.html">Korea</a></li>
+                            <li><a href="genre.html">United Kingdom</a></li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </li>
+            </ul>
+        </li>
+        <li><a href="list.html">A - z list</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+</div>

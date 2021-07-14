@@ -19,12 +19,12 @@
 
         public async Task<IActionResult> Index()
         {
-            var mostRecentMovie = await this.moviesService.GetRecentMovies<MostRecentMovieViewModel>(1);
-            var recentMovies = await this.moviesService.GetRecentMovies<RecentMoviesViewModel>(8);
-            var mostPopularMovie = await this.moviesService.GetPopularMovies<MostRecentMovieViewModel>(1);
-            var popularMovies = await this.moviesService.GetPopularMovies<RecentMoviesViewModel>(8);
-            var bestRatedMovie = await this.moviesService.GetTopRatedMovies<MostRecentMovieViewModel>(1);
-            var topRatedMovies = await this.moviesService.GetTopRatedMovies<RecentMoviesViewModel>(8);
+            var mostRecentMovie = await this.moviesService.GetRecentMoviesAsync<MostRecentMovieViewModel>(1);
+            var recentMovies = await this.moviesService.GetRecentMoviesAsync<RecentMoviesViewModel>(8);
+            var mostPopularMovie = await this.moviesService.GetPopularMoviesAsync<MostRecentMovieViewModel>(1);
+            var popularMovies = await this.moviesService.GetPopularMoviesAsync<RecentMoviesViewModel>(8);
+            var bestRatedMovie = await this.moviesService.GetTopRatedMoviesAsync<MostRecentMovieViewModel>(1);
+            var topRatedMovies = await this.moviesService.GetTopRatedMoviesAsync<RecentMoviesViewModel>(8);
 
             var viewModels = new MoviesHomePageViewModelsList
             {

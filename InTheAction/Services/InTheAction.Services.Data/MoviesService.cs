@@ -21,7 +21,7 @@
             this.moviesRepository = moviesRepository;
         }
 
-        public async Task<IEnumerable<T>> GetPopularMovies<T>(int count)
+        public async Task<IEnumerable<T>> GetPopularMoviesAsync<T>(int count)
         {
             var latestMovies = await this.moviesRepository
                 .AllAsNoTracking()
@@ -33,7 +33,7 @@
             return latestMovies;
         }
 
-        public async Task<IEnumerable<T>> GetRecentMovies<T>(int count)
+        public async Task<IEnumerable<T>> GetRecentMoviesAsync<T>(int count)
         {
             var latestMovies = await this.moviesRepository
                 .AllAsNoTracking()
@@ -45,7 +45,7 @@
             return latestMovies;
         }
 
-        public async Task<IEnumerable<T>> GetTopRatedMovies<T>(int count)
+        public async Task<IEnumerable<T>> GetTopRatedMoviesAsync<T>(int count)
         {
             var topRatedMovies = await this.moviesRepository
                 .AllAsNoTracking()

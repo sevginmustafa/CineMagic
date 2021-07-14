@@ -7,10 +7,10 @@
 
     public interface IMoviesService
     {
-        Task<IEnumerable<T>> GetRecentMovies<T>(int count);
+        Task<IEnumerable<T>> GetRecentMoviesAsync<T>(int count);
 
-        Task<IEnumerable<T>> GetPopularMovies<T>(int count);
+        Task<IEnumerable<T>> GetPopularMoviesAsync<T>(int count);
 
-        Task<IEnumerable<T>> GetTopRatedMovies<T>(int count);
+        Task<IEnumerable<T>> GetTopRatedMoviesAsync<T>(int count);
     }
 }
