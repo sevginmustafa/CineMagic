@@ -5,10 +5,8 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IGenresService
+    public interface ICountriesService
     {
-        Task<IEnumerable<T>> GetAllGenresAsync<T>();
-
-        Task<IEnumerable<T>> GetPopularGenresAsync<T>();
+        Task<IEnumerable<T>> GetPopularCountriesAsync<T>();
     }
 }

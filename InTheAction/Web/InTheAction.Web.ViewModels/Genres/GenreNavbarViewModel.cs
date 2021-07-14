@@ -3,7 +3,7 @@
     using InTheAction.Data.Models;
     using InTheAction.Services.Mapping;
 
-    public class GenreViewModel : IMapFrom<Genre>
+    public class GenreNavbarViewModel : IMapFrom<Genre>
     {
         public int Id { get; set; }
 

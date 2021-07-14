@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     // TODO: Move in administration area
-    public class GatherMoviesController : BaseController
+    public class GatherMoviesController : Controller
     {
         private readonly IFillDatabaseService fillDatabaseService;
 

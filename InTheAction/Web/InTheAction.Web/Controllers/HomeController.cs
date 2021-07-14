@@ -8,7 +8,7 @@
     using InTheAction.Web.ViewModels.Movies;
     using Microsoft.AspNetCore.Mvc;
 
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
         private readonly IMoviesService moviesService;
 
