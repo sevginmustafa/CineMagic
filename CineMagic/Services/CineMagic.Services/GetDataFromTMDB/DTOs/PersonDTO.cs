@@ -19,5 +19,7 @@
 
         [JsonProperty("place_of_birth")]
         public string Birthplace { get; set; }
+
+        public double Popularity { get; set; }
     }
 }

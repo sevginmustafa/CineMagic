@@ -4,16 +4,16 @@
 
     public class MoviesHomePageViewModelsList
     {
-        public IEnumerable<MostRecentMovieViewModel> MostRecentMovie { get; set; }
+        public IEnumerable<MovieHomePageViewModel> MostRecentMovie { get; set; }
 
-        public IEnumerable<RecentMoviesViewModel> RecentMovies { get; set; }
+        public IEnumerable<MoviesHomePageSliderViewModel> RecentMovies { get; set; }
 
-        public IEnumerable<MostRecentMovieViewModel> MostPopularMovie { get; set; }
+        public IEnumerable<MovieHomePageViewModel> MostPopularMovie { get; set; }
 
-        public IEnumerable<RecentMoviesViewModel> PopularMovies { get; set; }
+        public IEnumerable<MoviesHomePageSliderViewModel> PopularMovies { get; set; }
 
-        public IEnumerable<MostRecentMovieViewModel> BestRatedMovie { get; set; }
+        public IEnumerable<MovieHomePageViewModel> BestRatedMovie { get; set; }
 
-        public IEnumerable<RecentMoviesViewModel> TopRatedMovies { get; set; }
+        public IEnumerable<MoviesHomePageSliderViewModel> TopRatedMovies { get; set; }
     }
 }

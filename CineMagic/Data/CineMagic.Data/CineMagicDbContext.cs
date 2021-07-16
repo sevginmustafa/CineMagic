@@ -40,6 +40,8 @@
 
         public DbSet<MovieActor> MoviesActors { get; set; }
 
+        public DbSet<MovieBackdrop> MovieBackdrops { get; set; }
+
         public DbSet<MovieComment> MovieComments { get; set; }
 
         public DbSet<MovieCountry> MoviesCountries { get; set; }

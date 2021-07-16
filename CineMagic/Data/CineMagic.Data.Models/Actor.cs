@@ -35,6 +35,8 @@
 
         public string Birthplace { get; set; }
 
+        public double Popularity { get; set; }
+
         public virtual ICollection<MovieActor> Movies { get; set; }
 
         public virtual ICollection<ActorComment> Comments { get; set; }

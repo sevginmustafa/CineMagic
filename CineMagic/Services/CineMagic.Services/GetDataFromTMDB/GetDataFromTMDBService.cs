@@ -1,6 +1,7 @@
 ﻿namespace CineMagic.Services.GetDataFromTMDB
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Net;
 
@@ -25,6 +26,15 @@
             {
                 return null;
             }
+        }
+
+        public BackdropsDTO GetMovieBackdropsDataAsJSON(int movieId)
+        {
+            string result = this.client.DownloadString($"https://api.themoviedb.org/3/movie/{movieId}/images?api_key=bc76d9675394b601c098e4b5c540a75d");
+
+            var backdrops = JsonConvert.DeserializeObject<BackdropsDTO>(result);
+
+            return backdrops;
         }
 
         public string GetMovieTrailerPathDataAsJSON(int movieId)

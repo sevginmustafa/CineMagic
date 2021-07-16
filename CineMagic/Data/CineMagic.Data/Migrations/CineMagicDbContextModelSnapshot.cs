@@ -59,6 +59,9 @@ namespace CineMagic.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<double>("Popularity")
+                        .HasColumnType("float");
+
                     b.Property<string>("ProfilePicPath")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -300,6 +303,9 @@ namespace CineMagic.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<double>("Popularity")
+                        .HasColumnType("float");
+
                     b.Property<string>("ProfilePicPath")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -502,6 +508,40 @@ namespace CineMagic.Data.Migrations
                     b.HasIndex("MovieId");
 
                     b.ToTable("MoviesActors");
+                });
+
+            modelBuilder.Entity("CineMagic.Data.Models.MovieBackdrop", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("MovieBackdrops");
                 });
 
             modelBuilder.Entity("CineMagic.Data.Models.MovieComment", b =>
@@ -907,6 +947,17 @@ namespace CineMagic.Data.Migrations
                     b.Navigation("Movie");
                 });
 
+            modelBuilder.Entity("CineMagic.Data.Models.MovieBackdrop", b =>
+                {
+                    b.HasOne("CineMagic.Data.Models.Movie", "Movie")
+                        .WithMany("Backdrops")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+                });
+
             modelBuilder.Entity("CineMagic.Data.Models.MovieComment", b =>
                 {
                     b.HasOne("CineMagic.Data.Models.ApplicationUser", "Author")
@@ -1094,6 +1145,8 @@ namespace CineMagic.Data.Migrations
 
             modelBuilder.Entity("CineMagic.Data.Models.Movie", b =>
                 {
+                    b.Navigation("Backdrops");
+
                     b.Navigation("Cast");
 
                     b.Navigation("Comments");

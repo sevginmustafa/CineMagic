@@ -5,7 +5,7 @@
     using CineMagic.Data.Models;
     using CineMagic.Services.Mapping;
 
-    public class RecentMoviesViewModel : IMapFrom<Movie>
+    public class MoviesHomePageSliderViewModel : IMapFrom<Movie>
     {
         public int Id { get; set; }
 

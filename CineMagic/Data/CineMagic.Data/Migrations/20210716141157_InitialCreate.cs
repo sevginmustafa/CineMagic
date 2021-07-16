@@ -20,6 +20,7 @@ namespace CineMagic.Data.Migrations
                     Birthday = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Deathday = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Birthplace = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Popularity = table.Column<double>(type: "float", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -107,6 +108,7 @@ namespace CineMagic.Data.Migrations
                     Birthday = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Deathday = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Birthplace = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Popularity = table.Column<double>(type: "float", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -362,6 +364,30 @@ namespace CineMagic.Data.Migrations
                         name: "FK_Movies_Directors_DirectorId",
                         column: x => x.DirectorId,
                         principalTable: "Directors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MovieBackdrops",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MovieId = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieBackdrops", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MovieBackdrops_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -648,6 +674,16 @@ namespace CineMagic.Data.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MovieBackdrops_IsDeleted",
+                table: "MovieBackdrops",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MovieBackdrops_MovieId",
+                table: "MovieBackdrops",
+                column: "MovieId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MovieComments_AuthorId",
                 table: "MovieComments",
                 column: "AuthorId");
@@ -765,6 +801,9 @@ namespace CineMagic.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "DirectorComments");
+
+            migrationBuilder.DropTable(
+                name: "MovieBackdrops");
 
             migrationBuilder.DropTable(
                 name: "MovieComments");

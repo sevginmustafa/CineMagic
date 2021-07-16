@@ -46,9 +46,15 @@
                     movieDTO.Runtime.HasValue &&
                     movieDTO.Overview != null &&
                     movieDTO.Runtime > 70 &&
-                    DateTime.ParseExact(movieDTO.ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture).Year >= 1970 &&
-                    movieDTO.NumberOfVotes > 300)
+                    DateTime.ParseExact(movieDTO.ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture).Year >= 1980 &&
+                    movieDTO.NumberOfVotes > 500)
                 {
+                    var backdrops = this.getDataFromTMDBService.GetMovieBackdropsDataAsJSON(movieDTO.Id)
+                        .Backdrops
+                        .Where(x => x.ISO == null)
+                        .Select(x => x.FilePath)
+                        .Take(4);
+
                     var trailer = this.getDataFromTMDBService.GetMovieTrailerPathDataAsJSON(movieDTO.Id);
 
                     var movie = new Movie
@@ -63,10 +69,15 @@
                         Language = movieDTO.Language.Select(x => x.Name).FirstOrDefault(),
                         Budget = movieDTO.Budget,
                         Revenue = movieDTO.Revenue,
-                        Popularity=movieDTO.Popularity,
+                        Popularity = movieDTO.Popularity,
                         CurrentAverageVote = movieDTO.AverageVote,
                         CurrentNumberOfVotes = movieDTO.NumberOfVotes,
                     };
+
+                    foreach (var backdrop in backdrops)
+                    {
+                        movie.Backdrops.Add(new MovieBackdrop { Path = "https://www.themoviedb.org/t/p/original" + backdrop });
+                    }
 
                     foreach (var genre in movieDTO.Genres)
                     {
@@ -117,6 +128,7 @@
                             Birthday = director.Birthday != null ? DateTime.ParseExact(director.Birthday, "yyyy-MM-dd", CultureInfo.InvariantCulture) : null,
                             Deathday = director.Deathday != null ? DateTime.ParseExact(director.Deathday, "yyyy-MM-dd", CultureInfo.InvariantCulture) : null,
                             Birthplace = director.Birthplace,
+                            Popularity = director.Popularity,
                         };
 
                         await this.directorsRepository.AddAsync(findDirector);
@@ -143,6 +155,7 @@
                                 Birthday = actor.Birthday != null ? DateTime.ParseExact(actor.Birthday, "yyyy-MM-dd", CultureInfo.InvariantCulture) : null,
                                 Deathday = actor.Deathday != null ? DateTime.ParseExact(actor.Deathday, "yyyy-MM-dd", CultureInfo.InvariantCulture) : null,
                                 Birthplace = actor.Birthplace,
+                                Popularity = actor.Popularity,
                             };
 
                             await this.actorsRepository.AddAsync(findActor);

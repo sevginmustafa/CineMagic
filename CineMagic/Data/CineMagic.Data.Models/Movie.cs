@@ -12,6 +12,7 @@
     {
         public Movie()
         {
+            this.Backdrops = new HashSet<MovieBackdrop>();
             this.Genres = new HashSet<MovieGenre>();
             this.Cast = new HashSet<MovieActor>();
             this.ProductionCountries = new HashSet<MovieCountry>();
@@ -61,6 +62,8 @@
         public int DirectorId { get; set; }
 
         public virtual Director Director { get; set; }
+
+        public virtual ICollection<MovieBackdrop> Backdrops { get; set; }
 
         public virtual ICollection<MovieGenre> Genres { get; set; }
 

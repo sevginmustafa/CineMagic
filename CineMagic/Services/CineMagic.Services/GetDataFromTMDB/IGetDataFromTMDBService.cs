@@ -1,10 +1,14 @@
 ﻿namespace CineMagic.Services.GetDataFromTMDB
 {
+    using System.Collections.Generic;
+
     using CineMagic.Services.GetDataFromTMDB.DTOs;
 
     public interface IGetDataFromTMDBService
     {
         MovieDTO GetMovieDataAsJSON(int movieId);
+
+        public BackdropsDTO GetMovieBackdropsDataAsJSON(int movieId);
 
         string GetMovieTrailerPathDataAsJSON(int movieId);
 

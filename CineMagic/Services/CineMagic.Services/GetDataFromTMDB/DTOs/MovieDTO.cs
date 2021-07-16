@@ -42,12 +42,6 @@
         [JsonProperty("production_countries")]
         public ICollection<CountryDTO> ProductionCountries { get; set; }
 
-        //public int DirectorId { get; set; }
-
-        //public virtual Director Director { get; set; }
-
         public virtual ICollection<GenreDTO> Genres { get; set; }
-
-        //public virtual ICollection<MovieActor> Cast { get; set; }
     }
 }

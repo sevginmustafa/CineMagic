@@ -1,6 +1,7 @@
 ﻿namespace CineMagic.Web.Controllers
 {
     using System.Diagnostics;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using CineMagic.Services.Data.Contracts;
@@ -19,21 +20,21 @@
 
         public async Task<IActionResult> Index()
         {
-            var mostRecentMovie = await this.moviesService.GetRecentMoviesAsync<MostRecentMovieViewModel>(1);
-            var recentMovies = await this.moviesService.GetRecentMoviesAsync<RecentMoviesViewModel>(8);
-            var mostPopularMovie = await this.moviesService.GetPopularMoviesAsync<MostRecentMovieViewModel>(1);
-            var popularMovies = await this.moviesService.GetPopularMoviesAsync<RecentMoviesViewModel>(8);
-            var bestRatedMovie = await this.moviesService.GetTopRatedMoviesAsync<MostRecentMovieViewModel>(1);
-            var topRatedMovies = await this.moviesService.GetTopRatedMoviesAsync<RecentMoviesViewModel>(8);
+            var mostRecentMovie = await this.moviesService.GetRecentMoviesAsync<MovieHomePageViewModel>(1);
+            var recentMovies = await this.moviesService.GetRecentMoviesAsync<MoviesHomePageSliderViewModel>(9);
+            var mostPopularMovie = await this.moviesService.GetPopularMoviesAsync<MovieHomePageViewModel>(1);
+            var popularMovies = await this.moviesService.GetPopularMoviesAsync<MoviesHomePageSliderViewModel>(9);
+            var bestRatedMovie = await this.moviesService.GetTopRatedMoviesAsync<MovieHomePageViewModel>(1);
+            var topRatedMovies = await this.moviesService.GetTopRatedMoviesAsync<MoviesHomePageSliderViewModel>(9);
 
             var viewModels = new MoviesHomePageViewModelsList
             {
                 MostRecentMovie = mostRecentMovie,
-                RecentMovies = recentMovies,
-                MostPopularMovie=mostPopularMovie,
-                PopularMovies=popularMovies,
-                BestRatedMovie=bestRatedMovie,
-                TopRatedMovies = topRatedMovies,
+                RecentMovies = recentMovies.Skip(1),
+                MostPopularMovie = mostPopularMovie,
+                PopularMovies = popularMovies.Skip(1),
+                BestRatedMovie = bestRatedMovie,
+                TopRatedMovies = topRatedMovies.Skip(1),
             };
 
             return this.View(viewModels);

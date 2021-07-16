@@ -3,3 +3,234 @@
 @{
     this.ViewData["Title"] = "Home Page";
 }
+
+<div class="w3_content_agilleinfo_inner">
+    <div class="agile_featured_movies">
+        <!--/agileinfo_tabs-->
+        <div class="agileinfo_tabs">
+            <!---728x90--->
+            <!--/tab-section-->
+            <div id="horizontalTab">
+                <ul class="resp-tabs-list">
+                    <li>Recent</li>
+                    <li>Popularity</li>
+                    <li>Top Rating </li>
+
+                </ul>
+                <div class="resp-tabs-container">
+                    <div class="tab1">
+                        <div class="tab_movies_agileinfo">
+                            <div class="w3_agile_featured_movies">
+                                @foreach (var movie in Model.MostRecentMovie)
+                                {
+                                    <div class="col-md-5 video_agile_player">
+                                        <div class="video-grid-single-page-agileits">
+                                            <div data-video="@movie.TrailerPath" id="video"> <img src="@movie.PosterPath" alt="" class="img-responsive" /> </div>
+                                        </div>
+                                        <div class="player-text">
+                                            <p class="fexi_header">@movie.Title</p>
+                                            <p class="fexi_header_para">
+                                                <span class="conjuring_w3">Story Line<label>:</label></span>@movie.Overview
+                                            </p>
+                                            <p class="fexi_header_para"><span>Release On<label>:</label></span>@movie.ReleaseDate.ToString("yyyy-MM-dd")</p>
+                                            <p class="fexi_header_para">
+                                                <span>Genres<label>:</label> </span>
+                                                @foreach (var genre in movie.Genres)
+                                                {
+                                                    @:| <a href="genre.html">@genre.GenreName</a>
+                                                }
+                                            </p>
+                                            <p class="fexi_header_para fexi_header_para1">
+                                                <span>Star Rating<label>:</label></span>
+                                                <a href="#"><i class="fa fa-star" aria-hidden="true"></i></a>
+                                                <a href="#"><i class="fa fa-star" aria-hidden="true"></i></a>
+                                                <a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a>
+                                                <a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+                                                <a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                }
+
+                                <div class="col-md-7 wthree_agile-movies_list">
+                                    @foreach (var movie in Model.RecentMovies)
+                                    {
+                                        <div class="w3l-movie-gride-agile">
+                                            <a href="single.html" class="hvr-sweep-to-bottom">
+                                                <img src="@movie.PosterPath" title="@movie.Title" class="img-responsive" alt=" ">
+                                                <div class="w3l-action-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
+                                            </a>
+                                            <div class="mid-1 agileits_w3layouts_mid_1_home">
+                                                <div class="w3l-movie-text" style="height:45px;">
+                                                    <h6><a href="single.html">@movie.Title</a></h6>
+                                                </div>
+                                                <div class="mid-2 agile_mid_2_home">
+                                                    <p>@movie.ReleaseDate.Year</p>
+                                                    <div class="block-stars">
+                                                        <ul class="w3l-ratings">
+                                                            <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+                                            <div class="ribben">
+                                                <p>NEW</p>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                            <div class="cleafix"></div>
+                        </div>
+                    </div>
+                    <div class="tab2">
+                        <div class="tab_movies_agileinfo">
+                            <div class="w3_agile_featured_movies">
+                                @foreach (var movie in Model.MostPopularMovie)
+                                {
+                                    <div class="col-md-5 video_agile_player">
+                                        <div class="video-grid-single-page-agileits">
+                                            <div data-video="@movie.TrailerPath" id="video"> <img src="@movie.PosterPath" alt="" class="img-responsive" /> </div>
+                                        </div>
+                                        <div class="player-text">
+                                            <p class="fexi_header">@movie.Title</p>
+                                            <p class="fexi_header_para">
+                                                <span class="conjuring_w3">Story Line<label>:</label></span>@movie.Overview
+                                            </p>
+                                            <p class="fexi_header_para"><span>Release On<label>:</label></span>@movie.ReleaseDate.ToString("yyyy-MM-dd")</p>
+                                            <p class="fexi_header_para">
+                                                <span>Genres<label>:</label> </span>
+                                                @foreach (var genre in movie.Genres)
+                                                {
+                                                    @:| <a href="genre.html">@genre.GenreName</a>
+                                                }
+                                            </p>
+                                            <p class="fexi_header_para fexi_header_para1">
+                                                <span>Star Rating<label>:</label></span>
+                                                <a href="#"><i class="fa fa-star" aria-hidden="true"></i></a>
+                                                <a href="#"><i class="fa fa-star" aria-hidden="true"></i></a>
+                                                <a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a>
+                                                <a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+                                                <a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="col-md-7 wthree_agile-movies_list">
+                                    @foreach (var movie in Model.PopularMovies)
+                                    {
+                                        <div class="w3l-movie-gride-agile">
+                                            <a href="single.html" class="hvr-sweep-to-bottom">
+                                                <img src="@movie.PosterPath" title="@movie.Title" class="img-responsive" alt=" ">
+                                                <div class="w3l-action-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
+                                            </a>
+                                            <div class="mid-1 agileits_w3layouts_mid_1_home">
+                                                <div class="w3l-movie-text" style="height:45px;">
+                                                    <h6><a href="single.html">@movie.Title</a></h6>
+                                                </div>
+                                                <div class="mid-2 agile_mid_2_home">
+                                                    <p>@movie.ReleaseDate.Year</p>
+                                                    <div class="block-stars">
+                                                        <ul class="w3l-ratings">
+                                                            <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+                                            <div class="ribben">
+                                                <p>NEW</p>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                            <div class="cleafix"></div>
+                        </div>
+                    </div>
+                    <div class="tab3">
+                        <div class="tab_movies_agileinfo">
+                            <div class="w3_agile_featured_movies">
+                                @foreach (var movie in Model.BestRatedMovie)
+                                {
+                                    <div class="col-md-5 video_agile_player">
+                                        <div class="video-grid-single-page-agileits">
+                                            <div data-video="@movie.TrailerPath" id="video"> <img src="@movie.PosterPath" alt="" class="img-responsive" /> </div>
+                                        </div>
+                                        <div class="player-text">
+                                            <p class="fexi_header">@movie.Title</p>
+                                            <p class="fexi_header_para">
+                                                <span class="conjuring_w3">Story Line<label>:</label></span>@movie.Overview
+                                            </p>
+                                            <p class="fexi_header_para"><span>Release On<label>:</label></span>@movie.ReleaseDate.ToString("yyyy-MM-dd")</p>
+                                            <p class="fexi_header_para">
+                                                <span>Genres<label>:</label> </span>
+                                                @foreach (var genre in movie.Genres)
+                                                {
+                                                    @:| <a href="genre.html">@genre.GenreName</a>
+                                                }
+                                            </p>
+                                            <p class="fexi_header_para fexi_header_para1">
+                                                <span>Star Rating<label>:</label></span>
+                                                <a href="#"><i class="fa fa-star" aria-hidden="true"></i></a>
+                                                <a href="#"><i class="fa fa-star" aria-hidden="true"></i></a>
+                                                <a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a>
+                                                <a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+                                                <a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="col-md-7 wthree_agile-movies_list">
+                                    @foreach (var movie in Model.TopRatedMovies)
+                                    {
+                                        <div class="w3l-movie-gride-agile">
+                                            <a href="single.html" class="hvr-sweep-to-bottom">
+                                                <img src="@movie.PosterPath" title="@movie.Title" class="img-responsive" alt=" ">
+                                                <div class="w3l-action-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
+                                            </a>
+                                            <div class="mid-1 agileits_w3layouts_mid_1_home">
+                                                <div class="w3l-movie-text" style="height:45px;">
+                                                    <h6><a href="single.html">@movie.Title</a></h6>
+                                                </div>
+                                                <div class="mid-2 agile_mid_2_home">
+                                                    <p>@movie.ReleaseDate.Year</p>
+                                                    <div class="block-stars">
+                                                        <ul class="w3l-ratings">
+                                                            <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+                                            <div class="ribben">
+                                                <p>NEW</p>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                            <div class="cleafix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

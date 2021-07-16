@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Text;
 
-    public class MostRecentMovieViewModel : RecentMoviesViewModel
+    public class MovieHomePageViewModel : MoviesHomePageSliderViewModel
     {
         public string Overview { get; set; }
 
