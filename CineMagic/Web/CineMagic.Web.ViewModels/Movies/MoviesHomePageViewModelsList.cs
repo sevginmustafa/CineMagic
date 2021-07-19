@@ -15,5 +15,9 @@
         public IEnumerable<MovieHomePageViewModel> BestRatedMovie { get; set; }
 
         public IEnumerable<MoviesHomePageSliderViewModel> TopRatedMovies { get; set; }
+
+        public IEnumerable<MoviesHomePageSliderViewModel> LatestMovies { get; set; }
+
+        public IEnumerable<MovieHomePageBannerViewModel> LatestMovie { get; set; }
     }
 }

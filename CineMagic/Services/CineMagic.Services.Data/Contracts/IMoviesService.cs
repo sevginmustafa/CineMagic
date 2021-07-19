@@ -12,5 +12,7 @@
         Task<IEnumerable<T>> GetPopularMoviesAsync<T>(int count);
 
         Task<IEnumerable<T>> GetTopRatedMoviesAsync<T>(int count);
+
+        Task<IEnumerable<T>> GetLatestMoviesAsync<T>(int count);
     }
 }

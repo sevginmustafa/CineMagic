@@ -11,6 +11,9 @@
 
     public class HomeController : Controller
     {
+        private const int HomePageFeaturedMoviesTabCount = 9;
+        private const int HomePageLatestMoviesCount = 10;
+
         private readonly IMoviesService moviesService;
 
         public HomeController(IMoviesService moviesService)
@@ -21,11 +24,13 @@
         public async Task<IActionResult> Index()
         {
             var mostRecentMovie = await this.moviesService.GetRecentMoviesAsync<MovieHomePageViewModel>(1);
-            var recentMovies = await this.moviesService.GetRecentMoviesAsync<MoviesHomePageSliderViewModel>(9);
+            var recentMovies = await this.moviesService.GetRecentMoviesAsync<MoviesHomePageSliderViewModel>(HomePageFeaturedMoviesTabCount);
             var mostPopularMovie = await this.moviesService.GetPopularMoviesAsync<MovieHomePageViewModel>(1);
-            var popularMovies = await this.moviesService.GetPopularMoviesAsync<MoviesHomePageSliderViewModel>(9);
+            var popularMovies = await this.moviesService.GetPopularMoviesAsync<MoviesHomePageSliderViewModel>(HomePageFeaturedMoviesTabCount);
             var bestRatedMovie = await this.moviesService.GetTopRatedMoviesAsync<MovieHomePageViewModel>(1);
-            var topRatedMovies = await this.moviesService.GetTopRatedMoviesAsync<MoviesHomePageSliderViewModel>(9);
+            var topRatedMovies = await this.moviesService.GetTopRatedMoviesAsync<MoviesHomePageSliderViewModel>(HomePageFeaturedMoviesTabCount);
+            var latestMovie = await this.moviesService.GetLatestMoviesAsync<MovieHomePageBannerViewModel>(1);
+            var latestMovies = await this.moviesService.GetLatestMoviesAsync<MoviesHomePageSliderViewModel>(HomePageLatestMoviesCount);
 
             var viewModels = new MoviesHomePageViewModelsList
             {
@@ -35,6 +40,8 @@
                 PopularMovies = popularMovies.Skip(1),
                 BestRatedMovie = bestRatedMovie,
                 TopRatedMovies = topRatedMovies.Skip(1),
+                LatestMovie = latestMovie,
+                LatestMovies = latestMovies.Skip(1),
             };
 
             return this.View(viewModels);
