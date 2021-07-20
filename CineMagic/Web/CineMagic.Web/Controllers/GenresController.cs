@@ -5,13 +5,24 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using CineMagic.Services.Data.Contracts;
+    using CineMagic.Web.ViewModels.Movies;
     using Microsoft.AspNetCore.Mvc;
 
     public class GenresController : Controller
     {
-        public async Task<IActionResult> ByName(int year)
+        private readonly IMoviesService moviesService;
+
+        public GenresController(IMoviesService moviesService)
         {
-            throw new NotImplementedException();
+            this.moviesService = moviesService;
+        }
+
+        public async Task<IActionResult> ByName(string name)
+        {
+            var movies = await this.moviesService.GetMoviesByGenreName<MovieHomePageViewModel>(name);
+
+            return this.View(movies);
         }
     }
 }

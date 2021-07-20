@@ -14,5 +14,9 @@
         Task<IEnumerable<T>> GetTopRatedMoviesAsync<T>(int count);
 
         Task<IEnumerable<T>> GetLatestMoviesAsync<T>(int count);
+
+        Task<IEnumerable<T>> GetWatchlistMovies<T>(string userId, int count);
+
+        Task<IEnumerable<T>> GetMoviesByGenreName<T>(string genreName);
     }
 }

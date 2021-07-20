@@ -4,35 +4,43 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using CineMagic.Data.Models;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Web.ViewModels;
     using CineMagic.Web.ViewModels.Movies;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : Controller
     {
         private const int HomePageFeaturedMoviesTabCount = 9;
-        private const int HomePageLatestMoviesCount = 10;
+        private const int HomePageLatestMoviesCount = 11;
+        private const int HomePageWatchlistMoviesCount = 10;
 
         private readonly IMoviesService moviesService;
+        private readonly UserManager<ApplicationUser> usermanager;
 
-        public HomeController(IMoviesService moviesService)
+        public HomeController(IMoviesService moviesService, UserManager<ApplicationUser> usermanager)
         {
             this.moviesService = moviesService;
+            this.usermanager = usermanager;
         }
 
         public async Task<IActionResult> Index()
         {
-            var mostRecentMovie = await this.moviesService.GetRecentMoviesAsync<MovieHomePageViewModel>(1);
-            var recentMovies = await this.moviesService.GetRecentMoviesAsync<MoviesHomePageSliderViewModel>(HomePageFeaturedMoviesTabCount);
-            var mostPopularMovie = await this.moviesService.GetPopularMoviesAsync<MovieHomePageViewModel>(1);
-            var popularMovies = await this.moviesService.GetPopularMoviesAsync<MoviesHomePageSliderViewModel>(HomePageFeaturedMoviesTabCount);
-            var bestRatedMovie = await this.moviesService.GetTopRatedMoviesAsync<MovieHomePageViewModel>(1);
-            var topRatedMovies = await this.moviesService.GetTopRatedMoviesAsync<MoviesHomePageSliderViewModel>(HomePageFeaturedMoviesTabCount);
-            var latestMovie = await this.moviesService.GetLatestMoviesAsync<MovieHomePageBannerViewModel>(1);
-            var latestMovies = await this.moviesService.GetLatestMoviesAsync<MoviesHomePageSliderViewModel>(HomePageLatestMoviesCount);
+            var user = await this.usermanager.GetUserAsync(this.User);
 
-            var viewModels = new MoviesHomePageViewModelsList
+            var mostRecentMovie = await this.moviesService.GetRecentMoviesAsync<MovieHomePageRespTabsViewModel>(1);
+            var recentMovies = await this.moviesService.GetRecentMoviesAsync<MovieHomePageViewModel>(HomePageFeaturedMoviesTabCount);
+            var mostPopularMovie = await this.moviesService.GetPopularMoviesAsync<MovieHomePageRespTabsViewModel>(1);
+            var popularMovies = await this.moviesService.GetPopularMoviesAsync<MovieHomePageViewModel>(HomePageFeaturedMoviesTabCount);
+            var bestRatedMovie = await this.moviesService.GetTopRatedMoviesAsync<MovieHomePageRespTabsViewModel>(1);
+            var topRatedMovies = await this.moviesService.GetTopRatedMoviesAsync<MovieHomePageViewModel>(HomePageFeaturedMoviesTabCount);
+            var latestMovie = await this.moviesService.GetLatestMoviesAsync<MovieHomePageBannerViewModel>(1);
+            var latestMovies = await this.moviesService.GetLatestMoviesAsync<MovieHomePageViewModel>(HomePageLatestMoviesCount);
+            //var watchlistMovies = await this.moviesService.GetWatchlistMovies<MovieHomePageViewModel>(user.Id, HomePageWatchlistMoviesCount);
+
+            var viewModels = new HomePageViewModelsList
             {
                 MostRecentMovie = mostRecentMovie,
                 RecentMovies = recentMovies.Skip(1),
@@ -42,6 +50,7 @@
                 TopRatedMovies = topRatedMovies.Skip(1),
                 LatestMovie = latestMovie,
                 LatestMovies = latestMovies.Skip(1),
+                //Watchlist = watchlistMovies,
             };
 
             return this.View(viewModels);

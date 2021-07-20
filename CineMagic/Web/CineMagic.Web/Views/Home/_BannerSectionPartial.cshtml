@@ -1,47 +1,50 @@
 ﻿@using CineMagic.Web.ViewModels.Movies
-@model MovieHomePageBannerViewModel
+@model HomePageViewModelsList
 
-<div id="demo-1" data-zs-src='["@string.Join(", ", Model.Backdrops)"]' data-zs-overlay="dots">
-    <div class="demo-inner-content">
-        <!--/header-w3l-->
-        <div class="header-w3-agileits" id="home">
-            <div class="inner-header-agile">
-                <nav class="navbar navbar-default">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <h1><a asp-controller="Home" asp-action="Index"><span>C</span>ine<span>M</span>agic</a></h1>
-                    </div>
-                    <partial name="_NavbarPartial" />
-                    <div class="clearfix"> </div>
-                </nav>
-                <div class="w3ls_search">
-                    <div class="cd-main-header">
-                        <ul class="cd-header-buttons">
-                            <li><a class="cd-search-trigger" href="#cd-search"> <span></span></a></li>
-                        </ul> <!-- cd-header-buttons -->
-                    </div>
-                    <div id="cd-search" class="cd-search">
-                        <form action="#" method="post">
-                            <input name="Search" type="search" placeholder="Search...">
-                        </form>
+@foreach (var movie in Model.LatestMovie)
+{
+    <div id="demo-1" data-zs-src='[@movie.Backdrops]' data-zs-overlay="dots">
+        <div class="demo-inner-content">
+            <!--/header-w3l-->
+            <div class="header-w3-agileits" id="home">
+                <div class="inner-header-agile">
+                    <nav class="navbar navbar-default">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <h1><a asp-controller="Home" asp-action="Index"><span>C</span>ine<span>M</span>agic</a></h1>
+                        </div>
+                        <partial name="_NavbarPartial" />
+                        <div class="clearfix"> </div>
+                    </nav>
+                    <div class="w3ls_search">
+                        <div class="cd-main-header">
+                            <ul class="cd-header-buttons">
+                                <li><a class="cd-search-trigger" href="#cd-search"> <span></span></a></li>
+                            </ul> <!-- cd-header-buttons -->
+                        </div>
+                        <div id="cd-search" class="cd-search">
+                            <form action="#" method="post">
+                                <input name="Search" type="search" placeholder="Search...">
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
+            <!--//header-w3l-->
+            <!--/banner-info-->
+            <div class="baner-info">
+                <h3>Latest <span>On</span>Line <span>Mo</span>vies</h3>
+                <h4>@movie.Title</h4>
+                <a class="w3_play_icon1" href="#small-dialog1">
+                    Watch Trailer
+                </a>
+            </div>
+            <!--/banner-ingo-->
         </div>
-        <!--//header-w3l-->
-        <!--/banner-info-->
-        <div class="baner-info">
-            <h3>Latest <span>On</span>Line <span>Mo</span>vies</h3>
-            <h4>In space no one can hear you scream.</h4>
-            <a class="w3_play_icon1" href="#small-dialog1">
-                Watch Trailer
-            </a>
-        </div>
-        <!--/banner-ingo-->
     </div>
-</div>
+}

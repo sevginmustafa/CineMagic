@@ -22,8 +22,8 @@
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Movie, MovieHomePageBannerViewModel>()
-                .ForMember(m => m.Backdrops, opt => opt.MapFrom(x => string.Join(", ", x.Backdrops.Select(x => "\"" + x.Path + "\""))));
-                
+                .ForMember(m => m.Backdrops, opt => opt.MapFrom(x => string.Join(", ", x.Backdrops.Select(x => "\"" + x.Path + "\""))))
+                .ForMember(m => m.TrailerPath, opt => opt.MapFrom(x => "https://www.youtube.com/watch?v=NlJQ7MusKhI" + x.TrailerPath));
         }
     }
 }

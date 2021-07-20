@@ -52,5 +52,21 @@
             .Take(count)
             .To<T>()
             .ToListAsync();
+
+        // TODO
+        public async Task<IEnumerable<T>> GetWatchlistMovies<T>(string userId, int count)
+        => await this.moviesRepository
+            .AllAsNoTracking()
+            .OrderByDescending(x => x.ReleaseDate)
+            .Take(count)
+            .To<T>()
+            .ToListAsync();
+
+        public async Task<IEnumerable<T>> GetMoviesByGenreName<T>(string genreName)
+        => await this.moviesRepository
+            .AllAsNoTracking()
+            .Where(x => x.Genres.Any(x => x.Genre.Name == genreName))
+            .To<T>()
+            .ToListAsync();
     }
 }
