@@ -18,11 +18,20 @@
             this.moviesService = moviesService;
         }
 
-        public async Task<IActionResult> ByName(string name)
+        public async Task<IActionResult> ByName(string name, int pageNumber = 1)
         {
-            var movies = await this.moviesService.GetMoviesByGenreName<MovieStandartViewModel>(name);
+            const int ItemsPerPage = 10;
 
-            return this.View(movies);
+            var viewModel = new MoviesPagingListViewModel
+            {
+                Movies = await this.moviesService.GetMoviesByGenreName<MovieStandartViewModel>(name, pageNumber, ItemsPerPage),
+                GenreName=name,
+                PageNumber = pageNumber,
+                MoviesCount = this.moviesService.GetMoviesByGenreNameCount(name),
+                ItemsPerPage = ItemsPerPage,
+            };
+
+            return this.View(viewModel);
         }
     }
 }

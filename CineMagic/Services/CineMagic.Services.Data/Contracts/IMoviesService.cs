@@ -19,7 +19,9 @@
 
         Task<IEnumerable<T>> GetWatchlistMovies<T>(string userId, int count);
 
-        Task<IEnumerable<T>> GetMoviesByGenreName<T>(string name);
+        Task<IEnumerable<T>> GetMoviesByGenreName<T>(string name, int pageNumber, int itemsPerPage);
+
+        int GetMoviesByGenreNameCount(string name);
 
         Task<IEnumerable<T>> GetMoviesByCountryName<T>(string name);
     }

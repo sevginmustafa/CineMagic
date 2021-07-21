@@ -7,7 +7,7 @@
     using CineMagic.Data.Models;
     using CineMagic.Services.Mapping;
 
-    public class MovieLatestFooterViewModel : IMapFrom<Movie>
+    public class MovieFooterViewModel : IMapFrom<Movie>
     {
         public int Id { get; set; }
 

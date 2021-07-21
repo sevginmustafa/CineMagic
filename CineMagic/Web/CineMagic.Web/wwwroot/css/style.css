@@ -18,6 +18,10 @@ p {
 	font-size: 14px;
 }
 
+.word-wrap {
+	word-wrap: break-word;
+}
+
 h1,
 h2,
 h3,

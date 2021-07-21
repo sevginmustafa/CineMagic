@@ -81,10 +81,12 @@
             .To<T>()
             .ToListAsync();
 
-        public async Task<IEnumerable<T>> GetMoviesByGenreName<T>(string genreName)
+        public async Task<IEnumerable<T>> GetMoviesByGenreName<T>(string name, int pageNumber, int itemsPerPage)
         => await this.moviesRepository
             .AllAsNoTracking()
-            .Where(x => x.Genres.Any(x => x.Genre.Name == genreName))
+            .Where(x => x.Genres.Any(x => x.Genre.Name == name))
+            .OrderByDescending(x => x.Id)
+            .Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage)
             .To<T>()
             .ToListAsync();
 
@@ -94,5 +96,11 @@
             .Where(x => x.ProductionCountries.Any(x => x.Country.Name == countryName))
             .To<T>()
             .ToListAsync();
+
+        public int GetMoviesByGenreNameCount(string name)
+         => this.moviesRepository
+            .AllAsNoTracking()
+            .Where(x => x.Genres.Any(x => x.Genre.Name == name))
+            .Count();
     }
 }
