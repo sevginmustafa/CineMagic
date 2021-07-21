@@ -7,6 +7,8 @@
 
     public interface IMoviesService
     {
+        T GetBannerSectionMovie<T>();
+
         Task<IEnumerable<T>> GetRecentMoviesAsync<T>(int count);
 
         Task<IEnumerable<T>> GetPopularMoviesAsync<T>(int count);
@@ -17,6 +19,8 @@
 
         Task<IEnumerable<T>> GetWatchlistMovies<T>(string userId, int count);
 
-        Task<IEnumerable<T>> GetMoviesByGenreName<T>(string genreName);
+        Task<IEnumerable<T>> GetMoviesByGenreName<T>(string name);
+
+        Task<IEnumerable<T>> GetMoviesByCountryName<T>(string name);
     }
 }

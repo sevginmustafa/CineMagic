@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
     using CineMagic.Data.Common.Repositories;
@@ -19,6 +18,26 @@
         public MoviesService(IDeletableEntityRepository<Movie> moviesRepository)
         {
             this.moviesRepository = moviesRepository;
+        }
+
+        public T GetBannerSectionMovie<T>()
+        {
+            try
+            {
+                var movie = this.moviesRepository
+                   .AllAsNoTracking()
+                   .OrderByDescending(x => x.ReleaseDate)
+                   .ThenByDescending(x => x.Popularity)
+                   .Take(7)
+                   .To<T>()
+                   .ToList()[(int)DateTime.UtcNow.DayOfWeek];
+
+                return movie;
+            }
+            catch (Exception)
+            {
+                return default;
+            }
         }
 
         public async Task<IEnumerable<T>> GetRecentMoviesAsync<T>(int count)
@@ -66,6 +85,13 @@
         => await this.moviesRepository
             .AllAsNoTracking()
             .Where(x => x.Genres.Any(x => x.Genre.Name == genreName))
+            .To<T>()
+            .ToListAsync();
+
+        public async Task<IEnumerable<T>> GetMoviesByCountryName<T>(string countryName)
+          => await this.moviesRepository
+            .AllAsNoTracking()
+            .Where(x => x.ProductionCountries.Any(x => x.Country.Name == countryName))
             .To<T>()
             .ToListAsync();
     }

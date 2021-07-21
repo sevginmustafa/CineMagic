@@ -1,8 +1,10 @@
 ﻿@inject CineMagic.Services.Data.Contracts.IGenresService GenresService
+@inject CineMagic.Services.Data.Contracts.IMoviesService MoviesService
 @using CineMagic.Web.ViewModels.Genres
-
+@using CineMagic.Web.ViewModels.Movies
 @{
     var genres = await GenresService.GetPopularGenresAsync<GenreNavbarViewModel>();
+    var latestMovies = await MoviesService.GetLatestMoviesAsync<MovieLatestFooterViewModel>();
 }
 <!--/footer-bottom-->
 <div class="contact-w3ls" id="contact">
@@ -29,84 +31,39 @@
             <div class="col-md-2 footer-grid">
                 <h4>Movies</h4>
                 <ul>
-                    @foreach (var genre in genres)
+                    @foreach (var genre in genres.Take(5))
                     {
                         <li><a asp-controller="Genres" asp-action="ByName" asp-route-name="@genre.Name">@genre.Name</a></li>
                     }
-
                 </ul>
             </div>
-
 
             <div class="col-md-2 footer-grid">
                 <h4>Review Movies</h4>
                 <ul class="w3-tag2">
-                    <li><a href="comedy.html">Comedy</a></li>
-                    <li><a href="horror.html">Horror</a></li>
-                    <li><a href="series.html">Historical</a></li>
-                    <li><a href="series.html">Romantic</a></li>
-                    <li><a href="series.html">Love</a></li>
-                    <li><a href="genre.html">Action</a></li>
-                    <li><a href="single.html">Reviews</a></li>
-                    <li><a href="comedy.html">Comedy</a></li>
-                    <li><a href="horror.html">Horror</a></li>
-                    <li><a href="series.html">Historical</a></li>
-                    <li><a href="series.html">Romantic</a></li>
-                    <li><a href="genre.html">Love</a></li>
-                    <li><a href="comedy.html">Comedy</a></li>
-                    <li><a href="horror.html">Horror</a></li>
-                    <li><a href="genre.html">Historical</a></li>
-
+                    @foreach (var genre in genres.Take(10))
+                    {
+                        <li><a href="comedy.html">@genre.Name</a></li>
+                    }
                 </ul>
-
 
             </div>
             <div class="col-md-2 footer-grid">
                 <h4>Latest Movies</h4>
-                <div class="footer-grid1">
-                    <div class="footer-grid1-left">
-                        <a href="single.html"><img src="images/1.jpg" alt=" " class="img-responsive"></a>
+                @foreach (var movie in latestMovies)
+                {
+                    <div class="footer-grid1">
+                        <div class="footer-grid1-left">
+                            <a href="single.html"><img src="@movie.PosterPath" class="img-responsive"></a>
+                        </div>
+                        <div class="footer-grid1-right">
+                            <a href="single.html">@movie.Title</a>
+                        </div>
+                        <div class="clearfix"> </div>
                     </div>
-                    <div class="footer-grid1-right">
-                        <a href="single.html">eveniet ut molesti</a>
-
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
-                <div class="footer-grid1">
-                    <div class="footer-grid1-left">
-                        <a href="single.html"><img src="images/2.jpg" alt=" " class="img-responsive"></a>
-                    </div>
-                    <div class="footer-grid1-right">
-                        <a href="single.html">earum rerum tenet</a>
-
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
-                <div class="footer-grid1">
-
-                    <div class="footer-grid1-left">
-                        <a href="single.html"><img src="images/4.jpg" alt=" " class="img-responsive"></a>
-                    </div>
-                    <div class="footer-grid1-right">
-                        <a href="single.html">eveniet ut molesti</a>
-
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
-                <div class="footer-grid1">
-                    <div class="footer-grid1-left">
-                        <a href="single.html"><img src="images/3.jpg" alt=" " class="img-responsive"></a>
-                    </div>
-                    <div class="footer-grid1-right">
-                        <a href="single.html">earum rerum tenet</a>
-
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
-
-
+                }
             </div>
+
             <div class="col-md-2 footer-grid">
                 <h4 class="b-log"><a href="index.html"><span>C</span>ine<span>M</span>agic<span></span></a></h4>
                 <div class="footer-grid-instagram">

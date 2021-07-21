@@ -26,7 +26,7 @@
     <link href="~/css/popuo-box.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/table-style.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/zoomslider.css" rel="stylesheet" asp-append-version="true" />
-    <script type="text/javascript" src="js/modernizr-2.6.2.min.js" asp-append-version="true"></script>
+    <script src="~/js/modernizr-2.6.2.min.js" asp-append-version="true"></script>
 </head>
 <body>
     <script>
@@ -37,10 +37,8 @@
         ga('require', 'urlChangeTracker');
         ga('send', 'pageview');
     </script>
-    <script async src='/js/autotrack.js'></script>
 
     <meta name="robots" content="noindex">
-    <link rel="stylesheet" href="/assests/css/font-awesome.min.css">
     <!-- New toolbar-->
     <style>
         * {
@@ -128,7 +126,8 @@
 
     <!--/main-header-->
     <!--/banner-section-->
-    @if (this.ViewContext.RouteData.Values["action"].ToString() == "Index")
+    @if (this.ViewContext.RouteData.Values["controller"].ToString() == "Home" &&
+      this.ViewContext.RouteData.Values["action"].ToString() == "Index")
     {
         <partial name="_BannerSectionPartial" />
     }
@@ -153,7 +152,6 @@
     <!--//banner-bottom-->
     <!-- Modal1 -->
     <div class="modal fade" id="myModal4" tabindex="-1" role="dialog">
-
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -176,7 +174,6 @@
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -186,7 +183,6 @@
     <!-- //Modal1 -->
     <!-- Modal1 -->
     <div class="modal fade" id="myModal5" tabindex="-1" role="dialog">
-
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -221,7 +217,7 @@
 
     <partial name="_FooterPartial" />
 
-    <script src="js/jquery-1.11.1.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery-1.11.1.min.js" asp-append-version="true"></script>
     <!-- Dropdown-Menu-JavaScript -->
     <script>
         $(document).ready(function () {
@@ -239,11 +235,11 @@
     </script>
     <!-- //Dropdown-Menu-JavaScript -->
 
-    <script type="text/javascript" src="js/jquery.zoomslider.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.zoomslider.min.js" asp-append-version="true"></script>
 
     <!-- search-jQuery -->
-    <script src="js/main.js" asp-append-version="true"></script>
-    <script src="js/simplePlayer.js" asp-append-version="true"></script>
+    <script src="~/js/main.js" asp-append-version="true"></script>
+    <script src="~/js/simplePlayer.js" asp-append-version="true"></script>
     <script>
         $("document").ready(function () {
             $("#video").simplePlayer();
@@ -266,7 +262,7 @@
     </script>
 
     <!-- pop-up-box -->
-    <script src="js/jquery.magnific-popup.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/js/jquery.magnific-popup.js" asp-append-version="true"></script>
     <!--//pop-up-box -->
 
     <div id="small-dialog1" class="mfp-hide">
@@ -288,10 +284,9 @@
                 removalDelay: 300,
                 mainClass: 'my-mfp-zoom-in'
             });
-
         });
     </script>
-    <script src="js/easy-responsive-tabs.js" asp-append-version="true"></script>
+    <script src="~/js/easy-responsive-tabs.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
             $('#horizontalTab').easyResponsiveTabs({
@@ -314,8 +309,7 @@
             });
         });
     </script>
-    <link href="css/owl.carousel.css" rel="stylesheet" type="text/css" media="all" asp-append-version="true">
-    <script src="js/owl.carousel.js" asp-append-version="true"></script>
+    <script src="~/js/owl.carousel.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
             $("#owl-demo").owlCarousel({
@@ -323,19 +317,17 @@
                 autoPlay: 3000, //Set AutoPlay to 3 seconds
                 autoPlay: true,
                 navigation: true,
-
                 items: 5,
                 itemsDesktop: [640, 4],
                 itemsDesktopSmall: [414, 3]
 
             });
-
         });
     </script>
 
     <!--/script-->
-    <script type="text/javascript" src="js/move-top.js" asp-append-version="true"></script>
-    <script type="text/javascript" src="js/easing.js" asp-append-version="true"></script>
+    <script src="~/js/move-top.js" asp-append-version="true"></script>
+    <script src="~/js/easing.js" asp-append-version="true"></script>
 
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
@@ -355,13 +347,11 @@
                 easingType: 'linear'
                 };
             */
-
             $().UItoTop({ easingType: 'easeOutQuart' });
-
         });
     </script>
     <!--end-smooth-scrolling-->
-    <script src="js/bootstrap.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap.js" asp-append-version="true"></script>
 
     @this.RenderSection("Scripts", required: false)
 </body>

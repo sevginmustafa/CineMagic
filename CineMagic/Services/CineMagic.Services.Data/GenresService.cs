@@ -14,8 +14,6 @@
 
     public class GenresService : IGenresService
     {
-        private const int MostPopularGenres = 5;
-
         private readonly IDeletableEntityRepository<Genre> genresRepository;
 
         public GenresService(IDeletableEntityRepository<Genre> genresRepository)
@@ -39,7 +37,6 @@
             var popularGenres = await this.genresRepository
                 .AllAsNoTracking()
                 .OrderByDescending(x => x.Movies.Count)
-                .Take(MostPopularGenres)
                 .To<T>()
                 .ToListAsync();
 

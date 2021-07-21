@@ -1,15 +1,16 @@
 ﻿namespace CineMagic.Services.Data
 {
-    using CineMagic.Data.Common.Repositories;
-    using CineMagic.Data.Models;
-    using CineMagic.Services.Data.Contracts;
-    using CineMagic.Services.Mapping;
-    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+
+    using CineMagic.Data.Common.Repositories;
+    using CineMagic.Data.Models;
+    using CineMagic.Services.Data.Contracts;
+    using CineMagic.Services.Mapping;
+    using Microsoft.EntityFrameworkCore;
 
     public class CountriesService : ICountriesService
     {

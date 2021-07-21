@@ -20,7 +20,7 @@
 
         public async Task<IActionResult> ByName(string name)
         {
-            var movies = await this.moviesService.GetMoviesByGenreName<MovieHomePageViewModel>(name);
+            var movies = await this.moviesService.GetMoviesByGenreName<MovieStandartViewModel>(name);
 
             return this.View(movies);
         }

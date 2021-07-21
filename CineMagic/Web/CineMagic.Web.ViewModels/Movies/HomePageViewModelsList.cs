@@ -4,22 +4,22 @@
 
     public class HomePageViewModelsList
     {
-        public IEnumerable<MovieHomePageRespTabsViewModel> MostRecentMovie { get; set; }
+        public MovieHomePageBannerViewModel BannerSectionMovie { get; set; }
 
-        public IEnumerable<MovieHomePageViewModel> RecentMovies { get; set; }
+        public IEnumerable<MovieDetailedViewModel> MostRecentMovie { get; set; }
 
-        public IEnumerable<MovieHomePageRespTabsViewModel> MostPopularMovie { get; set; }
+        public IEnumerable<MovieStandartViewModel> RecentMovies { get; set; }
 
-        public IEnumerable<MovieHomePageViewModel> PopularMovies { get; set; }
+        public IEnumerable<MovieDetailedViewModel> MostPopularMovie { get; set; }
 
-        public IEnumerable<MovieHomePageRespTabsViewModel> BestRatedMovie { get; set; }
+        public IEnumerable<MovieStandartViewModel> PopularMovies { get; set; }
 
-        public IEnumerable<MovieHomePageViewModel> TopRatedMovies { get; set; }
+        public IEnumerable<MovieDetailedViewModel> BestRatedMovie { get; set; }
 
-        public IEnumerable<MovieHomePageViewModel> LatestMovies { get; set; }
+        public IEnumerable<MovieStandartViewModel> TopRatedMovies { get; set; }
 
-        public IEnumerable<MovieHomePageBannerViewModel> LatestMovie { get; set; }
+        public IEnumerable<MovieStandartViewModel> LatestMovies { get; set; }
 
-        public IEnumerable<MovieHomePageViewModel> Watchlist { get; set; }
+        public IEnumerable<MovieStandartViewModel> Watchlist { get; set; }
     }
 }
