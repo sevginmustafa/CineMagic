@@ -970,6 +970,26 @@ i.glyphicon.glyphicon-play-circle {
 	height: 23px;
 }
 
+.ribben.male {
+	position: absolute;
+	top: 3%;
+	right: 4%;
+	padding: 11px 0 0 0;
+	background: #00adef;
+	width: 61px;
+	height: 23px;
+}
+
+.ribben.female {
+	position: absolute;
+	top: 3%;
+	right: 4%;
+	padding: 11px 0 0 0;
+	background: #fe3f86;
+	width: 61px;
+	height: 23px;
+}
+
 .ribben p {
 	font-size: 0.75em;
 	color: #fff;
@@ -984,6 +1004,32 @@ i.glyphicon.glyphicon-play-circle {
 	width: 0;
 	height: 0;
 	border-top: 8px solid rgba(11, 12, 12, 0.95);
+	border-right: 5px solid transparent;
+	border-left: 5px solid transparent;
+	transform: rotate(119deg);
+}
+
+.ribben.male:after {
+	content: '';
+	position: absolute;
+	top: 86%;
+	right: 18%;
+	width: 0;
+	height: 0;
+	border-top: 8px solid #00adef;
+	border-right: 5px solid transparent;
+	border-left: 5px solid transparent;
+	transform: rotate(119deg);
+}
+
+.ribben.female:after {
+	content: '';
+	position: absolute;
+	top: 86%;
+	right: 18%;
+	width: 0;
+	height: 0;
+	border-top: 8px solid #fe3f86;
 	border-right: 5px solid transparent;
 	border-left: 5px solid transparent;
 	transform: rotate(119deg);
@@ -1223,7 +1269,6 @@ h3.agile_w3_title span {
 	top: 4%;
 	right: 6%;
 }
-
 
 /*-- /requested-movies  --*/
 

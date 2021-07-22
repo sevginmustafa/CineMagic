@@ -65,7 +65,7 @@
             .ToListAsync();
 
         public async Task<IEnumerable<T>> GetLatestMoviesAsync<T>(int count)
-        => await this.moviesRepository
+            => await this.moviesRepository
             .AllAsNoTracking()
             .OrderByDescending(x => x.ReleaseDate)
             .Take(count)
@@ -74,33 +74,56 @@
 
         // TODO
         public async Task<IEnumerable<T>> GetWatchlistMovies<T>(string userId, int count)
-        => await this.moviesRepository
+            => await this.moviesRepository
             .AllAsNoTracking()
             .OrderByDescending(x => x.ReleaseDate)
             .Take(count)
             .To<T>()
             .ToListAsync();
 
-        public async Task<IEnumerable<T>> GetMoviesByGenreName<T>(string name, int pageNumber, int itemsPerPage)
-        => await this.moviesRepository
+        public async Task<IEnumerable<T>> GetMoviesByGenreName<T>(string name, int page, int itemsPerPage)
+            => await this.moviesRepository
             .AllAsNoTracking()
             .Where(x => x.Genres.Any(x => x.Genre.Name == name))
             .OrderByDescending(x => x.Id)
-            .Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage)
-            .To<T>()
-            .ToListAsync();
-
-        public async Task<IEnumerable<T>> GetMoviesByCountryName<T>(string countryName)
-          => await this.moviesRepository
-            .AllAsNoTracking()
-            .Where(x => x.ProductionCountries.Any(x => x.Country.Name == countryName))
+            .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
             .To<T>()
             .ToListAsync();
 
         public int GetMoviesByGenreNameCount(string name)
-         => this.moviesRepository
+            => this.moviesRepository
             .AllAsNoTracking()
             .Where(x => x.Genres.Any(x => x.Genre.Name == name))
+            .Count();
+
+        public async Task<IEnumerable<T>> GetMoviesByCountryName<T>(string name, int page, int itemsPerPage)
+            => await this.moviesRepository
+            .AllAsNoTracking()
+            .Where(x => x.ProductionCountries.Any(x => x.Country.Name == name))
+            .OrderByDescending(x => x.Id)
+            .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+            .To<T>()
+            .ToListAsync();
+
+        public int GetMoviesByCountryNameCount(string name)
+            => this.moviesRepository
+            .AllAsNoTracking()
+            .Where(x => x.ProductionCountries.Any(x => x.Country.Name == name))
+            .Count();
+
+        public async Task<IEnumerable<T>> GetMoviesByReleaseYear<T>(int year, int page, int itemsPerPage)
+            => await this.moviesRepository
+            .AllAsNoTracking()
+            .Where(x => x.ReleaseDate.Year == year)
+            .OrderByDescending(x => x.Id)
+            .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+            .To<T>()
+            .ToListAsync();
+
+        public int GetMoviesByReleaseYearCount(int year)
+            => this.moviesRepository
+            .AllAsNoTracking()
+            .Where(x => x.ReleaseDate.Year == year)
             .Count();
     }
 }

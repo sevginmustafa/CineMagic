@@ -3,11 +3,9 @@
     using System;
     using System.Collections.Generic;
 
-    public class MoviesPagingListViewModel
+    public class MoviesPaginatedListViewModel
     {
         public IEnumerable<MovieStandartViewModel> Movies { get; set; }
-
-        public string GenreName { get; set; }
 
         public int PageNumber { get; set; }
 
@@ -15,7 +13,7 @@
 
         public int ItemsPerPage { get; set; }
 
-        public int PagesCount => (int)Math.Ceiling(this.MoviesCount / this.ItemsPerPage * 1.0);
+        public int PagesCount => (int)Math.Ceiling((double)this.MoviesCount / this.ItemsPerPage);
 
         public bool HasPreviousPage => this.PageNumber > 1;
 

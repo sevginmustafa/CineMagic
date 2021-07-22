@@ -1,8 +1,6 @@
 ﻿namespace CineMagic.Services.Data.Contracts
 {
-    using System;
     using System.Collections.Generic;
-    using System.Text;
     using System.Threading.Tasks;
 
     public interface IMoviesService
@@ -19,10 +17,16 @@
 
         Task<IEnumerable<T>> GetWatchlistMovies<T>(string userId, int count);
 
-        Task<IEnumerable<T>> GetMoviesByGenreName<T>(string name, int pageNumber, int itemsPerPage);
+        Task<IEnumerable<T>> GetMoviesByGenreName<T>(string name, int page, int itemsPerPage);
 
         int GetMoviesByGenreNameCount(string name);
 
-        Task<IEnumerable<T>> GetMoviesByCountryName<T>(string name);
+        Task<IEnumerable<T>> GetMoviesByCountryName<T>(string name, int page, int itemsPerPage);
+
+        int GetMoviesByCountryNameCount(string name);
+
+        Task<IEnumerable<T>> GetMoviesByReleaseYear<T>(int year, int page, int itemsPerPage);
+
+        int GetMoviesByReleaseYearCount(int year);
     }
 }

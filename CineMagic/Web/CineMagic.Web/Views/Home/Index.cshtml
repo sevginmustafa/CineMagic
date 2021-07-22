@@ -36,7 +36,7 @@
                                                 <span>Genres<label>:</label> </span>
                                                 @foreach (var genre in movie.Genres)
                                                 {
-                                                    @:| <a href="genre.html">@genre.GenreName</a>
+                                                    <text>| </text><a asp-controller="Genres" asp-action="ByName" asp-route-name="@genre.GenreName">@genre.GenreName</a>
                                                 }
                                             </p>
                                             <p class="fexi_header_para fexi_header_para1">
@@ -106,7 +106,7 @@
                                                 <span>Genres<label>:</label> </span>
                                                 @foreach (var genre in movie.Genres)
                                                 {
-                                                    @:| <a href="genre.html">@genre.GenreName</a>
+                                                    <text>| </text> <a asp-controller="Genres" asp-action="ByName" asp-route-name="@genre.GenreName">@genre.GenreName</a>
                                                 }
                                             </p>
                                             <p class="fexi_header_para fexi_header_para1">
@@ -176,7 +176,7 @@
                                                 <span>Genres<label>:</label> </span>
                                                 @foreach (var genre in movie.Genres)
                                                 {
-                                                    @:| <a href="genre.html">@genre.GenreName</a>
+                                                    <text>| </text> <a asp-controller="Genres" asp-action="ByName" asp-route-name="@genre.GenreName">@genre.GenreName</a>
                                                 }
                                             </p>
                                             <p class="fexi_header_para fexi_header_para1">

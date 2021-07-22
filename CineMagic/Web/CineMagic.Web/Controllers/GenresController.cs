@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using CineMagic.Common;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Web.ViewModels.Movies;
     using Microsoft.AspNetCore.Mvc;
@@ -18,18 +19,17 @@
             this.moviesService = moviesService;
         }
 
-        public async Task<IActionResult> ByName(string name, int pageNumber = 1)
+        public async Task<IActionResult> ByName(string name, int page = 1)
         {
-            const int ItemsPerPage = 10;
-
-            var viewModel = new MoviesPagingListViewModel
+            var viewModel = new MoviesPaginatedListViewModel
             {
-                Movies = await this.moviesService.GetMoviesByGenreName<MovieStandartViewModel>(name, pageNumber, ItemsPerPage),
-                GenreName=name,
-                PageNumber = pageNumber,
+                Movies = await this.moviesService.GetMoviesByGenreName<MovieStandartViewModel>(name, page, GlobalConstants.ItemsPerPagePagination),
+                PageNumber = page,
                 MoviesCount = this.moviesService.GetMoviesByGenreNameCount(name),
-                ItemsPerPage = ItemsPerPage,
+                ItemsPerPage = GlobalConstants.ItemsPerPagePagination,
             };
+
+            this.TempData["GenreName"] = name;
 
             return this.View(viewModel);
         }

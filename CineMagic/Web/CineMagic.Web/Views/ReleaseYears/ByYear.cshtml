@@ -1,7 +1,7 @@
 ﻿@using CineMagic.Web.ViewModels.Movies
 @model MoviesPaginatedListViewModel
 @{
-    ViewData["Title"] = "Genres";
+    ViewData["Title"] = "ReleaseYears";
 }
 
 <div class="wthree_agile-requested-movies">
@@ -41,14 +41,14 @@
 <div class="blog-pagenat-wthree">
     <ul class="pagination">
         <li class="page-item @if (!Model.HasPreviousPage) {<text>disabled</text>}">
-            <a class="page-link" asp-controller="Genres" asp-action="ByName" asp-route-name="@this.TempData["GenreName"]" asp-route-page="@Model.PreviousPage">Previous</a>
+            <a class="page-link" asp-controller="ReleaseYears" asp-action="ByYear" asp-route-name="@this.TempData["ReleaseYear"]" asp-route-page="@Model.PreviousPage">Previous</a>
         </li>
         @for (int i = Model.PageNumber - 3; i < Model.PageNumber; i++)
         {
             if (i > 0)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-controller="Genres" asp-action="ByName" asp-route-name="@this.TempData["GenreName"]" asp-route-page="@i">@i</a>
+                    <a class="page-link" asp-controller="ReleaseYears" asp-action="ByYear" asp-route-name="@this.TempData["ReleaseYear"]" asp-route-page="@i">@i</a>
                 </li>
             }
         }
@@ -63,12 +63,12 @@
             if (i <= Model.PagesCount)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-controller="Genres" asp-action="ByName" asp-route-name="@this.TempData["GenreName"]" asp-route-page="@i">@i</a>
+                    <a class="page-link" asp-controller="ReleaseYears" asp-action="ByYear" asp-route-name="@this.TempData["ReleaseYear"]" asp-route-page="@i">@i</a>
                 </li>
             }
         }
         <li class="page-item @if (!Model.HasNextPage) {<text>disabled</text>}">
-            <a class="page-link" asp-controller="Genres" asp-action="ByName" asp-route-name="@this.TempData["GenreName"]" asp-route-page="@Model.NextPage">Next</a>
+            <a class="page-link" asp-controller="ReleaseYears" asp-action="ByYear" asp-route-name="@this.TempData["ReleaseYear"]" asp-route-page="@Model.NextPage">Next</a>
         </li>
     </ul>
 </div>
