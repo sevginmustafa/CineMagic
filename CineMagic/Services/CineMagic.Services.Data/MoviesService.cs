@@ -41,7 +41,7 @@
         }
 
         public async Task<IEnumerable<T>> GetRecentMoviesAsync<T>(int count)
-        => await this.moviesRepository
+            => await this.moviesRepository
             .AllAsNoTracking()
             .OrderByDescending(x => x.CreatedOn)
             .Take(count)
@@ -80,6 +80,19 @@
             .Take(count)
             .To<T>()
             .ToListAsync();
+
+        public async Task<IEnumerable<T>> GetAllMovies<T>(int page, int itemsPerPage)
+       => await this.moviesRepository
+       .AllAsNoTracking()
+       .OrderBy(x => x.Title)
+       .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+       .To<T>()
+       .ToListAsync();
+
+        public int GetAllMoviesCount()
+            => this.moviesRepository
+            .AllAsNoTracking()
+            .Count();
 
         public async Task<IEnumerable<T>> GetMoviesByGenreName<T>(string name, int page, int itemsPerPage)
             => await this.moviesRepository

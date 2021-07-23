@@ -11,6 +11,8 @@
 
     public class ActorsController : Controller
     {
+        private const int MostPopularActorsCount = 50;
+
         private readonly IActorsService actorsService;
 
         public ActorsController(IActorsService actorsService)
@@ -18,9 +20,16 @@
             this.actorsService = actorsService;
         }
 
-        public async Task<IActionResult> BornToday()
+        public async Task<IActionResult> BornToday(int gender)
         {
-            var actors = await this.actorsService.GetActorsBornToday<PersonStandartViewModel>();
+            var actors = await this.actorsService.GetActorsBornToday<PersonStandartViewModel>(gender);
+
+            return this.View(actors);
+        }
+
+        public async Task<IActionResult> MostPopularActors()
+        {
+            var actors = await this.actorsService.GetMostPopularActors<PersonStandartViewModel>(MostPopularActorsCount);
 
             return this.View(actors);
         }

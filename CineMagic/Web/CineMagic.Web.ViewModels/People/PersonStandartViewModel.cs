@@ -13,9 +13,9 @@
 
         public string Name { get; set; }
 
-        public string ProfilePicPath { get; set; }
+        public string Gender { get; set; }
 
-        public string Birthplace { get; set; }
+        public string ProfilePicPath { get; set; }
 
         public double Popularity { get; set; }
     }

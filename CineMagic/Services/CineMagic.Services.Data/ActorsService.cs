@@ -21,17 +21,20 @@
             this.actorsRepository = actorsRepository;
         }
 
-        public async Task<IEnumerable<T>> GetActorsBornToday<T>()
-            => await this.actorsRepository
+        public async Task<IEnumerable<T>> GetActorsBornToday<T>(int gender)
+        => await this.actorsRepository
+                .AllAsNoTracking()
+                .Where(x => x.Birthday.Value.DayOfYear == DateTime.UtcNow.DayOfYear && (int)x.Gender != gender)
+                .OrderBy(x => x.Name)
+                .To<T>()
+                .ToListAsync();
+
+        public async Task<IEnumerable<T>> GetMostPopularActors<T>(int count)
+        => await this.actorsRepository
             .AllAsNoTracking()
-            .Where(x => x.Birthday.Value.DayOfYear == DateTime.UtcNow.DayOfYear)
-            .OrderBy(x => x.Name)
+            .OrderByDescending(x => x.Popularity)
+            .Take(count)
             .To<T>()
             .ToListAsync();
-
-        public Task<IEnumerable<T>> GetMostPopularActors<T>()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

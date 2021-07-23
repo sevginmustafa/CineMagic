@@ -7,8 +7,8 @@
 
     public interface IActorsService
     {
-        public Task<IEnumerable<T>> GetActorsBornToday<T>();
-        
-        public Task<IEnumerable<T>> GetMostPopularActors<T>();
+        public Task<IEnumerable<T>> GetActorsBornToday<T>(int gender);
+
+        public Task<IEnumerable<T>> GetMostPopularActors<T>(int count);
     }
 }

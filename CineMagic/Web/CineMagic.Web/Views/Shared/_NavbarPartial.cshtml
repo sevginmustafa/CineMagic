@@ -11,7 +11,8 @@
 <!-- navbar-header -->
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
-        <li active-when="/Home/Index"><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li><a asp-controller="Movies" asp-action="All">Movies</a></li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown">Genre<b class="caret"></b></a>
             <ul class="dropdown-menu multi-column columns-3">
@@ -48,14 +49,13 @@
                 </li>
             </ul>
         </li>
-        <li><a href="list.html">A - z list</a></li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown">Actors<b class="caret"></b></a>
             <ul class="dropdown-menu multi-column columns-3">
                 <li>
                     <div class="col-sm-6">
                         <ul class="multi-column-dropdown">
-                            <li><a asp-controller="Actors" asp-action="MostPopular">Most Popular Actors</a></li>
+                            <li><a asp-controller="Actors" asp-action="MostPopularActors">Most Popular Actors</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-6">
@@ -73,7 +73,7 @@
                 <li>
                     <div class="col-sm-6">
                         <ul class="multi-column-dropdown">
-                            <li><a asp-controller="Directors" asp-action="MostPopular">Most Popular Directors</a></li>
+                            <li><a asp-controller="Directors" asp-action="MostPopularDirectors">Most Popular Directors</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-6">

@@ -5,24 +5,8 @@
     this.ViewData["Title"] = "Actors";
 }
 
-<div class="inner-agile-w3l-part-head">
-    <h3 class="w3l-inner-h-title">Today's famous birthdays</h3>
-    <p class="w3ls_head_para">@DateTime.UtcNow.ToString("MMMM dd")</p>
-</div>
-
-<div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
-    <ul id="myTab" class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a asp-controller="Actors" asp-action="BornToday" asp-route-gender="0">ALL</a>
-        </li>
-        <li>
-            <a asp-controller="Actors" asp-action="BornToday" asp-route-gender="1">M</a>
-        </li>
-        <li>
-            <a asp-controller="Actors" asp-action="BornToday" asp-route-gender="2">F</a>
-        </li>
-    </ul>
-</div>
+<h2 class="text-center" style="color: #11b5c4">Today's famous birthdays</h2>
+<h3 class="text-center" style="color: #db3d3d">@DateTime.UtcNow.ToString("MMMM dd")</h3>
 
 <div class="wthree_agile-requested-movies">
     @foreach (var person in Model)
@@ -88,4 +72,4 @@
             </li>
         </ul>
     </div>*@
-    </html>
+</html>
