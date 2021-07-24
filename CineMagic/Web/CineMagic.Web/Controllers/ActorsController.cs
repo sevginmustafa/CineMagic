@@ -5,14 +5,15 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using CineMagic.Common;
+    using CineMagic.Data.Models.Enums;
     using CineMagic.Services.Data.Contracts;
-    using CineMagic.Web.ViewModels.People;
+    using CineMagic.Web.ViewModels;
+    using CineMagic.Web.ViewModels.Actors;
     using Microsoft.AspNetCore.Mvc;
 
     public class ActorsController : Controller
     {
-        private const int MostPopularActorsCount = 50;
-
         private readonly IActorsService actorsService;
 
         public ActorsController(IActorsService actorsService)
@@ -20,18 +21,36 @@
             this.actorsService = actorsService;
         }
 
-        public async Task<IActionResult> BornToday(int gender)
+        public async Task<IActionResult> BornToday(int gender, int page = 1)
         {
-            var actors = await this.actorsService.GetActorsBornToday<PersonStandartViewModel>(gender);
+            var actors = this.actorsService.GetActorsBornTodayAsQueryable<ActorStandartViewModel>(gender);
 
-            return this.View(actors);
+            var actorsPaginated = await PaginatedList<ActorStandartViewModel>
+                .CreateAsync(actors, page, GlobalConstants.ItemsStandartCountPagination);
+
+            var model = new ActorsGenderFilterPagingViewModel
+            {
+                Actors = actorsPaginated,
+                Gender = (Gender)gender,
+            };
+
+            return this.View(model);
         }
 
-        public async Task<IActionResult> MostPopularActors()
+        public async Task<IActionResult> MostPopularActors(int gender, int page = 1)
         {
-            var actors = await this.actorsService.GetMostPopularActors<PersonStandartViewModel>(MostPopularActorsCount);
+            var actors = this.actorsService.GetMostPopularActorsAsQueryable<ActorStandartViewModel>(gender, GlobalConstants.MostPopularPeopleCount);
 
-            return this.View(actors);
+            var actorsPaginated = await PaginatedList<ActorStandartViewModel>
+                .CreateAsync(actors, page, GlobalConstants.ItemsStandartCountPagination);
+
+            var model = new ActorsGenderFilterPagingViewModel
+            {
+                Actors = actorsPaginated,
+                Gender = (Gender)gender,
+            };
+
+            return this.View(model);
         }
     }
 }

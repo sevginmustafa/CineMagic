@@ -7,6 +7,7 @@
 
     using CineMagic.Common;
     using CineMagic.Services.Data.Contracts;
+    using CineMagic.Web.ViewModels;
     using CineMagic.Web.ViewModels.Movies;
     using Microsoft.AspNetCore.Mvc;
 
@@ -21,17 +22,13 @@
 
         public async Task<IActionResult> ByYear(int year, int page = 1)
         {
-            var viewModel = new MoviesPaginatedListViewModel
-            {
-                Movies = await this.moviesService.GetMoviesByReleaseYear<MovieStandartViewModel>(year, page, GlobalConstants.ItemsPerPagePagination),
-                PageNumber = page,
-                MoviesCount = this.moviesService.GetMoviesByReleaseYearCount(year),
-                ItemsPerPage = GlobalConstants.ItemsPerPagePagination,
-            };
+            var movies = this.moviesService.GetMoviesByReleaseYearAsQueryable<MovieStandartViewModel>(year);
+
+            var moviesPaginated = await PaginatedList<MovieStandartViewModel>.CreateAsync(movies, page, GlobalConstants.ItemsStandartCountPagination);
 
             this.TempData["ReleaseYear"] = year;
 
-            return this.View(viewModel);
+            return this.View(moviesPaginated);
         }
     }
 }

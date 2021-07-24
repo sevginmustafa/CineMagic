@@ -1,6 +1,7 @@
 ﻿namespace CineMagic.Services.Data.Contracts
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public interface IMoviesService
@@ -15,22 +16,16 @@
 
         Task<IEnumerable<T>> GetLatestMoviesAsync<T>(int count);
 
-        Task<IEnumerable<T>> GetWatchlistMovies<T>(string userId, int count);
+        Task<IEnumerable<T>> GetWatchlistMoviesAsync<T>(string userId, int count);
 
-        Task<IEnumerable<T>> GetAllMovies<T>(int page, int itemsPerPage);
+        IQueryable<T> GetMoviesByLetterAsQueryable<T>(string letter);
 
-        int GetAllMoviesCount();
+        IQueryable<T> GetMoviesByGenreNameAsQueryable<T>(string name);
 
-        Task<IEnumerable<T>> GetMoviesByGenreName<T>(string name, int page, int itemsPerPage);
+        IQueryable<T> GetMoviesByCountryNameAsQueryable<T>(string name);
 
-        int GetMoviesByGenreNameCount(string name);
+        IQueryable<T> GetMoviesByReleaseYearAsQueryable<T>(int year);
 
-        Task<IEnumerable<T>> GetMoviesByCountryName<T>(string name, int page, int itemsPerPage);
-
-        int GetMoviesByCountryNameCount(string name);
-
-        Task<IEnumerable<T>> GetMoviesByReleaseYear<T>(int year, int page, int itemsPerPage);
-
-        int GetMoviesByReleaseYearCount(int year);
+        IQueryable<T> GetAllMoviesAsQueryable<T>();
     }
 }

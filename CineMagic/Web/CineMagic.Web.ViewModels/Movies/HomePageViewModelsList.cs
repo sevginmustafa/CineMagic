@@ -6,15 +6,15 @@
     {
         public MovieHomePageBannerViewModel BannerSectionMovie { get; set; }
 
-        public IEnumerable<MovieDetailedViewModel> MostRecentMovie { get; set; }
+        public IEnumerable<MovieRespTabsViewModel> MostRecentMovie { get; set; }
 
         public IEnumerable<MovieStandartViewModel> RecentMovies { get; set; }
 
-        public IEnumerable<MovieDetailedViewModel> MostPopularMovie { get; set; }
+        public IEnumerable<MovieRespTabsViewModel> MostPopularMovie { get; set; }
 
         public IEnumerable<MovieStandartViewModel> PopularMovies { get; set; }
 
-        public IEnumerable<MovieDetailedViewModel> BestRatedMovie { get; set; }
+        public IEnumerable<MovieRespTabsViewModel> BestRatedMovie { get; set; }
 
         public IEnumerable<MovieStandartViewModel> TopRatedMovies { get; set; }
 

@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
 
     using CineMagic.Services.Data.Contracts;
+    using CineMagic.Web.ViewModels;
     using CineMagic.Web.ViewModels.Movies;
     using Microsoft.AspNetCore.Mvc;
 
@@ -18,18 +19,26 @@
             this.moviesService = moviesService;
         }
 
-        public async Task<IActionResult> All(int page = 1)
+        public async Task<IActionResult> All(string letter, int page = 1)
         {
             const int ItemsPerPage = 20;
 
-            var model = new AlphabetMoviesPaginatedViewModel
+            var movies = this.moviesService.GetMoviesByLetterAsQueryable<MovieDetailedViewModel>(letter);
+
+            var moviesPaginated = await PaginatedList<MovieDetailedViewModel>.CreateAsync(movies, page, ItemsPerPage);
+
+            var alphabetPagingViewModel = new AlphabetPagingViewModel
             {
-                Movies = await this.moviesService.GetAllMovies<AlphabetMovieViewModel>(page, ItemsPerPage),
-                MoviesCount = this.moviesService.GetAllMoviesCount(),
-                ItemsPerPage = ItemsPerPage,
+                SelectedLetter = letter,
             };
 
-            return this.View(model);
+            var viewModel = new MoviesAlphabetPaginationViewModel
+            {
+                Movies = moviesPaginated,
+                AlphabetPagingViewModel = alphabetPagingViewModel,
+            };
+
+            return this.View(viewModel);
         }
     }
 }

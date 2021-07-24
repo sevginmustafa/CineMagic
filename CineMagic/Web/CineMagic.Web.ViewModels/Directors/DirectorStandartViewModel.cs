@@ -1,13 +1,9 @@
-﻿namespace CineMagic.Web.ViewModels.People
+﻿namespace CineMagic.Web.ViewModels.Directors
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     using CineMagic.Data.Models;
     using CineMagic.Services.Mapping;
 
-    public class PersonStandartViewModel : IMapFrom<Actor>
+    public class DirectorStandartViewModel : IMapFrom<Director>
     {
         public int Id { get; set; }
 

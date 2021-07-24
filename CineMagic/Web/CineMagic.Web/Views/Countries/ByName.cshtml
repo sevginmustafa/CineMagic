@@ -1,11 +1,25 @@
 ﻿@using CineMagic.Web.ViewModels.Movies
-@model MoviesPaginatedListViewModel
+@model PaginatedList<MovieStandartViewModel>
 @{
     ViewData["Title"] = "Countries";
 }
 
+<div class="w3_breadcrumb">
+    <div class="breadcrumb-inner">
+        <ul>
+            <li><a asp-controller="Home" asp-action="Index">Home</a><i>//</i></li>
+            <li class="active">Country</li>
+        </ul>
+    </div>
+</div>
+
+<div class="inner-agile-w3l-part-head">
+    <h3 class="w3l-inner-h-title">@this.TempData["CountryName"]</h3>
+    <p class="w3ls_head_para">Movies by Country</p>
+</div>
+
 <div class="wthree_agile-requested-movies">
-    @foreach (var movie in Model.Movies)
+    @foreach (var movie in Model)
     {
         <div class="col-md-2 w3l-movie-gride-agile requested-movies">
             <a href="single.html" class="hvr-sweep-to-bottom">
@@ -38,37 +52,40 @@
     <div class="clearfix"></div>
 </div>
 
-<div class="blog-pagenat-wthree">
-    <ul class="pagination">
-        <li class="page-item @if (!Model.HasPreviousPage) {<text>disabled</text>}">
-            <a class="page-link" asp-controller="Countries" asp-action="ByName" asp-route-name="@this.TempData["CountryName"]" asp-route-page="@Model.PreviousPage">Previous</a>
-        </li>
-        @for (int i = Model.PageNumber - 3; i < Model.PageNumber; i++)
-        {
-            if (i > 0)
+@if (Model.TotalPages > 1)
+{
+    <div class="blog-pagenat-wthree">
+        <ul class="pagination">
+            <li class="page-item @if (!Model.HasPreviousPage) {<text>disabled</text>}">
+                <a class="page-link" asp-controller="Countries" asp-action="ByName" asp-route-name="@this.TempData["CountryName"]" asp-route-page="@Model.PreviousPage">Previous</a>
+            </li>
+            @for (int i = Model.PageNumber - 3; i < Model.PageNumber; i++)
             {
-                <li class="page-item">
-                    <a class="page-link" asp-controller="Countries" asp-action="ByName" asp-route-name="@this.TempData["CountryName"]" asp-route-page="@i">@i</a>
-                </li>
+                if (i > 0)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-controller="Countries" asp-action="ByName" asp-route-name="@this.TempData["CountryName"]" asp-route-page="@i">@i</a>
+                    </li>
+                }
             }
-        }
-        <li class="page-item active">
-            <span class="page-link">
-                @Model.PageNumber
-                <span class="sr-only">(current)</span>
-            </span>
-        </li>
-        @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + 3; i++)
-        {
-            if (i <= Model.PagesCount)
+            <li class="page-item active">
+                <span class="page-link">
+                    @Model.PageNumber
+                    <span class="sr-only">(current)</span>
+                </span>
+            </li>
+            @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + 3; i++)
             {
-                <li class="page-item">
-                    <a class="page-link" asp-controller="Countries" asp-action="ByName" asp-route-name="@this.TempData["CountryName"]" asp-route-page="@i">@i</a>
-                </li>
+                if (i <= Model.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-controller="Countries" asp-action="ByName" asp-route-name="@this.TempData["CountryName"]" asp-route-page="@i">@i</a>
+                    </li>
+                }
             }
-        }
-        <li class="page-item @if (!Model.HasNextPage) {<text>disabled</text>}">
-            <a class="page-link" asp-controller="Countries" asp-action="ByName" asp-route-name="@this.TempData["CountryName"]" asp-route-page="@Model.NextPage">Next</a>
-        </li>
-    </ul>
-</div>
+            <li class="page-item @if (!Model.HasNextPage) {<text>disabled</text>}">
+                <a class="page-link" asp-controller="Countries" asp-action="ByName" asp-route-name="@this.TempData["CountryName"]" asp-route-page="@Model.NextPage">Next</a>
+            </li>
+        </ul>
+    </div>
+}

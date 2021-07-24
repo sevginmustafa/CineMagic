@@ -12,22 +12,22 @@
     using CineMagic.Services.Mapping;
     using Microsoft.EntityFrameworkCore;
 
-    public class ActorsService : IActorsService
+    public class DirectorsService : IDirectorsService
     {
-        private readonly IDeletableEntityRepository<Actor> actorsRepository;
+        private readonly IDeletableEntityRepository<Director> directorsRepository;
 
-        public ActorsService(IDeletableEntityRepository<Actor> actorsRepository)
+        public DirectorsService(IDeletableEntityRepository<Director> directorsRepository)
         {
-            this.actorsRepository = actorsRepository;
+            this.directorsRepository = directorsRepository;
         }
 
-        public IQueryable<T> GetActorsBornTodayAsQueryable<T>(int gender)
+        public IQueryable<T> GetDirectorsBornTodayAsQueryable<T>(int gender)
         {
-            var actors = Enumerable.Empty<T>().AsQueryable();
+            var directors = Enumerable.Empty<T>().AsQueryable();
 
             if (gender == 0)
             {
-                actors = this.actorsRepository
+                directors = this.directorsRepository
                     .AllAsNoTracking()
                     .Where(x => x.Birthday.Value.DayOfYear == DateTime.Now.DayOfYear)
                     .OrderBy(x => x.Name)
@@ -35,37 +35,37 @@
             }
             else
             {
-                actors = this.actorsRepository
+                directors = this.directorsRepository
                     .AllAsNoTracking()
                     .Where(x => x.Birthday.Value.DayOfYear == DateTime.Now.DayOfYear && (int)x.Gender == gender)
                     .OrderBy(x => x.Name)
                     .To<T>();
             }
 
-            return actors;
+            return directors;
         }
 
-        public IQueryable<T> GetMostPopularActorsAsQueryable<T>(int gender, int count)
+        public IQueryable<T> GetMostPopularDirectorsAsQueryable<T>(int gender, int count)
         {
-            var actors = Enumerable.Empty<T>().AsQueryable();
+            var directors = Enumerable.Empty<T>().AsQueryable();
 
             if (gender == 0)
             {
-                actors = this.actorsRepository
+                directors = this.directorsRepository
                     .AllAsNoTracking()
                     .OrderByDescending(x => x.Popularity)
                     .To<T>();
             }
             else
             {
-                actors = this.actorsRepository
+                directors = this.directorsRepository
                     .AllAsNoTracking()
                     .Where(x => (int)x.Gender == gender)
                     .OrderByDescending(x => x.Popularity)
                     .To<T>();
             }
 
-            return actors;
+            return directors;
         }
     }
 }

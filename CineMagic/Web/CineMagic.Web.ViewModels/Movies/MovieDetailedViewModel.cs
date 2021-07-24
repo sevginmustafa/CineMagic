@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
 
     using CineMagic.Data.Models;
     using CineMagic.Services.Mapping;
@@ -15,14 +14,26 @@
 
         public string PosterPath { get; set; }
 
-        public string TrailerPath { get; set; }
+        public ICollection<MovieGenresViewModel> Genres { get; set; }
+
+        public ICollection<MovieCountriesViewModel> ProductionCountries { get; set; }
 
         public DateTime ReleaseDate { get; set; }
 
+        public int Runtime { get; set; }
+
+        public string Language { get; set; }
+
+        public double Budget { get; set; }
+
+        public double Revenue { get; set; }
+
+        public double Popularity { get; set; }
+
         public double CurrentAverageVote { get; set; }
 
-        public string Overview { get; set; }
+        public int CurrentNumberOfVotes { get; set; }
 
-        public ICollection<MovieGenresViewModel> Genres { get; set; }
+        public string DirectorName { get; set; }
     }
 }

@@ -6,10 +6,10 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IActorsService
+    public interface IDirectorsService
     {
-        IQueryable<T> GetActorsBornTodayAsQueryable<T>(int gender);
+        IQueryable<T> GetDirectorsBornTodayAsQueryable<T>(int gender);
 
-        IQueryable<T> GetMostPopularActorsAsQueryable<T>(int gender, int count);
+        IQueryable<T> GetMostPopularDirectorsAsQueryable<T>(int gender, int count);
     }
 }

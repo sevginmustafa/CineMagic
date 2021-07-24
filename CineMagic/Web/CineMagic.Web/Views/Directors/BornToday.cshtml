@@ -1,23 +1,14 @@
 ﻿@using CineMagic.Data.Models.Enums
-@using CineMagic.Web.ViewModels.Actors
-@model ActorsGenderFilterPagingViewModel
+@using CineMagic.Web.ViewModels.Directors
+@model DirectorsGenderFilterPagingViewModel
 
 @{
-    this.ViewData["Title"] = "Actors";
-}
-
-@{
-    var counter = 1;
-
-    if (Model.Actors.PageNumber > 1)
-    {
-        counter = Model.Actors.PageNumber * 10 - 9;
-    }
+    this.ViewData["Title"] = "Directors";
 }
 
 <div class="inner-agile-w3l-part-head">
-    <h3 class="w3l-inner-h-title">Most Popular Actors</h3>
-    <p class="w3ls_head_para">Top 50</p>
+    <h3 class="w3l-inner-h-title">Today's famous directors birthdays</h3>
+    <p class="w3ls_head_para">@DateTime.Now.ToString("MMMM dd")</p>
 </div>
 
 <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
@@ -27,13 +18,13 @@
             if (Model.Gender == gender)
             {
                 <li class="active">
-                    <a asp-action="MostPopularActors" asp-route-gender="@((int)gender)">@gender.ToString()</a>
+                    <a asp-action="BornToday" asp-route-gender="@((int)gender)">@gender.ToString()</a>
                 </li>
             }
             else
             {
                 <li>
-                    <a asp-action="MostPopularActors" asp-route-gender="@((int)gender)">@gender.ToString()</a>
+                    <a asp-action="BornToday" asp-route-gender="@((int)gender)">@gender.ToString()</a>
                 </li>
             }
         }
@@ -41,7 +32,7 @@
 </div>
 
 <div class="wthree_agile-requested-movies">
-    @foreach (var person in Model.Actors)
+    @foreach (var person in Model.Directors)
     {
         <div class="col-md-2 w3l-movie-gride-agile requested-movies">
             <a href="single.html" class="hvr-sweep-to-bottom">
@@ -50,7 +41,7 @@
             </a>
             <div class="mid-1 agileits_w3layouts_mid_1_home">
                 <div class="w3l-movie-text">
-                    <h6><a class="text-left" href="single.html">@counter. @person.Name</a></h6>
+                    <h6><a class="text-left" href="single.html">@person.Name</a></h6>
                 </div>
             </div>
             @if (person.Gender == "Male")
@@ -66,45 +57,43 @@
                 </div>
             }
         </div>
-
-        counter++;
     }
     <div class="clearfix"></div>
 </div>
 
-@if (Model.Actors.TotalPages > 1)
+@if (Model.Directors.TotalPages > 1)
 {
     <div class="blog-pagenat-wthree">
         <ul class="pagination">
-            <li class="page-item @if (!Model.Actors.HasPreviousPage) {<text>disabled</text>}">
-                <a class="page-link" asp-action="MostPopularActors" asp-route-gender="@((int)Model.Gender)" asp-route-page="@Model.Actors.PreviousPage">Previous</a>
+            <li class="page-item @if (!Model.Directors.HasPreviousPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="BornToday" asp-route-gender="@((int)Model.Gender)" asp-route-page="@Model.Directors.PreviousPage">Previous</a>
             </li>
-            @for (int i = Model.Actors.PageNumber - 3; i < Model.Actors.PageNumber; i++)
+            @for (int i = Model.Directors.PageNumber - 3; i < Model.Directors.PageNumber; i++)
             {
                 if (i > 0)
                 {
                     <li class="page-item">
-                        <a class="page-link" asp-action="MostPopularActors" asp-route-gender="@((int)Model.Gender)" asp-route-page="@i">@i</a>
+                        <a class="page-link" asp-action="BornToday" asp-route-gender="@((int)Model.Gender)" asp-route-page="@i">@i</a>
                     </li>
                 }
             }
             <li class="page-item active">
                 <span class="page-link">
-                    @Model.Actors.PageNumber
+                    @Model.Directors.PageNumber
                     <span class="sr-only">(current)</span>
                 </span>
             </li>
-            @for (int i = Model.Actors.PageNumber + 1; i <= Model.Actors.PageNumber + 3; i++)
+            @for (int i = Model.Directors.PageNumber + 1; i <= Model.Directors.PageNumber + 3; i++)
             {
-                if (i <= Model.Actors.TotalPages)
+                if (i <= Model.Directors.TotalPages)
                 {
                     <li class="page-item">
-                        <a class="page-link" asp-action="MostPopularActors" asp-route-gender="@((int)Model.Gender)" asp-route-page="@i">@i</a>
+                        <a class="page-link" asp-action="BornToday" asp-route-gender="@((int)Model.Gender)" asp-route-page="@i">@i</a>
                     </li>
                 }
             }
-            <li class="page-item @if (!Model.Actors.HasNextPage) {<text>disabled</text>}">
-                <a class="page-link" asp-action="MostPopularActors" asp-route-gender="@((int)Model.Gender)" asp-route-page="@Model.Actors.NextPage">Next</a>
+            <li class="page-item @if (!Model.Directors.HasNextPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="BornToday" asp-route-gender="@((int)Model.Gender)" asp-route-page="@Model.Directors.NextPage">Next</a>
             </li>
         </ul>
     </div>

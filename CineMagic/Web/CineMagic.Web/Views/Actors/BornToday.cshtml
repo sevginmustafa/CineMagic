@@ -1,31 +1,38 @@
-﻿@using CineMagic.Web.ViewModels.People
-@model IEnumerable<PersonStandartViewModel>
+﻿@using CineMagic.Data.Models.Enums
+@using CineMagic.Web.ViewModels.Actors
+@model ActorsGenderFilterPagingViewModel
 
 @{
     this.ViewData["Title"] = "Actors";
 }
 
 <div class="inner-agile-w3l-part-head">
-    <h3 class="w3l-inner-h-title">Today's famous birthdays</h3>
-    <p class="w3ls_head_para">@DateTime.UtcNow.ToString("MMMM dd")</p>
+    <h3 class="w3l-inner-h-title">Today's famous actors birthdays</h3>
+    <p class="w3ls_head_para">@DateTime.Now.ToString("MMMM dd")</p>
 </div>
 
 <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
-    <ul id="myTab" class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a asp-controller="Actors" asp-action="BornToday" asp-route-gender="0">ALL</a>
-        </li>
-        <li>
-            <a asp-controller="Actors" asp-action="BornToday" asp-route-gender="1">M</a>
-        </li>
-        <li>
-            <a asp-controller="Actors" asp-action="BornToday" asp-route-gender="2">F</a>
-        </li>
+    <ul id="myTab" class="nav nav-tabs nav-justified" role="tablist">
+        @foreach (Gender gender in Enum.GetValues(typeof(Gender)))
+        {
+            if (Model.Gender == gender)
+            {
+                <li class="active">
+                    <a asp-action="BornToday" asp-route-gender="@((int)gender)">@gender.ToString()</a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a asp-action="BornToday" asp-route-gender="@((int)gender)">@gender.ToString()</a>
+                </li>
+            }
+        }
     </ul>
 </div>
 
 <div class="wthree_agile-requested-movies">
-    @foreach (var person in Model)
+    @foreach (var person in Model.Actors)
     {
         <div class="col-md-2 w3l-movie-gride-agile requested-movies">
             <a href="single.html" class="hvr-sweep-to-bottom">
@@ -54,38 +61,40 @@
     <div class="clearfix"></div>
 </div>
 
-@*<div class="blog-pagenat-wthree">
+@if (Model.Actors.TotalPages > 1)
+{
+    <div class="blog-pagenat-wthree">
         <ul class="pagination">
-            <li class="page-item @if (!Model.HasPreviousPage) {<text>disabled</text>}">
-                <a class="page-link" asp-controller="Countries" asp-action="ByName" asp-route-name="@this.TempData["CountryName"]" asp-route-page="@Model.PreviousPage">Previous</a>
+            <li class="page-item @if (!Model.Actors.HasPreviousPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="BornToday" asp-route-gender="@((int)Model.Gender)" asp-route-page="@Model.Actors.PreviousPage">Previous</a>
             </li>
-            @for (int i = Model.PageNumber - 3; i < Model.PageNumber; i++)
+            @for (int i = Model.Actors.PageNumber - 3; i < Model.Actors.PageNumber; i++)
             {
                 if (i > 0)
                 {
                     <li class="page-item">
-                        <a class="page-link" asp-controller="Countries" asp-action="ByName" asp-route-name="@this.TempData["CountryName"]" asp-route-page="@i">@i</a>
+                        <a class="page-link" asp-action="BornToday" asp-route-gender="@((int)Model.Gender)" asp-route-page="@i">@i</a>
                     </li>
                 }
             }
             <li class="page-item active">
                 <span class="page-link">
-                    @Model.PageNumber
+                    @Model.Actors.PageNumber
                     <span class="sr-only">(current)</span>
                 </span>
             </li>
-            @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + 3; i++)
+            @for (int i = Model.Actors.PageNumber + 1; i <= Model.Actors.PageNumber + 3; i++)
             {
-                if (i <= Model.PagesCount)
+                if (i <= Model.Actors.TotalPages)
                 {
                     <li class="page-item">
-                        <a class="page-link" asp-controller="Countries" asp-action="ByName" asp-route-name="@this.TempData["CountryName"]" asp-route-page="@i">@i</a>
+                        <a class="page-link" asp-action="BornToday" asp-route-gender="@((int)Model.Gender)" asp-route-page="@i">@i</a>
                     </li>
                 }
             }
-            <li class="page-item @if (!Model.HasNextPage) {<text>disabled</text>}">
-                <a class="page-link" asp-controller="Countries" asp-action="ByName" asp-route-name="@this.TempData["CountryName"]" asp-route-page="@Model.NextPage">Next</a>
+            <li class="page-item @if (!Model.Actors.HasNextPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="BornToday" asp-route-gender="@((int)Model.Gender)" asp-route-page="@Model.Actors.NextPage">Next</a>
             </li>
         </ul>
-    </div>*@
-    </html>
+    </div>
+}

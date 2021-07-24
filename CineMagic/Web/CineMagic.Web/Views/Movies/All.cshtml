@@ -1,5 +1,5 @@
 ﻿@using CineMagic.Web.ViewModels.Movies
-@model AlphabetMoviesPaginatedViewModel
+@model MoviesAlphabetPaginationViewModel
 
 @{
     this.ViewData["Title"] = "Movies";
@@ -7,6 +7,11 @@
 
 @{
     int counter = 1;
+
+    if (Model.Movies.PageNumber > 1)
+    {
+        counter = Model.Movies.PageNumber * 20 - 19;
+    }
 }
 
 <div class="w3_breadcrumb">
@@ -24,38 +29,25 @@
 
         <div class="inner-agile-w3l-part-head">
             <h3 class="w3l-inner-h-title">Movie List</h3>
-            <p class="w3ls_head_para">Add short Description</p>
+            <p class="w3ls_head_para">From A To Z</p>
         </div>
+
         <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
             <ul id="myTab" class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">ALL</a></li>
-                <li role="presentation"><a href="#a" role="tab" id="a-tab" data-toggle="tab" aria-controls="a">A</a></li>
-                <li role="presentation"><a href="#b" role="tab" id="b-tab" data-toggle="tab" aria-controls="b">B</a></li>
-                <li role="presentation"><a href="#c" role="tab" id="c-tab" data-toggle="tab" aria-controls="c">C</a></li>
-                <li role="presentation"><a href="#d" role="tab" id="d-tab" data-toggle="tab" aria-controls="d">D</a></li>
-                <li role="presentation"><a href="#e" role="tab" id="e-tab" data-toggle="tab" aria-controls="e">E</a></li>
-                <li role="presentation"><a href="#f" role="tab" id="f-tab" data-toggle="tab" aria-controls="f">F</a></li>
-                <li role="presentation"><a href="#g" role="tab" id="g-tab" data-toggle="tab" aria-controls="g">G</a></li>
-                <li role="presentation"><a href="#h" role="tab" id="h-tab" data-toggle="tab" aria-controls="h">H</a></li>
-                <li role="presentation"><a href="#i" role="tab" id="i-tab" data-toggle="tab" aria-controls="i">I</a></li>
-                <li role="presentation"><a href="#j" role="tab" id="j-tab" data-toggle="tab" aria-controls="j">J</a></li>
-                <li role="presentation"><a href="#k" role="tab" id="k-tab" data-toggle="tab" aria-controls="k">K</a></li>
-                <li role="presentation"><a href="#l" role="tab" id="l-tab" data-toggle="tab" aria-controls="l">L</a></li>
-                <li role="presentation"><a href="#m" role="tab" id="m-tab" data-toggle="tab" aria-controls="m">M</a></li>
-                <li role="presentation"><a href="#n" role="tab" id="n-tab" data-toggle="tab" aria-controls="n">N</a></li>
-                <li role="presentation"><a href="#o" role="tab" id="o-tab" data-toggle="tab" aria-controls="o">O</a></li>
-                <li role="presentation"><a href="#p" role="tab" id="p-tab" data-toggle="tab" aria-controls="p">P</a></li>
-                <li role="presentation"><a href="#q" role="tab" id="q-tab" data-toggle="tab" aria-controls="q">Q</a></li>
-                <li role="presentation"><a href="#r" role="tab" id="r-tab" data-toggle="tab" aria-controls="r">R</a></li>
-                <li role="presentation"><a href="#s" role="tab" id="s-tab" data-toggle="tab" aria-controls="s">S</a></li>
-                <li role="presentation"><a href="#t" role="tab" id="t-tab" data-toggle="tab" aria-controls="t">T</a></li>
-                <li role="presentation"><a href="#u" role="tab" id="u-tab" data-toggle="tab" aria-controls="u">U</a></li>
-                <li role="presentation"><a href="#v" role="tab" id="v-tab" data-toggle="tab" aria-controls="v">V</a></li>
-                <li role="presentation"><a href="#w" role="tab" id="w-tab" data-toggle="tab" aria-controls="w">W</a></li>
-                <li role="presentation"><a href="#x" role="tab" id="x-tab" data-toggle="tab" aria-controls="x">X</a></li>
-                <li role="presentation"><a href="#y" role="tab" id="y-tab" data-toggle="tab" aria-controls="y">Y</a></li>
-                <li role="presentation"><a href="#z" role="tab" id="z-tab" data-toggle="tab" aria-controls="z">Z</a></li>
+                @foreach (var letter in Model.AlphabetPagingViewModel.Alphabet)
+                {
+                    if (Model.AlphabetPagingViewModel.SelectedLetter == letter ||
+                        (string.IsNullOrEmpty(Model.AlphabetPagingViewModel.SelectedLetter) && letter == "All"))
+                    {
+                        <li class="active"><a asp-action="All" asp-route-letter="@letter">@letter</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-action="All" asp-route-letter="@letter">@letter</a></li>
+                    }
+                }
             </ul>
+
             <div id="myTabContent" class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
                     <div class="agile-news-table">
@@ -73,6 +65,8 @@
                                     <th>Runtime</th>
                                     <th>Language</th>
                                     <th>Country</th>
+                                    <th>Budget</th>
+                                    <th>Revenue</th>
                                     <th>Rating</th>
                                 </tr>
                             </thead>
@@ -88,6 +82,8 @@
                                         <td>@movie.Runtime min</td>
                                         <td>@movie.Language</td>
                                         <td class="w3-list-info">@string.Join(", ", movie.ProductionCountries.Select(x => x.CountryName))</td>
+                                        <td>@movie.Budget</td>
+                                        <td>@movie.Revenue</td>
                                         <td>@movie.CurrentAverageVote</td>
                                     </tr>
 
@@ -102,37 +98,40 @@
     </div>
 </div>
 
-<div class="blog-pagenat-wthree">
-    <ul class="pagination">
-        <li class="page-item @if (!Model.HasPreviousPage) {<text>disabled</text>}">
-            <a class="page-link" asp-controller="Genres" asp-action="ByName" asp-route-name="@this.TempData["GenreName"]" asp-route-page="@Model.PreviousPage">Previous</a>
-        </li>
-        @for (int i = Model.PageNumber - 3; i < Model.PageNumber; i++)
-        {
-            if (i > 0)
+@if (Model.Movies.TotalPages > 1)
+{
+    <div class="blog-pagenat-wthree">
+        <ul class="pagination">
+            <li class="page-item @if (!Model.Movies.HasPreviousPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="All" asp-route-letter="@Model.AlphabetPagingViewModel.SelectedLetter" asp-route-page="@Model.Movies.PreviousPage">Previous</a>
+            </li>
+            @for (int i = Model.Movies.PageNumber - 3; i < Model.Movies.PageNumber; i++)
             {
-                <li class="page-item">
-                    <a class="page-link" asp-controller="Genres" asp-action="ByName" asp-route-name="@this.TempData["GenreName"]" asp-route-page="@i">@i</a>
-                </li>
+                if (i > 0)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="All" asp-route-name="@Model.AlphabetPagingViewModel.SelectedLetter" asp-route-page="@i">@i</a>
+                    </li>
+                }
             }
-        }
-        <li class="page-item active">
-            <span class="page-link">
-                @Model.PageNumber
-                <span class="sr-only">(current)</span>
-            </span>
-        </li>
-        @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + 3; i++)
-        {
-            if (i <= Model.PagesCount)
+            <li class="page-item active">
+                <span class="page-link">
+                    @Model.Movies.PageNumber
+                    <span class="sr-only">(current)</span>
+                </span>
+            </li>
+            @for (int i = Model.Movies.PageNumber + 1; i <= Model.Movies.PageNumber + 3; i++)
             {
-                <li class="page-item">
-                    <a class="page-link" asp-controller="Genres" asp-action="ByName" asp-route-name="@this.TempData["GenreName"]" asp-route-page="@i">@i</a>
-                </li>
+                if (i <= Model.Movies.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="All" asp-route-name="@Model.AlphabetPagingViewModel.SelectedLetter" asp-route-page="@i">@i</a>
+                    </li>
+                }
             }
-        }
-        <li class="page-item @if (!Model.HasNextPage) {<text>disabled</text>}">
-            <a class="page-link" asp-controller="Genres" asp-action="ByName" asp-route-name="@this.TempData["GenreName"]" asp-route-page="@Model.NextPage">Next</a>
-        </li>
-    </ul>
-</div>
+            <li class="page-item @if (!Model.Movies.HasNextPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="All" asp-route-name="@Model.AlphabetPagingViewModel.SelectedLetter" asp-route-page="@Model.Movies.NextPage">Next</a>
+            </li>
+        </ul>
+    </div>
+}

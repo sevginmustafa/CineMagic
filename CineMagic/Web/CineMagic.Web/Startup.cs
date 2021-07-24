@@ -13,7 +13,6 @@
     using CineMagic.Services.GetDataFromTMDB;
     using CineMagic.Services.Mapping;
     using CineMagic.Services.Messaging;
-    using CineMagic.Services.Scraping;
     using CineMagic.Web.ViewModels;
 
     using Microsoft.AspNetCore.Builder;
@@ -75,6 +74,7 @@
             services.AddTransient<IGenresService, GenresService>();
             services.AddTransient<ICountriesService, CountriesService>();
             services.AddTransient<IActorsService, ActorsService>();
+            services.AddTransient<IDirectorsService, DirectorsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -103,7 +103,7 @@
 
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
-                DefaultRequestCulture = new RequestCulture("en-UK"),
+                DefaultRequestCulture = new RequestCulture("en"),
             });
 
             app.UseHttpsRedirection();
