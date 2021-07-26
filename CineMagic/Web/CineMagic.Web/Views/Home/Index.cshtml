@@ -268,8 +268,53 @@
                 }
             </div>
         </div>
-
         
+<h3 class="agile_w3_title">From Your <span>Watchlist</span> </h3>
+        <!--/from-watchlist-->
+        @if (this.User.Identity.IsAuthenticated)
+        {
+            <div class="wthree_agile-requested-movies">
+                @foreach (var movie in Model.Watchlist)
+                {
+                    <div class="col-md-2 w3l-movie-gride-agile requested-movies">
+                        <a href="single.html" class="hvr-sweep-to-bottom">
+                            <img src="@movie.PosterPath" title="@movie.Title" class="img-responsive">
+                            <div class="w3l-action-icon"></div>
+                        </a>
+                        <div class="mid-1 agileits_w3layouts_mid_1_home">
+                            <div class="w3l-movie-text">
+                                <h6><a href="single.html">@movie.Title</a></h6>
+                            </div>
+                            <div class="mid-2 agile_mid_2_home">
+                                <p>@movie.ReleaseDate.Year</p>
+                                <div class="block-stars">
+                                    <ul class="w3l-ratings">
+                                        <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="ribben one">
+                            <p>NEW</p>
+                        </div>
+                    </div>
+                }
+                <div class="clearfix"></div>
+            </div>
+        }
+        else
+        {
+            <div class="text-center">Login to access your Watchlist</div>
+            <div class="text-center" style="padding-bottom:10px;">Save movies to keep track of what you want to watch.</div>
+            <div class="text-center">
+                <a href="#" class="login" style="margin-left:0px" ; data-toggle="modal" data-target="#myModal4">Login</a>
+            </div>
+        }
         <!--//from-watchlist-->
     </div>
 </div>
