@@ -26,7 +26,7 @@
                     @for (int i = DateTime.UtcNow.Year; i > DateTime.UtcNow.Year - 5; i--)
                     {
                         <li>
-                            <a asp-controller="ReleaseYears" asp-action="ByYear" asp-route-year="@i">@i</a>
+                            <a asp-area="" asp-controller="ReleaseYears" asp-action="ByYear" asp-route-year="@i">@i</a>
                         </li>
                     }
                 </ul>
@@ -37,7 +37,7 @@
                 <ul>
                     @foreach (var genre in genres.Take(5))
                     {
-                        <li><a asp-controller="Genres" asp-action="ByName" asp-route-name="@genre.Name">@genre.Name</a></li>
+                        <li><a asp-area="" asp-controller="Genres" asp-action="ByName" asp-route-name="@genre.Name">@genre.Name</a></li>
                     }
                 </ul>
             </div>

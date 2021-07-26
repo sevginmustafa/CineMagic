@@ -17,6 +17,7 @@
             this.Cast = new HashSet<MovieActor>();
             this.ProductionCountries = new HashSet<MovieCountry>();
             this.Ratings = new HashSet<Rating>();
+            this.Watchlists = new HashSet<Watchlist>();
             this.Reviews = new HashSet<Review>();
             this.Comments = new HashSet<MovieComment>();
         }
@@ -72,6 +73,8 @@
         public virtual ICollection<MovieCountry> ProductionCountries { get; set; }
 
         public virtual ICollection<Rating> Ratings { get; set; }
+
+        public virtual ICollection<Watchlist> Watchlists { get; set; }
 
         public virtual ICollection<Review> Reviews { get; set; }
 

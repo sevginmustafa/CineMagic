@@ -54,6 +54,7 @@
                 actors = this.actorsRepository
                     .AllAsNoTracking()
                     .OrderByDescending(x => x.Popularity)
+                    .Take(count)
                     .To<T>();
             }
             else
@@ -62,6 +63,7 @@
                     .AllAsNoTracking()
                     .Where(x => (int)x.Gender == gender)
                     .OrderByDescending(x => x.Popularity)
+                    .Take(count)
                     .To<T>();
             }
 

@@ -13,13 +13,16 @@ namespace CineMagic.Data.Models
         public ApplicationUser()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Roles = new HashSet<IdentityUserRole<string>>();
+            this.Claims = new HashSet<IdentityUserClaim<string>>();
+            this.Logins = new HashSet<IdentityUserLogin<string>>();
+
+            this.Ratings = new HashSet<Rating>();
+            this.Watchlists = new HashSet<Watchlist>();
             this.Reviews = new HashSet<Review>();
             this.MovieComments = new HashSet<MovieComment>();
             this.ActorComments = new HashSet<ActorComment>();
             this.DirectorComments = new HashSet<DirectorComment>();
-            this.Roles = new HashSet<IdentityUserRole<string>>();
-            this.Claims = new HashSet<IdentityUserClaim<string>>();
-            this.Logins = new HashSet<IdentityUserLogin<string>>();
         }
 
         // Audit info
@@ -32,6 +35,16 @@ namespace CineMagic.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
+        public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
+
+        public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
+
+        public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        public virtual ICollection<Rating> Ratings { get; set; }
+
+        public virtual ICollection<Watchlist> Watchlists { get; set; }
+
         public virtual ICollection<Review> Reviews { get; set; }
 
         public virtual ICollection<MovieComment> MovieComments { get; set; }
@@ -39,11 +52,5 @@ namespace CineMagic.Data.Models
         public virtual ICollection<ActorComment> ActorComments { get; set; }
 
         public virtual ICollection<DirectorComment> DirectorComments { get; set; }
-
-        public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
-
-        public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
-
-        public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
     }
 }

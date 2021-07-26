@@ -12,6 +12,11 @@
 
         public virtual Actor Actor { get; set; }
 
+        [Required]
+        public string UserId { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
+
         public int? ParentId { get; set; }
 
         public virtual ActorComment Parent { get; set; }
@@ -19,10 +24,5 @@
         [Required]
         [MaxLength(ContentMaxLength)]
         public string Content { get; set; }
-
-        [Required]
-        public string AuthorId { get; set; }
-
-        public virtual ApplicationUser Author { get; set; }
     }
 }

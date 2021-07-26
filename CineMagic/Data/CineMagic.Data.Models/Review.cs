@@ -24,8 +24,8 @@
         public virtual Movie Movie { get; set; }
 
         [Required]
-        public string AuthorId { get; set; }
+        public string UserId { get; set; }
 
-        public virtual ApplicationUser Author { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

@@ -182,9 +182,9 @@ namespace CineMagic.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ActorId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ParentId = table.Column<int>(type: "int", nullable: true),
                     Content = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -204,8 +204,8 @@ namespace CineMagic.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ActorComments_AspNetUsers_AuthorId",
-                        column: x => x.AuthorId,
+                        name: "FK_ActorComments_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -303,9 +303,9 @@ namespace CineMagic.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DirectorId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ParentId = table.Column<int>(type: "int", nullable: true),
                     Content = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -313,8 +313,8 @@ namespace CineMagic.Data.Migrations
                 {
                     table.PrimaryKey("PK_DirectorComments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DirectorComments_AspNetUsers_AuthorId",
-                        column: x => x.AuthorId,
+                        name: "FK_DirectorComments_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -399,9 +399,9 @@ namespace CineMagic.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MovieId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ParentId = table.Column<int>(type: "int", nullable: true),
                     Content = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -409,8 +409,8 @@ namespace CineMagic.Data.Migrations
                 {
                     table.PrimaryKey("PK_MovieComments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MovieComments_AspNetUsers_AuthorId",
-                        column: x => x.AuthorId,
+                        name: "FK_MovieComments_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -527,6 +527,7 @@ namespace CineMagic.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Rate = table.Column<int>(type: "int", nullable: false),
                     MovieId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -535,6 +536,12 @@ namespace CineMagic.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ratings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Ratings_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Ratings_Movies_MovieId",
                         column: x => x.MovieId,
@@ -553,7 +560,7 @@ namespace CineMagic.Data.Migrations
                     Description = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     MovieId = table.Column<int>(type: "int", nullable: false),
-                    AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -561,13 +568,41 @@ namespace CineMagic.Data.Migrations
                 {
                     table.PrimaryKey("PK_Reviews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reviews_AspNetUsers_AuthorId",
-                        column: x => x.AuthorId,
+                        name: "FK_Reviews_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Reviews_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Watchlists",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MovieId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Watchlists", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Watchlists_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Watchlists_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
                         principalColumn: "Id",
@@ -580,14 +615,14 @@ namespace CineMagic.Data.Migrations
                 column: "ActorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ActorComments_AuthorId",
-                table: "ActorComments",
-                column: "AuthorId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ActorComments_ParentId",
                 table: "ActorComments",
                 column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ActorComments_UserId",
+                table: "ActorComments",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Actors_IsDeleted",
@@ -649,11 +684,6 @@ namespace CineMagic.Data.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DirectorComments_AuthorId",
-                table: "DirectorComments",
-                column: "AuthorId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_DirectorComments_DirectorId",
                 table: "DirectorComments",
                 column: "DirectorId");
@@ -662,6 +692,11 @@ namespace CineMagic.Data.Migrations
                 name: "IX_DirectorComments_ParentId",
                 table: "DirectorComments",
                 column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DirectorComments_UserId",
+                table: "DirectorComments",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Directors_IsDeleted",
@@ -684,11 +719,6 @@ namespace CineMagic.Data.Migrations
                 column: "MovieId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MovieComments_AuthorId",
-                table: "MovieComments",
-                column: "AuthorId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_MovieComments_MovieId",
                 table: "MovieComments",
                 column: "MovieId");
@@ -697,6 +727,11 @@ namespace CineMagic.Data.Migrations
                 name: "IX_MovieComments_ParentId",
                 table: "MovieComments",
                 column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MovieComments_UserId",
+                table: "MovieComments",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Movies_DirectorId",
@@ -764,9 +799,9 @@ namespace CineMagic.Data.Migrations
                 column: "MovieId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_AuthorId",
-                table: "Reviews",
-                column: "AuthorId");
+                name: "IX_Ratings_UserId",
+                table: "Ratings",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_MovieId",
@@ -774,9 +809,24 @@ namespace CineMagic.Data.Migrations
                 column: "MovieId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Reviews_UserId",
+                table: "Reviews",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Settings_IsDeleted",
                 table: "Settings",
                 column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Watchlists_MovieId",
+                table: "Watchlists",
+                column: "MovieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Watchlists_UserId",
+                table: "Watchlists",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -825,6 +875,9 @@ namespace CineMagic.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Settings");
+
+            migrationBuilder.DropTable(
+                name: "Watchlists");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
