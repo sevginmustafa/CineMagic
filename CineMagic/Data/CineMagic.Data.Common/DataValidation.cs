@@ -2,6 +2,14 @@
 {
     public static class DataValidation
     {
+        public static class User
+        {
+            public const int UsernameMinLength = 3;
+            public const int UsernameMaxLength = 30;
+            public const int FullNameMinLength = 5;
+            public const int FullNameMaxLength = 100;
+        }
+
         public static class Movie
         {
             public const int TitleMaxLength = 100;

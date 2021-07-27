@@ -25,19 +25,5 @@
 else
 {
     <partial name="_AjaxLoginPartial" model=" new AjaxLoginInputModel()" />
-    <partial name="_AjaxRegisterPartial" />
-
-    <script>
-            $('.toggle').click(function () {
-                // Switches the Icon
-                $(this).children('i').toggleClass('fa-pencil');
-                // Switches the forms
-                $('.form').animate({
-                    height: "toggle",
-                    'padding-top': 'toggle',
-                    'padding-bottom': 'toggle',
-                    opacity: "toggle"
-                }, "slow");
-            });
-        </script>
+    <partial name="_AjaxRegisterPartial" model=" new AjaxRegisterInputModel()"/>
 }

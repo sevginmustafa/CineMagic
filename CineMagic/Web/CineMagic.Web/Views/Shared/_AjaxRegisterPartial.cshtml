@@ -1,4 +1,6 @@
-﻿<div class="modal fade" id="myModal5" tabindex="-1" role="dialog">
+﻿@model CineMagic.Web.ViewModels.InputModels.Users.AjaxRegisterInputModel
+
+<div class="modal fade" id="myModal5" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
@@ -6,11 +8,15 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4>Register</h4>
                 <div class="login-form">
-                    <form action="#" method="post">
-                        <input type="text" name="name" placeholder="Name" required="">
-                        <input type="email" name="email" placeholder="E-mail" required="">
-                        <input type="password" name="password" placeholder="Password" required="">
-                        <input type="password" name="conform password" placeholder="Confirm Password" required="">
+                    <form id="formRegisterAjax" asp-area="" asp-controller="Users" asp-action="Register" method="post">
+                        <div class="shadow">
+                            <div class="lds-dual-ring"></div>
+                        </div>
+                        <span id="register-error" class="text-danger" style="display: none; white-space: pre-line"></span>
+                        <input asp-for="Username" placeholder="Username">
+                        <input asp-for="Email" placeholder="E-mail">
+                        <input asp-for="Password" placeholder="Password">
+                        <input asp-for="ConfirmPassword" placeholder="Confirm Password">
                         <div class="signin-rit">
                             <span class="agree-checkbox">
                                 <label class="checkbox"><input type="checkbox" name="checkbox">I agree to your <a class="w3layouts-t" href="#" target="_blank">Terms of Use</a> and <a class="w3layouts-t" href="#" target="_blank">Privacy Policy</a></label>
@@ -25,3 +31,41 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('#formRegisterAjax').submit(function (event) {
+        event.preventDefault();
+        var json = { success: false, message: '', action: '' };
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: $('#formRegisterAjax').attr('action'),
+            xhrFields: {
+                withCredentials: true
+            },
+            data: $('#formRegisterAjax').serialize(),
+            beforeSend: function () {
+                $('.shadow').show(900);
+            },
+            success: function (data) {
+                json = data;
+            },
+            error: function (errorThrown) {
+                json.message = 'Request failed: ' + errorThrown;
+            },
+            complete: function () {
+                $('.shadow').hide(900);
+                if (json.success) {
+                    $('#myModal5').modal('hide');
+                    window.location.href = json.action;
+                }
+                else {
+                    let span = document.getElementById("register-error");
+                    span.style.display = "block";
+                    span.style.marginBottom = "2.5vh"; // 2,5% from virtual screen
+                    span.innerHTML = json.message;
+                }
+            }
+        });
+    });
+</script> 

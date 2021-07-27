@@ -6,6 +6,8 @@
 
         public const string AdministratorRoleName = "Administrator";
 
+        public const string UserRoleName = "User";
+
         public const int ItemsStandartCountPagination = 10;
 
         public const int MostPopularPeopleCount = 50;
