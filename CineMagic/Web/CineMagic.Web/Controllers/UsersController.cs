@@ -22,11 +22,11 @@
     public class UsersController : Controller
     {
         private readonly SignInManager<ApplicationUser> signInManager;
-        private readonly Logger<ApplicationUser> logger;
+        private readonly ILogger<UsersController> logger;
 
         public UsersController(
             SignInManager<ApplicationUser> signInManager,
-            Logger<ApplicationUser> logger)
+            ILogger<UsersController> logger)
         {
             this.signInManager = signInManager;
             this.logger = logger;
@@ -63,18 +63,16 @@
                 {
                     this.ModelState.AddModelError(string.Empty, "The email address or password supplied are incorrect. Please check your spelling and try again.");
                 }
-
-                // Login was unsuccessful, return model errors
-                if (!ajaxReturnObject.Success)
-                {
-                    ajaxReturnObject.Message = ModelErrorsHelper.GetModelErorrs(this.ModelState);
-                }
-
-                return this.Json(ajaxReturnObject);
             }
 
-            // If we got this far, something failed, redisplay form
-            return this.View();
+            // Login was unsuccessful, return model errors
+            if (!ajaxReturnObject.Success)
+            {
+                ajaxReturnObject.Message = ModelErrorsHelper.GetModelErorrs(this.ModelState);
+            }
+
+            var jsonResult = new JsonResult(ajaxReturnObject);
+            return jsonResult;
         }
     }
 }

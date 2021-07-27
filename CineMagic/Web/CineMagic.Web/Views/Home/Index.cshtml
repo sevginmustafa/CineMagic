@@ -230,6 +230,7 @@
                 </div>
             </div>
         </div>
+
         <h3 class="agile_w3_title"> Latest <span>Movies</span></h3>
         <!--/movies-->
         <div class="w3_agile_latest_movies">
@@ -271,7 +272,7 @@
         
 <h3 class="agile_w3_title">From Your <span>Watchlist</span> </h3>
         <!--/from-watchlist-->
-        @if (this.User.Identity.IsAuthenticated)
+        @*@if (this.User.Identity.IsAuthenticated)
         {
             <div class="wthree_agile-requested-movies">
                 @foreach (var movie in Model.Watchlist)
@@ -299,7 +300,7 @@
                                 <div class="clearfix"></div>
                             </div>
                         </div>
-                        <div class="ribben one">
+                        <div class="ribben one"> 
                             <p>NEW</p>
                         </div>
                     </div>
@@ -314,7 +315,7 @@
             <div class="text-center">
                 <a href="#" class="login" style="margin-left:0px" ; data-toggle="modal" data-target="#myModal4">Login</a>
             </div>
-        }
+        }*@
         <!--//from-watchlist-->
     </div>
 </div>
