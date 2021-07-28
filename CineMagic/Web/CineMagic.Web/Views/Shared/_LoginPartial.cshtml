@@ -8,26 +8,25 @@
 @if (this.SignInManager.IsSignedIn(this.User))
 {
     <div class="w3_agilits_banner_bootm">
-            <div class="col-md-6 wthree_agile_login">
-                <ul>
-                    <li>
-                        <a id="banner_logged" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello, @this.User.Identity.Name!</a>
-                    </li>
-                    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
-                        </li>
-                    }
+        <div class="col-md-6 wthree_agile_login">
+            <ul>
+                <li>
+                    <a id="banner_logged" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello, @this.User.Identity.Name!</a>
+                </li>
+                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                {
                     <li class="nav-item">
-                        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@this.Url.Action("Index", "Home", new { area = string.Empty })">
-                            <button type="submit">Logout</button>
-                        </form>
+                        <a class="nav-link text-dark" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
                     </li>
-                    <li><a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@this.Url.Action("Index", "Home", new { area = string.Empty })" class="login reg">Register</a></li>
-                </ul>
-            </div>
+                }
+                <li class="nav-item">
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
+                        <button id="logout_button" type="submit">Logout</button>
+                    </form>
+                </li>
+            </ul>
         </div>
+    </div>
 }
 else
 {

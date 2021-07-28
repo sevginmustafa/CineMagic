@@ -13,6 +13,7 @@
     </div>
 </div>
 
+<hr />
 <div class="inner-agile-w3l-part-head">
     <h3 class="w3l-inner-h-title">@this.TempData["CountryName"]</h3>
     <p class="w3ls_head_para">Movies by Country</p>
@@ -44,9 +45,12 @@
                     <div class="clearfix"></div>
                 </div>
             </div>
-            <div class="ribben one">
-                <p>NEW</p>
-            </div>
+            @if (movie.ReleaseDate.Year == DateTime.Now.Year)
+            {
+                <div class="ribben one">
+                    <p>NEW</p>
+                </div>
+            }
         </div>
     }
     <div class="clearfix"></div>

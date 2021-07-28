@@ -36,7 +36,10 @@
     $('#formRegisterAjax').submit(function (event) {
         if ($('#terms').is(':checked') == false) {
             event.preventDefault();
-            alert("By signing up, you must accept our terms and conditions!");
+            let span = document.getElementById("register-error");
+            span.style.display = "block";
+            span.style.marginBottom = "2.5vh"; // 2,5% from virtual screen
+            span.innerHTML = "If you want to sign up, first you have to accept our terms and conditions!";
             return false;
         }
         event.preventDefault();
