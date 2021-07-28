@@ -19,7 +19,7 @@
                         <input asp-for="ConfirmPassword" placeholder="Confirm Password">
                         <div class="signin-rit">
                             <span class="agree-checkbox">
-                                <label class="checkbox"><input type="checkbox" name="checkbox">I agree to your <a class="w3layouts-t" href="#" target="_blank">Terms of Use</a> and <a class="w3layouts-t" href="#" target="_blank">Privacy Policy</a></label>
+                                <label class="checkbox"><input type="checkbox" id="terms">I agree to your <a class="w3layouts-t" href="#" target="_blank">Terms of Use</a> and <a class="w3layouts-t" href="#" target="_blank">Privacy Policy</a></label>
                             </span>
                         </div>
                         <div class="tp">
@@ -34,6 +34,11 @@
 
 <script>
     $('#formRegisterAjax').submit(function (event) {
+        if ($('#terms').is(':checked') == false) {
+            event.preventDefault();
+            alert("By signing up, you must accept our terms and conditions!");
+            return false;
+        }
         event.preventDefault();
         var json = { success: false, message: '', action: '' };
         $.ajax({

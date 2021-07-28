@@ -7,8 +7,10 @@
     using System.Text;
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
+
     using CineMagic.Common;
     using CineMagic.Data.Models;
+    using CineMagic.Services.Data.Contracts;
     using CineMagic.Web.Helpers;
     using CineMagic.Web.Infrastructure;
     using CineMagic.Web.ViewModels.InputModels.Users;
@@ -23,17 +25,20 @@
 
     public class UsersController : Controller
     {
+        private readonly IUsersService usersService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ILogger<UsersController> logger;
         private readonly IEmailSender emailSender;
 
         public UsersController(
+            IUsersService usersService,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<UsersController> logger,
             IEmailSender emailSender)
         {
+            this.usersService = usersService;
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.logger = logger;
@@ -91,50 +96,57 @@
 
             if (this.ModelState.IsValid)
             {
-                var user = new ApplicationUser
+                if (!this.usersService.IsEmailAvailable(registerInputModel.Email))
                 {
-                    UserName = registerInputModel.Username,
-                    Email = registerInputModel.Email,
-                };
-
-                var result = await this.userManager.CreateAsync(user, registerInputModel.Password);
-
-                if (result.Succeeded)
-                {
-                    this.logger.LogInformation("User created a new account with password.");
-
-                    await this.userManager.AddToRoleAsync(user, GlobalConstants.UserRoleName);
-
-                    ajaxReturnObject.Success = true;
-                    ajaxReturnObject.Message = "Registered-in";
-                    ajaxReturnObject.Action = returnUrl;
-
-                    var code = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = this.Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl },
-                        protocol: this.Request.Scheme);
-
-                    await this.emailSender.SendEmailAsync(
-                        registerInputModel.Email,
-                        "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    if (this.userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return this.RedirectToPage("RegisterConfirmation", new { email = registerInputModel.Email, returnUrl });
-                    }
-                    else
-                    {
-                        await this.signInManager.SignInAsync(user, isPersistent: false);
-                    }
+                    this.ModelState.AddModelError("Email", $"Email address '{registerInputModel.Email}' is already taken.");
                 }
-
-                foreach (var error in result.Errors)
+                else
                 {
-                    this.ModelState.AddModelError(string.Empty, error.Description);
+                    var user = new ApplicationUser
+                    {
+                        UserName = registerInputModel.Username,
+                        Email = registerInputModel.Email,
+                    };
+
+                    var result = await this.userManager.CreateAsync(user, registerInputModel.Password);
+
+                    if (result.Succeeded)
+                    {
+                        this.logger.LogInformation("User created a new account with password.");
+
+                        await this.userManager.AddToRoleAsync(user, GlobalConstants.UserRoleName);
+
+                        ajaxReturnObject.Success = true;
+                        ajaxReturnObject.Message = "Registered-in";
+                        ajaxReturnObject.Action = returnUrl;
+
+                        var code = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
+                        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                        var callbackUrl = this.Url.Page(
+                            "/Account/ConfirmEmail",
+                            pageHandler: null,
+                            values: new { area = "Identity", userId = user.Id, code = code, returnUrl },
+                            protocol: this.Request.Scheme);
+
+                        await this.emailSender.SendEmailAsync(
+                            registerInputModel.Email,
+                            "Confirm your email",
+                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                        if (this.userManager.Options.SignIn.RequireConfirmedAccount)
+                        {
+                            return this.RedirectToPage("RegisterConfirmation", new { email = registerInputModel.Email, returnUrl });
+                        }
+                        else
+                        {
+                            await this.signInManager.SignInAsync(user, isPersistent: false);
+                        }
+                    }
+
+                    foreach (var error in result.Errors)
+                    {
+                        this.ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
             }
 
