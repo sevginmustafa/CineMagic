@@ -27,5 +27,7 @@
         IQueryable<T> GetMoviesByReleaseYearAsQueryable<T>(int year);
 
         IQueryable<T> GetAllMoviesAsQueryable<T>();
+
+        Task<T> GetMovieByIdAsync<T>(int id);
     }
 }

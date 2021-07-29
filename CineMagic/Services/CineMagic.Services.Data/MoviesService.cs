@@ -140,5 +140,12 @@
             .AllAsNoTracking()
             .OrderBy(x => x.Title)
             .To<T>();
+
+        public async Task<T> GetMovieByIdAsync<T>(int id)
+        => await this.moviesRepository
+            .AllAsNoTracking()
+            .Where(x => x.Id == id)
+            .To<T>()
+            .FirstOrDefaultAsync();
     }
 }

@@ -40,5 +40,12 @@
 
             return this.View(viewModel);
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var movie = await this.moviesService.GetMovieByIdAsync<MovieSingleViewModel>(id);
+
+            return this.View(movie);
+        }
     }
 }
