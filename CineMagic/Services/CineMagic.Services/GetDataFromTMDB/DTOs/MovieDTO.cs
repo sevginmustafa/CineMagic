@@ -21,7 +21,8 @@
 
         public int? Runtime { get; set; }
 
-        [JsonProperty("overview")]
+        public string Tagline { get; set; }
+
         public string Overview { get; set; }
 
         [JsonProperty("spoken_languages")]

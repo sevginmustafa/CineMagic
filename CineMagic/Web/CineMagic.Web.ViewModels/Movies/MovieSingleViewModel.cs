@@ -21,6 +21,8 @@
 
         public int Runtime { get; set; }
 
+        public string Tagline { get; set; }
+
         public string Overview { get; set; }
 
         public string Language { get; set; }
@@ -35,17 +37,15 @@
 
         public int CurrentNumberOfVotes { get; set; }
 
-        //public int DirectorId { get; set; }
-
-        //public virtual Director Director { get; set; }
+        public string DirectorName { get; set; }
 
         //public virtual ICollection<MovieBackdrop> Backdrops { get; set; }
 
-        //public virtual ICollection<MovieGenre> Genres { get; set; }
+        public ICollection<MovieGenresViewModel> Genres { get; set; }
 
         //public virtual ICollection<MovieActor> Cast { get; set; }
 
-        //public virtual ICollection<MovieCountry> ProductionCountries { get; set; }
+        public ICollection<MovieCountriesViewModel> ProductionCountries { get; set; }
 
         //public virtual ICollection<Rating> Ratings { get; set; }
 

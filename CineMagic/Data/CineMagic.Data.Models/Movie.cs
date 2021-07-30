@@ -42,6 +42,9 @@
         [MaxLength(RuntimeMaxLength)]
         public int Runtime { get; set; }
 
+        [MaxLength(TaglineMaxLength)]
+        public string Tagline { get; set; }
+
         [Required]
         [MaxLength(OverviewMaxLength)]
         public string Overview { get; set; }

@@ -344,6 +344,7 @@ namespace CineMagic.Data.Migrations
                     IMDBLink = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Runtime = table.Column<int>(type: "int", maxLength: 10, nullable: false),
+                    Tagline = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Overview = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     Language = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Budget = table.Column<double>(type: "float", nullable: false),

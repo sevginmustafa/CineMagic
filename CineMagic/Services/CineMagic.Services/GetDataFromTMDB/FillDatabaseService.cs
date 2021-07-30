@@ -65,6 +65,7 @@
                         IMDBLink = "https://www.imdb.com/title/" + movieDTO.IMDBId,
                         ReleaseDate = DateTime.ParseExact(movieDTO.ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
                         Runtime = movieDTO.Runtime.Value,
+                        Tagline = movieDTO.Tagline,
                         Overview = movieDTO.Overview,
                         Language = movieDTO.Language.Select(x => x.Name).FirstOrDefault(),
                         Budget = movieDTO.Budget,
