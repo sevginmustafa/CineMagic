@@ -1,5 +1,5 @@
 ﻿@using CineMagic.Web.ViewModels.Movies
-@model MovieSingleViewModel
+@model MovieSinglePageViewModel
 
 @{
     this.ViewData["Title"] = "Details";
@@ -17,11 +17,10 @@
 
 <div class="w3_content_agilleinfo_inner">
     <div class="agile_featured_movies">
-        <!---728x90--->
 
         <div class="inner-agile-w3l-part-head">
             <h3 class="w3l-inner-h-title">@Model.Title (@Model.ReleaseDate.Year)</h3>
-            <p class="w3ls_head_para">A Hero Will Rise.</p>
+            <p class="w3ls_head_para">@Model.Tagline</p>
         </div>
 
         <hr />
@@ -33,6 +32,7 @@
                             <div data-video="@Model.TrailerPath" id="video"> <img src="@Model.PosterPath" class="img-responsive" /></div>
                         </div>
                         <div class="col-md-6">
+                            <a href="#" class="watchlist">Add to watchlist</a>
                             <p class="text-left" style="color:red"><i class="fa fa-clock-o" title="Edit"></i> @Model.Runtime min </p>
                             <p class="text-left"><strong>Genre: </strong>@string.Join(", ", Model.Genres.Select(x => x.GenreName))</p>
                             <p class="text-left"><strong>Director: </strong>@Model.DirectorName</p>
@@ -41,281 +41,34 @@
                             <p class="text-left"><strong>Country: </strong>@string.Join(", ", Model.ProductionCountries.Select(x => x.CountryName))</p>
                             <p class="text-left"><strong>Budget: </strong>$@Model.Budget.ToString("#,##")</p>
                             <p class="text-left"><strong>Revenue: </strong>$@Model.Revenue.ToString("#,##")</p>
-                            <p class="text-left"><strong>Overview:  </strong>@Model.Overview </p>
+                            <p class="text-left"><strong>Overview: </strong>@Model.Overview</p>
                         </div>
                     </div>
-                    <h4>Movie Overview</h4>
-                    <p>@Model.Overview</p>
+                    <hr />
                 </div>
-                <h4 class="side-t-w3l-agile">Top Billed <span>Cast</span></h4>
-                <!--/movies-->
-                <div class="w3_agile_latest_movies">
 
+                <h4 class="side-t-w3l-agile">Top Billed <span>Cast</span></h4>
+                <div class="w3_agile_latest_movies">
                     <div id="owl-demo" class="owl-carousel owl-theme">
-                        <div class="item">
-                            <div class="w3l-movie-gride-agile w3l-movie-gride-slider ">
-                                <a href="single.html" class="hvr-sweep-to-bottom">
-                                    <img src="images/m5.jpg" title="Movies Pro" class="img-responsive" alt=" " />
-                                    <div class="w3l-action-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
-                                </a>
-                                <div class="mid-1 agileits_w3layouts_mid_1_home">
-                                    <div class="w3l-movie-text">
-                                        <h6><a href="single.html">Storks	</a></h6>
-                                    </div>
-                                    <div class="mid-2 agile_mid_2_home">
-                                        <p>2016</p>
-                                        <div class="block-stars">
-                                            <ul class="w3l-ratings">
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
-                                            </ul>
+                        @foreach (var actor in Model.Cast)
+                        {
+                            <di class="item">
+                                <div class="w3l-movie-gride-agile w3l-movie-gride-slider ">
+                                    <a href="single.html" class="hvr-sweep-to-bottom">
+                                        <img src="@actor.ActorProfilePicPath" title="@actor.ActorName" class="img-responsive" alt=" " />
+                                    </a>
+                                    <div class="mid-1 agileits_w3layouts_mid_1_home">
+                                        <div class="w3l-movie-text " style="height:45px;">
+                                            <h6><a style="font-weight:bold;" href="single.html">@actor.ActorName</a></h6>
+                                            <h6><a href="single.html">@actor.CharacterName</a></h6>
                                         </div>
-                                        <div class="clearfix"></div>
                                     </div>
                                 </div>
-                                <div class="ribben one">
-                                    <p>NEW</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="w3l-movie-gride-agile w3l-movie-gride-slider ">
-                                <a href="single.html" class="hvr-sweep-to-bottom">
-                                    <img src="images/m6.jpg" title="Movies Pro" class="img-responsive" alt=" " />
-                                    <div class="w3l-action-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
-                                </a>
-                                <div class="mid-1 agileits_w3layouts_mid_1_home">
-                                    <div class="w3l-movie-text">
-                                        <h6><a href="single.html">Hopeless</a></h6>
-                                    </div>
-                                    <div class="mid-2 agile_mid_2_home">
-                                        <p>2016</p>
-                                        <div class="block-stars">
-                                            <ul class="w3l-ratings">
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                                <div class="ribben one">
-                                    <p>NEW</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="w3l-movie-gride-agile w3l-movie-gride-slider ">
-                                <a href="single.html" class="hvr-sweep-to-bottom">
-                                    <img src="images/m7.jpg" title="Movies Pro" class="img-responsive" alt=" " />
-                                    <div class="w3l-action-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
-                                </a>
-                                <div class="mid-1 agileits_w3layouts_mid_1_home">
-                                    <div class="w3l-movie-text">
-                                        <h6><a href="single.html">Mechanic</a></h6>
-                                    </div>
-                                    <div class="mid-2 agile_mid_2_home">
-                                        <p>2016</p>
-                                        <div class="block-stars">
-                                            <ul class="w3l-ratings">
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                                <div class="ribben one">
-                                    <p>NEW</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="w3l-movie-gride-agile w3l-movie-gride-slider ">
-                                <a href="single.html" class="hvr-sweep-to-bottom">
-                                    <img src="images/m8.jpg" title="Movies Pro" class="img-responsive" alt=" " />
-                                    <div class="w3l-action-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
-                                </a>
-                                <div class="mid-1 agileits_w3layouts_mid_1_home">
-                                    <div class="w3l-movie-text">
-                                        <h6><a href="single.html">Timeless</a></h6>
-                                    </div>
-                                    <div class="mid-2 agile_mid_2_home">
-                                        <p>2016</p>
-                                        <div class="block-stars">
-                                            <ul class="w3l-ratings">
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                                <div class="ribben one">
-                                    <p>NEW</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="w3l-movie-gride-agile w3l-movie-gride-slider ">
-                                <a href="single.html" class="hvr-sweep-to-bottom">
-                                    <img src="images/m3.jpg" title="Movies Pro" class="img-responsive" alt=" " />
-                                    <div class="w3l-action-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
-                                </a>
-                                <div class="mid-1 agileits_w3layouts_mid_1_home">
-                                    <div class="w3l-movie-text">
-                                        <h6><a href="single.html">Deadpool</a></h6>
-                                    </div>
-                                    <div class="mid-2 agile_mid_2_home">
-                                        <p>2016</p>
-                                        <div class="block-stars">
-                                            <ul class="w3l-ratings">
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                                <div class="ribben one">
-                                    <p>NEW</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="w3l-movie-gride-agile w3l-movie-gride-slider ">
-                                <a href="single.html" class="hvr-sweep-to-bottom">
-                                    <img src="images/m11.jpg" title="Movies Pro" class="img-responsive" alt=" " />
-                                    <div class="w3l-action-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
-                                </a>
-                                <div class="mid-1 agileits_w3layouts_mid_1_home">
-                                    <div class="w3l-movie-text">
-                                        <h6><a href="single.html">Warcraft</a></h6>
-                                    </div>
-                                    <div class="mid-2 agile_mid_2_home">
-                                        <p>2016</p>
-                                        <div class="block-stars">
-                                            <ul class="w3l-ratings">
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                                <div class="ribben one">
-                                    <p>NEW</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="w3l-movie-gride-agile w3l-movie-gride-slider ">
-                                <a href="single.html" class="hvr-sweep-to-bottom">
-                                    <img src="images/m14.jpg" title="Movies Pro" class="img-responsive" alt=" " />
-                                    <div class="w3l-action-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
-                                </a>
-                                <div class="mid-1 agileits_w3layouts_mid_1_home">
-                                    <div class="w3l-movie-text">
-                                        <h6><a href="single.html">Rambo 4</a></h6>
-                                    </div>
-                                    <div class="mid-2 agile_mid_2_home">
-                                        <p>2016</p>
-                                        <div class="block-stars">
-                                            <ul class="w3l-ratings">
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                                <div class="ribben one">
-                                    <p>NEW</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="w3l-movie-gride-agile w3l-movie-gride-slider ">
-                                <a href="single.html" class="hvr-sweep-to-bottom">
-                                    <img src="images/m13.jpg" title="Movies Pro" class="img-responsive" alt=" " />
-                                    <div class="w3l-action-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
-                                </a>
-                                <div class="mid-1 agileits_w3layouts_mid_1_home">
-                                    <div class="w3l-movie-text">
-                                        <h6><a href="single.html">Ghostbuster</a></h6>
-                                    </div>
-                                    <div class="mid-2 agile_mid_2_home">
-                                        <p>2016</p>
-                                        <div class="block-stars">
-                                            <ul class="w3l-ratings">
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                                <div class="ribben one">
-                                    <p>NEW</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="w3l-movie-gride-agile w3l-movie-gride-slider ">
-                                <a href="single.html" class="hvr-sweep-to-bottom">
-                                    <img src="images/m15.jpg" title="Movies Pro" class="img-responsive" alt=" " />
-                                    <div class="w3l-action-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
-                                </a>
-                                <div class="mid-1 agileits_w3layouts_mid_1_home">
-                                    <div class="w3l-movie-text">
-                                        <h6><a href="single.html">RoboCop</a></h6>
-                                    </div>
-                                    <div class="mid-2 agile_mid_2_home">
-                                        <p>2016</p>
-                                        <div class="block-stars">
-                                            <ul class="w3l-ratings">
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                                <div class="ribben one">
-                                    <p>NEW</p>
-                                </div>
-                            </div>
-                        </div>
+                            </di>
+                        }
                     </div>
                 </div>
-                <!---728x90--->
+
                 <div class="admin-text">
                     <h5>WRITTEN BY ADMIN</h5>
                     <div class="admin-text-left">
@@ -421,104 +174,106 @@
                     </form>
                 </div>
                 <h4 class="side-t-w3l-agile">
-                    Hot <span>Topics</span></h4>
-                    <ul class="side-bar-agile">
-                        <li><a href="single.html">John Abraham, Sonakshi Sinha and Tahir ...</a><p>Sep 29, 2016</p></li>
-                        <li><a href="single.html">Romantic drama about two people finding out that love</a><p>Feb 3, 2016</p></li>
-                        <li><a href="single.html">Storks have moved on from delivering babies to packages ...</a><p>Aug 1, 2016</p></li>
-                        <li><a href="single.html">John Abraham, Sonakshi Sinha and Tahir ...</a><p>Sep 29, 2016</p></li>
-                        <li><a href="single.html">John Abraham, Sonakshi Sinha and Tahir ...</a><p>Sep 29, 2016</p></li>
-                    </ul>
-                    <h4 class="side-t-w3l-agile">
-                        Latest <span>Trailer</span></h4>
-                        <div class="video_agile_player sidebar-player">
-                            <div class="video-grid-single-page-agileits">
-                                <div data-video="fNKUgX8PhMA" id="video1"> <img src="images/22.jpg" alt="" class="img-responsive"> <div id="play"></div></div>
+                    Hot <span>Topics</span>
+                </h4>
+                <ul class="side-bar-agile">
+                    <li><a href="single.html">John Abraham, Sonakshi Sinha and Tahir ...</a><p>Sep 29, 2016</p></li>
+                    <li><a href="single.html">Romantic drama about two people finding out that love</a><p>Feb 3, 2016</p></li>
+                    <li><a href="single.html">Storks have moved on from delivering babies to packages ...</a><p>Aug 1, 2016</p></li>
+                    <li><a href="single.html">John Abraham, Sonakshi Sinha and Tahir ...</a><p>Sep 29, 2016</p></li>
+                    <li><a href="single.html">John Abraham, Sonakshi Sinha and Tahir ...</a><p>Sep 29, 2016</p></li>
+                </ul>
+                <h4 class="side-t-w3l-agile">
+                    Latest <span>Trailer</span>
+                </h4>
+                <div class="video_agile_player sidebar-player">
+                    <div class="video-grid-single-page-agileits">
+                        <div data-video="fNKUgX8PhMA" id="video1"> <img src="images/22.jpg" alt="" class="img-responsive"> <div id="play"></div></div>
+                    </div>
+
+
+                    <div class="player-text side-bar-info">
+                        <p class="fexi_header">Me Before You </p>
+                        <p class="fexi_header_para">
+                            <span class="conjuring_w3">Story Line<label>:</label></span>Me Before You Official Trailer #2 (2016) - Emilia Clarke, Sam Claflin Movie HD
+
+                            A girl in a small town forms an unlikely....
+                        </p>
+                        <p class="fexi_header_para"><span>Release On<label>:</label></span>Feb 3, 2016 </p>
+                        <p class="fexi_header_para">
+                            <span>Genres<label>:</label> </span>
+                            <a href="genre.html">Drama</a> |
+                            <a href="genre.html">Adventure</a> |
+                            <a href="genre.html">Family</a>
+                        </p>
+                        <p class="fexi_header_para fexi_header_para1">
+                            <span>Star Rating<label>:</label></span>
+                            <a href="#"><i class="fa fa-star" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-star" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+                        </p>
+                    </div>
+
+                </div>
+                <div class="clearfix"> </div>
+                <div class="agile-info-recent">
+                    <h4 class="side-t-w3l-agile">Latest <span>Trailer</span></h4>
+                    <div class="w3ls-recent-grids">
+                        <div class="w3l-recent-grid">
+                            <div class="wom">
+                                <a href="single.html"><img src="images/m12.jpg" alt=" " class="img-responsive"></a>
                             </div>
-
-
-                            <div class="player-text side-bar-info">
-                                <p class="fexi_header">Me Before You </p>
-                                <p class="fexi_header_para">
-                                    <span class="conjuring_w3">Story Line<label>:</label></span>Me Before You Official Trailer #2 (2016) - Emilia Clarke, Sam Claflin Movie HD
-
-                                    A girl in a small town forms an unlikely....
+                            <div class="wom-right">
+                                <h5><a href="single.html">Lorem Integer rutrum</a></h5>
+                                <p>
+                                    Mauris fermentum dictum magna. Sed laoreet aliquam leo.
+                                    Ut tellus dolor, dapibus eget.
                                 </p>
-                                <p class="fexi_header_para"><span>Release On<label>:</label></span>Feb 3, 2016 </p>
-                                <p class="fexi_header_para">
-                                    <span>Genres<label>:</label> </span>
-                                    <a href="genre.html">Drama</a> |
-                                    <a href="genre.html">Adventure</a> |
-                                    <a href="genre.html">Family</a>
-                                </p>
-                                <p class="fexi_header_para fexi_header_para1">
-                                    <span>Star Rating<label>:</label></span>
-                                    <a href="#"><i class="fa fa-star" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-star" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                                </p>
+                                <ul class="w3l-sider-list">
+                                    <li><i class="fa fa-clock-o" aria-hidden="true"></i>On Jan 12, 2016</li>
+                                    <li><i class="fa fa-eye" aria-hidden="true"></i> 2602</li>
+                                </ul>
                             </div>
-
+                            <div class="clearfix"> </div>
                         </div>
-                        <div class="clearfix"> </div>
-                        <div class="agile-info-recent">
-                            <h4 class="side-t-w3l-agile">Latest <span>Trailer</span></h4>
-                            <div class="w3ls-recent-grids">
-                                <div class="w3l-recent-grid">
-                                    <div class="wom">
-                                        <a href="single.html"><img src="images/m12.jpg" alt=" " class="img-responsive"></a>
-                                    </div>
-                                    <div class="wom-right">
-                                        <h5><a href="single.html">Lorem Integer rutrum</a></h5>
-                                        <p>
-                                            Mauris fermentum dictum magna. Sed laoreet aliquam leo.
-                                            Ut tellus dolor, dapibus eget.
-                                        </p>
-                                        <ul class="w3l-sider-list">
-                                            <li><i class="fa fa-clock-o" aria-hidden="true"></i>On Jan 12, 2016</li>
-                                            <li><i class="fa fa-eye" aria-hidden="true"></i> 2602</li>
-                                        </ul>
-                                    </div>
-                                    <div class="clearfix"> </div>
-                                </div>
-                                <div class="w3l-recent-grid">
-                                    <div class="wom">
-                                        <a href="single.html"><img src="images/m13.jpg" alt=" " class="img-responsive"></a>
-                                    </div>
-                                    <div class="wom-right">
-                                        <h5><a href="single.html">Lorem Integer rutrum</a></h5>
-                                        <p>
-                                            Mauris fermentum dictum magna. Sed laoreet aliquam leo.
-                                            Ut tellus dolor, dapibus eget.
-                                        </p>
-                                        <ul class="w3l-sider-list">
-                                            <li><i class="fa fa-clock-o" aria-hidden="true"></i>On Mar 3, 2016</li>
-                                            <li><i class="fa fa-eye" aria-hidden="true"></i> 2742</li>
-                                        </ul>
-                                    </div>
-                                    <div class="clearfix"> </div>
-                                </div>
-                                <div class="w3l-recent-grid">
-                                    <div class="wom">
-                                        <a href="single.html"><img src="images/m14.jpg" alt=" " class="img-responsive"></a>
-                                    </div>
-                                    <div class="wom-right">
-                                        <h5><a href="single.html">Lorem Integer rutrum</a></h5>
-                                        <p>
-                                            Mauris fermentum dictum magna. Sed laoreet aliquam leo.
-                                            Ut tellus dolor, dapibus eget.
-                                        </p>
-                                        <ul class="w3l-sider-list">
-                                            <li><i class="fa fa-clock-o" aria-hidden="true"></i>On Oct 13, 2016</li>
-                                            <li><i class="fa fa-eye" aria-hidden="true"></i> 2802</li>
-                                        </ul>
-                                    </div>
-                                    <div class="clearfix"> </div>
-                                </div>
+                        <div class="w3l-recent-grid">
+                            <div class="wom">
+                                <a href="single.html"><img src="images/m13.jpg" alt=" " class="img-responsive"></a>
                             </div>
+                            <div class="wom-right">
+                                <h5><a href="single.html">Lorem Integer rutrum</a></h5>
+                                <p>
+                                    Mauris fermentum dictum magna. Sed laoreet aliquam leo.
+                                    Ut tellus dolor, dapibus eget.
+                                </p>
+                                <ul class="w3l-sider-list">
+                                    <li><i class="fa fa-clock-o" aria-hidden="true"></i>On Mar 3, 2016</li>
+                                    <li><i class="fa fa-eye" aria-hidden="true"></i> 2742</li>
+                                </ul>
+                            </div>
+                            <div class="clearfix"> </div>
                         </div>
+                        <div class="w3l-recent-grid">
+                            <div class="wom">
+                                <a href="single.html"><img src="images/m14.jpg" alt=" " class="img-responsive"></a>
+                            </div>
+                            <div class="wom-right">
+                                <h5><a href="single.html">Lorem Integer rutrum</a></h5>
+                                <p>
+                                    Mauris fermentum dictum magna. Sed laoreet aliquam leo.
+                                    Ut tellus dolor, dapibus eget.
+                                </p>
+                                <ul class="w3l-sider-list">
+                                    <li><i class="fa fa-clock-o" aria-hidden="true"></i>On Oct 13, 2016</li>
+                                    <li><i class="fa fa-eye" aria-hidden="true"></i> 2802</li>
+                                </ul>
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="clearfix"></div>
         </div>

@@ -7,7 +7,7 @@
     using CineMagic.Data.Models;
     using CineMagic.Services.Mapping;
 
-    public class MovieSingleViewModel : IMapFrom<Movie>
+    public class MovieSinglePageViewModel : IMapFrom<Movie>
     {
         public string Title { get; set; }
 
@@ -39,11 +39,9 @@
 
         public string DirectorName { get; set; }
 
-        //public virtual ICollection<MovieBackdrop> Backdrops { get; set; }
-
         public ICollection<MovieGenresViewModel> Genres { get; set; }
 
-        //public virtual ICollection<MovieActor> Cast { get; set; }
+        public virtual ICollection<MovieCastViewModel> Cast { get; set; }
 
         public ICollection<MovieCountriesViewModel> ProductionCountries { get; set; }
 

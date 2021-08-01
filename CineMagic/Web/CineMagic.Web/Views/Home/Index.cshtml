@@ -54,13 +54,13 @@
                                     @foreach (var movie in Model.RecentMovies)
                                     {
                                         <div class="w3l-movie-gride-agile">
-                                            <a href="single.html" class="hvr-sweep-to-bottom">
+                                            <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="hvr-sweep-to-bottom">
                                                 <img src="@movie.PosterPath" title="@movie.Title" class="img-responsive">
                                                 <div class="w3l-action-icon"></div>
                                             </a>
                                             <div class="mid-1 agileits_w3layouts_mid_1_home">
                                                 <div class="w3l-movie-text" style="height:45px;">
-                                                    <h6><a href="single.html">@movie.Title</a></h6>
+                                                    <h6><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h6>
                                                 </div>
                                                 <div class="mid-2 agile_mid_2_home">
                                                     <p>@movie.ReleaseDate.Year</p>
@@ -127,13 +127,13 @@
                                     @foreach (var movie in Model.PopularMovies)
                                     {
                                         <div class="w3l-movie-gride-agile">
-                                            <a href="single.html" class="hvr-sweep-to-bottom">
+                                            <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="hvr-sweep-to-bottom">
                                                 <img src="@movie.PosterPath" title="@movie.Title" class="img-responsive">
                                                 <div class="w3l-action-icon"></div>
                                             </a>
                                             <div class="mid-1 agileits_w3layouts_mid_1_home">
                                                 <div class="w3l-movie-text" style="height:45px;">
-                                                    <h6><a href="single.html">@movie.Title</a></h6>
+                                                    <h6><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h6>
                                                 </div>
                                                 <div class="mid-2 agile_mid_2_home">
                                                     <p>@movie.ReleaseDate.Year</p>
@@ -200,13 +200,13 @@
                                     @foreach (var movie in Model.TopRatedMovies)
                                     {
                                         <div class="w3l-movie-gride-agile">
-                                            <a href="single.html" class="hvr-sweep-to-bottom">
+                                            <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="hvr-sweep-to-bottom">
                                                 <img src="@movie.PosterPath" title="@movie.Title" class="img-responsive">
                                                 <div class="w3l-action-icon"></div>
                                             </a>
                                             <div class="mid-1 agileits_w3layouts_mid_1_home">
                                                 <div class="w3l-movie-text" style="height:45px;">
-                                                    <h6><a href="single.html">@movie.Title</a></h6>
+                                                    <h6><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h6>
                                                 </div>
                                                 <div class="mid-2 agile_mid_2_home">
                                                     <p>@movie.ReleaseDate.Year</p>
@@ -248,13 +248,13 @@
                 {
                     <div class="item">
                         <div class="w3l-movie-gride-agile w3l-movie-gride-slider ">
-                            <a href="single.html" class="hvr-sweep-to-bottom">
+                            <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="hvr-sweep-to-bottom">
                                 <img src="@movie.PosterPath" title="@movie.Title" class="img-responsive" />
                                 <div class="w3l-action-icon"></div>
                             </a>
                             <div class="mid-1 agileits_w3layouts_mid_1_home">
                                 <div class="w3l-movie-text" style="height:45px;">
-                                    <h6><a href="single.html">@movie.Title</a></h6>
+                                    <h6><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h6>
                                 </div>
                                 <div class="mid-2 agile_mid_2_home">
                                     <p>@movie.ReleaseDate.Year</p>
@@ -289,13 +289,13 @@
                 @foreach (var movie in Model.Watchlist)
                 {
                     <div class="col-md-2 w3l-movie-gride-agile requested-movies">
-                        <a href="single.html" class="hvr-sweep-to-bottom">
+                        <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="hvr-sweep-to-bottom">
                             <img src="@movie.PosterPath" title="@movie.Title" class="img-responsive">
                             <div class="w3l-action-icon"></div>
                         </a>
                         <div class="mid-1 agileits_w3layouts_mid_1_home">
                             <div class="w3l-movie-text">
-                                <h6><a href="single.html">@movie.Title</a></h6>
+                                <h6><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h6>
                             </div>
                             <div class="mid-2 agile_mid_2_home">
                                 <p>@movie.ReleaseDate.Year</p>

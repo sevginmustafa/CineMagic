@@ -1245,9 +1245,43 @@ div#video8 > #play {
 
 /*-- //player--*/
 
+.watchlist {
+    float: right;
+    margin-top: 4px;
+}
+
+    .watchlist:hover {
+        background-color: #02a388;
+        color: white;
+    }
+
+        .watchlist:hover:before {
+            color: white;
+        }
+
+.watchlist {
+    font-size: 13px;
+    color: black;
+    border: 1px solid black;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    position: relative;
+    padding: 5px 14px 6px 31px;
+}
+
+    .watchlist::before {
+        content: '\f055';
+        color: black;
+        font-family: "FontAwesome";
+        font-size: 16px;
+        position: absolute;
+        top: 4px;
+        left: 11px;
+    }
+
 
 /*-- /latest-movies--*/
-
 h3.agile_w3_title {
     margin: 1.5em 0 1em;
     font-size: 2em;

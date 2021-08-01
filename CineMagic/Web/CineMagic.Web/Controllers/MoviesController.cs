@@ -43,7 +43,7 @@
 
         public async Task<IActionResult> Details(int id)
         {
-            var movie = await this.moviesService.GetMovieByIdAsync<MovieSingleViewModel>(id);
+            var movie = await this.moviesService.GetMovieByIdAsync<MovieSinglePageViewModel>(id);
 
             return this.View(movie);
         }

@@ -58,10 +58,10 @@
                 {
                     <div class="footer-grid1">
                         <div class="footer-grid1-left">
-                            <a href="single.html"><img src="@movie.PosterPath" style="width:90px; height:75px;" class="img-responsive"></a>
+                            <a asp-area="" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id"><img src="@movie.PosterPath" style="width:90px; height:75px;" class="img-responsive"></a>
                         </div>
                         <div class="footer-grid1-right">
-                            <a class="word-wrap" href="single.html">@movie.Title</a>
+                            <a class="word-wrap" asp-area="" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a>
                         </div>
                         <div class="clearfix"> </div>
                     </div>
@@ -73,7 +73,7 @@
                 @foreach (var movie in popularMovies)
                 {
                     <div class="footer-grid-instagram">
-                        <a href="single.html"><img src="@movie.PosterPath" class="img-responsive"></a>
+                        <a asp-area="" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id"><img src="@movie.PosterPath" class="img-responsive"></a>
                     </div>
                 }
                 <div class="clearfix"> </div>
