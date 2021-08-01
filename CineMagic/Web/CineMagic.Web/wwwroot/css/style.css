@@ -1245,21 +1245,21 @@ div#video8 > #play {
 
 /*-- //player--*/
 
-.watchlist {
+.watchlist_add {
     float: right;
     margin-top: 4px;
 }
 
-    .watchlist:hover {
+    .watchlist_add:hover {
         background-color: #02a388;
         color: white;
     }
 
-        .watchlist:hover:before {
+        .watchlist_add:hover:before {
             color: white;
         }
 
-.watchlist {
+.watchlist_add {
     font-size: 13px;
     color: black;
     border: 1px solid black;
@@ -1270,7 +1270,7 @@ div#video8 > #play {
     padding: 5px 14px 6px 31px;
 }
 
-    .watchlist::before {
+    .watchlist_add::before {
         content: '\f055';
         color: black;
         font-family: "FontAwesome";
@@ -1280,6 +1280,41 @@ div#video8 > #play {
         left: 11px;
     }
 
+
+.watchlist_remove {
+    float: right;
+    margin-top: 4px;
+}
+
+    .watchlist_remove:hover {
+        background-color: #d72d1a;
+        color: white;
+    }
+
+        .watchlist_remove:hover:before {
+            color: white;
+        }
+
+.watchlist_remove {
+    font-size: 13px;
+    color: black;
+    border: 1px solid black;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    position: relative;
+    padding: 5px 14px 6px 31px;
+}
+
+    .watchlist_remove::before {
+        content: '\f057';
+        color: black;
+        font-family: "FontAwesome";
+        font-size: 16px;
+        position: absolute;
+        top: 4px;
+        left: 11px;
+    }
 
 /*-- /latest-movies--*/
 h3.agile_w3_title {

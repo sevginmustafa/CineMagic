@@ -283,22 +283,22 @@
         </div>
 
         <h3 class="agile_w3_title">From Your <span>Watchlist</span> </h3>
-        @*@if (this.User.Identity.IsAuthenticated)
+        @if (this.User.Identity.IsAuthenticated)
         {
             <div class="wthree_agile-requested-movies">
                 @foreach (var movie in Model.Watchlist)
                 {
                     <div class="col-md-2 w3l-movie-gride-agile requested-movies">
-                        <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="hvr-sweep-to-bottom">
-                            <img src="@movie.PosterPath" title="@movie.Title" class="img-responsive">
+                        <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.MovieId" class="hvr-sweep-to-bottom">
+                            <img src="@movie.MoviePosterPath" title="@movie.MovieTitle" class="img-responsive">
                             <div class="w3l-action-icon"></div>
                         </a>
                         <div class="mid-1 agileits_w3layouts_mid_1_home">
                             <div class="w3l-movie-text">
-                                <h6><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h6>
+                                <h6><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.MovieId">@movie.MovieTitle</a></h6>
                             </div>
                             <div class="mid-2 agile_mid_2_home">
-                                <p>@movie.ReleaseDate.Year</p>
+                                <p>@movie.MovieReleaseDate.Year</p>
                                 <div class="block-stars">
                                     <ul class="w3l-ratings">
                                         <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
@@ -311,7 +311,7 @@
                                 <div class="clearfix"></div>
                             </div>
                         </div>
-                        @if (movie.ReleaseDate.Year == DateTime.Now.Year)
+                        @if (movie.MovieReleaseDate.Year == DateTime.Now.Year)
                         {
                             <div class="ribben one">
                                 <p>NEW</p>
@@ -329,6 +329,6 @@
             <div class="text-center">
                 <a href="#" class="login" style="margin-left:0px" ; data-toggle="modal" data-target="#myModal4">Login</a>
             </div>
-        }*@
+        }
     </div>
 </div>

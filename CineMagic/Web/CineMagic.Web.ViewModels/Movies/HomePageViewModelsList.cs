@@ -20,6 +20,6 @@
 
         public IEnumerable<MovieStandartViewModel> LatestMovies { get; set; }
 
-        public IEnumerable<MovieStandartViewModel> Watchlist { get; set; }
+        public IEnumerable<MovieWatchlistViewModel> Watchlist { get; set; }
     }
 }

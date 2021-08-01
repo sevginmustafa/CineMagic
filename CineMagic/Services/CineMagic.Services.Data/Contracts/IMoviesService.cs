@@ -29,5 +29,9 @@
         IQueryable<T> GetAllMoviesAsQueryable<T>();
 
         Task<T> GetMovieByIdAsync<T>(int id);
+
+        Task AddToUserWatchlistAsync(int movieId, string userId);
+
+        Task RemoveFromUserWatchlistAsync(int movieId, string userId);
     }
 }

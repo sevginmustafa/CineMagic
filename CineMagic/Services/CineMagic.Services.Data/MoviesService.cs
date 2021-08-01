@@ -17,10 +17,14 @@
         private const string DigitPaginationFilter = "0 - 9";
 
         private readonly IDeletableEntityRepository<Movie> moviesRepository;
+        private readonly IRepository<Watchlist> watchlistRepository;
 
-        public MoviesService(IDeletableEntityRepository<Movie> moviesRepository)
+        public MoviesService(
+            IDeletableEntityRepository<Movie> moviesRepository,
+            IRepository<Watchlist> watchlistRepository)
         {
             this.moviesRepository = moviesRepository;
+            this.watchlistRepository = watchlistRepository;
         }
 
         public T GetBannerSectionMovie<T>()
@@ -77,9 +81,10 @@
 
         // TODO
         public async Task<IEnumerable<T>> GetWatchlistMoviesAsync<T>(string userId, int count)
-            => await this.moviesRepository
+            => await this.watchlistRepository
             .AllAsNoTracking()
-            .OrderByDescending(x => x.ReleaseDate)
+            .Where(x => x.UserId == userId)
+            .OrderByDescending(x => x.CreatedOn)
             .Take(count)
             .To<T>()
             .ToListAsync();
@@ -147,5 +152,28 @@
             .Where(x => x.Id == id)
             .To<T>()
             .FirstOrDefaultAsync();
+
+        public async Task AddToUserWatchlistAsync(int movieId, string userId)
+        {
+            if (!this.watchlistRepository.AllAsNoTracking().Any(x => x.MovieId == movieId && x.UserId == userId))
+            {
+                await this.watchlistRepository.AddAsync(new Watchlist { MovieId = movieId, UserId = userId });
+
+                await this.watchlistRepository.SaveChangesAsync();
+            }
+        }
+
+        public async Task RemoveFromUserWatchlistAsync(int movieId, string userId)
+        {
+            var watchlist = this.watchlistRepository.AllAsNoTracking()
+                .FirstOrDefault(x => x.MovieId == movieId && x.UserId == userId);
+
+            if (watchlist != null)
+            {
+                this.watchlistRepository.Delete(watchlist);
+
+                await this.watchlistRepository.SaveChangesAsync();
+            }
+        }
     }
 }

@@ -2,13 +2,16 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
-
+    using AutoMapper;
     using CineMagic.Data.Models;
     using CineMagic.Services.Mapping;
 
-    public class MovieSinglePageViewModel : IMapFrom<Movie>
+    public class MovieSinglePageViewModel : IMapFrom<Movie>, IHaveCustomMappings
     {
+        public int Id { get; set; }
+
         public string Title { get; set; }
 
         public string PosterPath { get; set; }
@@ -47,10 +50,16 @@
 
         //public virtual ICollection<Rating> Ratings { get; set; }
 
-        //public virtual ICollection<Watchlist> Watchlists { get; set; }
+        public virtual ICollection<string> WatchlistUsers { get; set; }
 
         //public virtual ICollection<Review> Reviews { get; set; }
 
         //public virtual ICollection<MovieComment> Comments { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<Movie, MovieSinglePageViewModel>()
+                .ForMember(x => x.WatchlistUsers, opt => opt.MapFrom(x => x.Watchlists.Select(x => x.UserId)));
+        }
     }
 }

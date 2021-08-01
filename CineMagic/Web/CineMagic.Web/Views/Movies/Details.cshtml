@@ -1,4 +1,5 @@
-﻿@using CineMagic.Web.ViewModels.Movies
+﻿@using CineMagic.Web.Infrastructure
+@using CineMagic.Web.ViewModels.Movies
 @model MovieSinglePageViewModel
 
 @{
@@ -32,7 +33,21 @@
                             <div data-video="@Model.TrailerPath" id="video"> <img src="@Model.PosterPath" class="img-responsive" /></div>
                         </div>
                         <div class="col-md-6">
-                            <a href="#" class="watchlist">Add to watchlist</a>
+                            @if (this.User.Identity.IsAuthenticated)
+                            {
+                                if (Model.WatchlistUsers.Contains(this.User.GetId()))
+                                {
+                                    <a asp-controller="Movies" asp-action="RemoveFromWatchlist" asp-route-movieId="@Model.Id" class="watchlist_remove">Remove from Watchlist</a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Movies" asp-action="AddToWatchlist" asp-route-movieId="@Model.Id" class="watchlist_add">Add to Watchlist</a>
+                                }
+                            }
+                            else
+                            {
+                                <a href="#" class="watchlist_add" data-toggle="modal" data-target="#myModal4">Add to Watchlist</a>
+                            }
                             <p class="text-left" style="color:red"><i class="fa fa-clock-o" title="Edit"></i> @Model.Runtime min </p>
                             <p class="text-left"><strong>Genre: </strong>@string.Join(", ", Model.Genres.Select(x => x.GenreName))</p>
                             <p class="text-left"><strong>Director: </strong>@Model.DirectorName</p>
@@ -60,7 +75,7 @@
                                     <div class="mid-1 agileits_w3layouts_mid_1_home">
                                         <div class="w3l-movie-text " style="height:45px;">
                                             <h6><a style="font-weight:bold;" href="single.html">@actor.ActorName</a></h6>
-                                            <h6><a href="single.html">@actor.CharacterName</a></h6>
+                                            <h6><a>@actor.CharacterName</a></h6>
                                         </div>
                                     </div>
                                 </div>

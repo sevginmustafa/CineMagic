@@ -6,14 +6,16 @@
     using System.Threading.Tasks;
 
     using CineMagic.Services.Data.Contracts;
+    using CineMagic.Web.Infrastructure;
     using CineMagic.Web.ViewModels;
     using CineMagic.Web.ViewModels.Movies;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     public class MoviesController : Controller
     {
         private readonly IMoviesService moviesService;
-
+    
         public MoviesController(IMoviesService moviesService)
         {
             this.moviesService = moviesService;
@@ -46,6 +48,26 @@
             var movie = await this.moviesService.GetMovieByIdAsync<MovieSinglePageViewModel>(id);
 
             return this.View(movie);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> AddToWatchlist(int movieId)
+        {
+            var userId = this.User.GetId();
+
+            await this.moviesService.AddToUserWatchlistAsync(movieId, userId);
+
+            return this.RedirectToAction(nameof(this.Details), new { id = movieId });
+        }
+
+        [Authorize]
+        public async Task<IActionResult> RemoveFromWatchlist(int movieId)
+        {
+            var userId = this.User.GetId();
+
+            await this.moviesService.RemoveFromUserWatchlistAsync(movieId, userId);
+
+            return this.RedirectToAction(nameof(this.Details), new { id = movieId });
         }
     }
 }
