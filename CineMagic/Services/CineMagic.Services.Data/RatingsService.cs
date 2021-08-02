@@ -9,6 +9,7 @@
     using CineMagic.Data.Common.Repositories;
     using CineMagic.Data.Models;
     using CineMagic.Services.Data.Contracts;
+    using Microsoft.EntityFrameworkCore;
 
     public class RatingsService : IRatingsService
     {
@@ -19,17 +20,40 @@
             this.ratingsRepository = ratingsRepository;
         }
 
-        public double GetAverageRating(int movieId)
-        => this.ratingsRepository
+        public async Task<double> GetAverageRatingAsync(int movieId)
+        {
+            var rating = await this.ratingsRepository
             .AllAsNoTracking()
             .Where(x => x.MovieId == movieId)
-            .Average(x => x.Rate);
+            .ToListAsync();
 
-        public async Task SetRateAsync(int rate, int movieId, string userId)
+            if (rating.Count > 0)
+            {
+                return rating.Average(x => x.Rate);
+            }
+
+            return 0;
+        }
+
+        public async Task<double> GetUserRatingAsync(int movieId, string userId)
         {
-            var rating = this.ratingsRepository
+            var rating = await this.ratingsRepository
+            .AllAsNoTracking()
+            .FirstOrDefaultAsync(x => x.MovieId == movieId && x.UserId == userId);
+
+            if (rating != null)
+            {
+                return rating.Rate;
+            }
+
+            return await this.GetAverageRatingAsync(movieId);
+        }
+
+        public async Task SetRateAsync(double rate, int movieId, string userId)
+        {
+            var rating = await this.ratingsRepository
                 .All()
-                .FirstOrDefault(x => x.MovieId == movieId && x.UserId == userId);
+                .FirstOrDefaultAsync(x => x.MovieId == movieId && x.UserId == userId);
 
             if (rating == null)
             {

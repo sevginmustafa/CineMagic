@@ -4,7 +4,7 @@
 
     public class Rating : BaseModel<int>
     {
-        public int Rate { get; set; }
+        public double Rate { get; set; }
 
         public int MovieId { get; set; }
 

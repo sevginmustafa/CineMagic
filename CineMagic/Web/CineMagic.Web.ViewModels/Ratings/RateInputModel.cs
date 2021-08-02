@@ -4,8 +4,8 @@
 
     public class RateInputModel
     {
-        [Range(1, 5)]
-        public int Rate { get; set; }
+        [Range(0, 5)]
+        public double Rate { get; set; }
 
         public int MovieId { get; set; }
     }

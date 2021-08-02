@@ -1,9 +1,13 @@
 ﻿@using CineMagic.Web.Infrastructure
 @using CineMagic.Web.ViewModels.Movies
+@inject CineMagic.Services.Data.Contracts.IRatingsService RatingsService
 @model MovieSinglePageViewModel
 
 @{
     this.ViewData["Title"] = "Details";
+
+    var userId = this.User.GetId();
+    var getMovieRating = await RatingsService.GetUserRatingAsync(Model.Id, userId);
 }
 
 <div class="w3_breadcrumb">
@@ -22,19 +26,14 @@
         <div class="inner-agile-w3l-part-head">
             <h3 class="w3l-inner-h-title">@Model.Title (@Model.ReleaseDate.Year)</h3>
             <p class="w3ls_head_para">@Model.Tagline</p>
-
-
-
-            <div class="block-stars" style="float:none">
-                <ul class="w3l-ratings">
-                    <li data-rate="1"><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                    <li data-rate="2"><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                    <li data-rate="3"><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
-                    <li data-rate="4"><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
-                    <li data-rate="5"><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
-                    <li><span id="averageRating">@Model.Rating.ToString("f1")</span><span> / 5.0</span></li>
-                </ul>
-            </div>
+            @if (this.User.Identity.IsAuthenticated)
+            {
+                <div class="rating-enabled"></div><span id="averageRating">@Model.Rating.ToString("f2")</span><span> / 5.00</span>
+            }
+            else
+            {
+                <div class="rating-disabled"></div><span id="averageRating">@Model.Rating.ToString("f2")</span><span> / 5.00</span>
+            }
         </div>
 
         <div class="latest-news-agile-info">
@@ -47,7 +46,7 @@
                         <div class="col-md-6">
                             @if (this.User.Identity.IsAuthenticated)
                             {
-                                if (Model.WatchlistUsers.Contains(this.User.GetId()))
+                                if (Model.WatchlistUsers.Contains(userId))
                                 {
                                     <a asp-controller="Movies" asp-action="RemoveFromWatchlist" asp-route-movieId="@Model.Id" class="watchlist_remove">Remove from Watchlist</a>
                                 }
@@ -310,22 +309,51 @@
 
 @section Scripts{
     <script>
-        $("li[data-rate]").each(function (el) {
+        $(".rating-enabled").starRating({
+           starSize: 25,
+           initialRating: @getMovieRating,
+           disableAfterRate: false,
+    callback: function(currentRating, $el){
+        // make a server call here
             $(this).click(function () {
-                var rate = $(this).attr("data-rate");
+                var rate = currentRating;
                 var movieId = @Model.Id;
-                var data = { movieId: movieId, rate: rate };
-
+                var data = { movieId: movieId, rate: currentRating };
                 $.ajax({
                     type: "POST",
                     url: "/api/Ratings",
                     data: JSON.stringify(data),
                     success: function (data) {
-                        $('#averageRating').html(data.averageRating.toFixed(1));
+                        $('#averageRating').html(data.averageRating.toFixed(2));
                     },
                     contentType: 'application/json',
                 })
             })
+    }
+});
+    </script>
+
+    <script>
+        $(".rating-disabled").starRating({
+           starSize: 25,
+           initialRating: @Model.Rating,
+           readOnly: true,
         });
     </script>
 }
+
+@*<li class="list-group-item">
+        Rating:
+        <div class="movie_rating" data-rating="<%= movie.rating %>"></div>
+    </li>
+
+    $(".movie_rating").each( function() {
+        var rating = $(this).attr("data-rating");
+        $(this).rateYo(
+            {
+                rating: rating,
+                fullStar: true,
+                readOnly: true
+            }
+        );
+    });*@

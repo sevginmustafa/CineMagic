@@ -30,7 +30,7 @@
             var userId = this.User.GetId();
 
             await this.ratingsService.SetRateAsync(inputModel.Rate, inputModel.MovieId, userId);
-            var averageRating = this.ratingsService.GetAverageRating(inputModel.MovieId);
+            var averageRating = await this.ratingsService.GetAverageRatingAsync(inputModel.MovieId);
 
             return new RatingResponseModel { AverageRating = averageRating };
         }

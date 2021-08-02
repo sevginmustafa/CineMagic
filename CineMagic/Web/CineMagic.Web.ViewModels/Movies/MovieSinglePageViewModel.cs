@@ -62,7 +62,7 @@
         {
             configuration.CreateMap<Movie, MovieSinglePageViewModel>()
                 .ForMember(x => x.WatchlistUsers, opt => opt.MapFrom(x => x.Watchlists.Select(x => x.UserId)))
-                .ForMember(x => x.Rating, opt => opt.MapFrom(x => x.Ratings.Average(x => x.Rate)));
+                .ForMember(x => x.Rating, opt => opt.MapFrom(x => x.Ratings.Count > 0 ? x.Ratings.Average(x => x.Rate) : 0));
         }
     }
 }

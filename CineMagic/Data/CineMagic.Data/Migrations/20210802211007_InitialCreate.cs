@@ -344,7 +344,7 @@ namespace CineMagic.Data.Migrations
                     IMDBLink = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Runtime = table.Column<int>(type: "int", maxLength: 10, nullable: false),
-                    Tagline = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true),
+                    Tagline = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     Overview = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     Language = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Budget = table.Column<double>(type: "float", nullable: false),
@@ -526,7 +526,7 @@ namespace CineMagic.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Rate = table.Column<int>(type: "int", nullable: false),
+                    Rate = table.Column<double>(type: "float", nullable: false),
                     MovieId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),

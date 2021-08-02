@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CineMagic.Data.Migrations
 {
     [DbContext(typeof(CineMagicDbContext))]
-    [Migration("20210802144151_InitialCreate")]
+    [Migration("20210802211007_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -454,8 +454,8 @@ namespace CineMagic.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Tagline")
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -677,8 +677,8 @@ namespace CineMagic.Data.Migrations
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Rate")
-                        .HasColumnType("int");
+                    b.Property<double>("Rate")
+                        .HasColumnType("float");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
