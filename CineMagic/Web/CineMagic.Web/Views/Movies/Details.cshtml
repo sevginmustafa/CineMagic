@@ -22,9 +22,21 @@
         <div class="inner-agile-w3l-part-head">
             <h3 class="w3l-inner-h-title">@Model.Title (@Model.ReleaseDate.Year)</h3>
             <p class="w3ls_head_para">@Model.Tagline</p>
+
+
+
+            <div class="block-stars" style="float:none">
+                <ul class="w3l-ratings">
+                    <li data-rate="1"><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                    <li data-rate="2"><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                    <li data-rate="3"><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+                    <li data-rate="4"><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+                    <li data-rate="5"><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+                    <li><span id="averageRating">@Model.Rating.ToString("f1")</span><span> / 5.0</span></li>
+                </ul>
+            </div>
         </div>
 
-        <hr />
         <div class="latest-news-agile-info">
             <div class="col-md-8 latest-news-agile-left-content">
                 <div class="single video_agile_player">
@@ -295,3 +307,25 @@
 
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        $("li[data-rate]").each(function (el) {
+            $(this).click(function () {
+                var rate = $(this).attr("data-rate");
+                var movieId = @Model.Id;
+                var data = { movieId: movieId, rate: rate };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/Ratings",
+                    data: JSON.stringify(data),
+                    success: function (data) {
+                        $('#averageRating').html(data.averageRating.toFixed(1));
+                    },
+                    contentType: 'application/json',
+                })
+            })
+        });
+    </script>
+}

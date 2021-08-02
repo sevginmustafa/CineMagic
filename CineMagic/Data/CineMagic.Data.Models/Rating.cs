@@ -2,7 +2,7 @@
 {
     using CineMagic.Data.Common.Models;
 
-    public class Rating : BaseDeletableModel<int>
+    public class Rating : BaseModel<int>
     {
         public int Rate { get; set; }
 

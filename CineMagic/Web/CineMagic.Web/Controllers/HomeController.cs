@@ -13,8 +13,8 @@
     public class HomeController : Controller
     {
         private const int HomePageLeadMovieCount = 1;
-        private const int HomePageFeaturedMoviesTabCount = 9;
-        private const int HomePageLatestMoviesCount = 11;
+        private const int HomePageFeaturedMoviesTabCount = 12;
+        private const int HomePageLatestMoviesCount = 10;
         private const int HomePageWatchlistMoviesCount = 10;
 
         private readonly IMoviesService moviesService;
@@ -47,7 +47,7 @@
                 PopularMovies = popularMovies.Skip(1),
                 BestRatedMovie = bestRatedMovie,
                 TopRatedMovies = topRatedMovies.Skip(1),
-                LatestMovies = latestMovies.Skip(1),
+                LatestMovies = latestMovies,
                 Watchlist = watchlistMovies,
             };
 

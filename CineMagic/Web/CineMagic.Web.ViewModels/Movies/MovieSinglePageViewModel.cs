@@ -40,6 +40,8 @@
 
         public int CurrentNumberOfVotes { get; set; }
 
+        public double Rating { get; set; }
+
         public string DirectorName { get; set; }
 
         public ICollection<MovieGenresViewModel> Genres { get; set; }
@@ -59,7 +61,8 @@
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Movie, MovieSinglePageViewModel>()
-                .ForMember(x => x.WatchlistUsers, opt => opt.MapFrom(x => x.Watchlists.Select(x => x.UserId)));
+                .ForMember(x => x.WatchlistUsers, opt => opt.MapFrom(x => x.Watchlists.Select(x => x.UserId)))
+                .ForMember(x => x.Rating, opt => opt.MapFrom(x => x.Ratings.Average(x => x.Rate)));
         }
     }
 }
