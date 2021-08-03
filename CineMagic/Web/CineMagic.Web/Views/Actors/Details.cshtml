@@ -1,21 +1,16 @@
-﻿@using CineMagic.Web.Infrastructure
-@using CineMagic.Web.ViewModels.Movies
-@inject CineMagic.Services.Data.Contracts.IRatingsService RatingsService
-@model MovieSinglePageViewModel
+﻿@using CineMagic.Web.ViewModels.Actors
+@model ActorSinglePageViewModel
 
 @{
     this.ViewData["Title"] = "Details";
-
-    var userId = this.User.GetId();
-    var getMovieRating = await RatingsService.GetUserRatingAsync(Model.Id, userId);
 }
 
 <div class="w3_breadcrumb">
     <div class="breadcrumb-inner">
         <ul>
             <li><a asp-controller="Home" asp-action="Index">Home</a><i>//</i></li>
-            <li><a asp-controller="Movies" asp-action="All">All Movies</a><i>//</i></li>
-            <li class="active">@Model.Title</li>
+            <li><a asp-controller="Movies" asp-action="All">All Actors</a><i>//</i></li>
+            <li class="active">@Model.Name</li>
         </ul>
     </div>
 </div>
@@ -24,16 +19,7 @@
     <div class="agile_featured_movies">
 
         <div class="inner-agile-w3l-part-head">
-            <h3 class="w3l-inner-h-title">@Model.Title (@Model.ReleaseDate.Year)</h3>
-            <p class="w3ls_head_para">@Model.Tagline</p>
-            @if (this.User.Identity.IsAuthenticated)
-            {
-                <div class="rating-enabled"></div><span id="averageRating">@Model.Rating.ToString("f2")</span><span> / 5.00</span>
-            }
-            else
-            {
-                <div class="rating-disabled"></div><span id="averageRating">@Model.Rating.ToString("f2")</span><span> / 5.00</span>
-            }
+            <h3 class="w3l-inner-h-title">@Model.Name</h3>
         </div>
 
         <div class="latest-news-agile-info">
@@ -41,33 +27,34 @@
                 <div class="single video_agile_player">
                     <div class="row text-center">
                         <div class="col-md-6">
-                            <div data-video="@Model.TrailerPath" id="video"> <img src="@Model.PosterPath" class="img-responsive" /></div>
+                            ​<picture>
+                                <img src="@Model.ProfilePicPath" class="img-fluid img-thumbnail">
+                            </picture>
                         </div>
                         <div class="col-md-6">
-                            @if (this.User.Identity.IsAuthenticated)
+                            <p class="text-left"><strong>Known For: </strong>Acting</p>
+                            <p class="text-left"><strong>Gender: </strong>@Model.Gender</p>
+                            @if (Model.Birthday != null)
                             {
-                                if (Model.WatchlistUsers.Contains(userId))
-                                {
-                                    <a asp-controller="Movies" asp-action="RemoveFromWatchlist" asp-route-movieId="@Model.Id" class="watchlist_remove">Remove from Watchlist</a>
-                                }
-                                else
-                                {
-                                    <a asp-controller="Movies" asp-action="AddToWatchlist" asp-route-movieId="@Model.Id" class="watchlist_add">Add to Watchlist</a>
-                                }
+                                <p class="text-left">
+                                    <strong>Birthday: </strong>@Model.Birthday.Value.ToString("MMM d, yyyy")
+                                    @if (Model.Deathday == null)
+                                    {<text>(@Model.Age years old)</text>}
+                                </p>
                             }
                             else
                             {
-                                <a href="#" class="watchlist_add" data-toggle="modal" data-target="#myModal4">Add to Watchlist</a>
+                                <p class="text-left">
+                                    <strong>Birthday: </strong>
+                                </p>
                             }
-                            <p class="text-left" style="color:red"><i class="fa fa-clock-o" title="Edit"></i> @Model.Runtime min </p>
-                            <p class="text-left"><strong>Genre: </strong>@string.Join(", ", Model.Genres.Select(x => x.GenreName))</p>
-                            <p class="text-left"><strong>Director: </strong>@Model.DirectorName</p>
-                            <p class="text-left"><strong>IMDB: </strong><a href="@Model.IMDBLink">Link to IMDB</a> </p>
-                            <p class="text-left"><strong>Language: </strong>@Model.Language</p>
-                            <p class="text-left"><strong>Country: </strong>@string.Join(", ", Model.ProductionCountries.Select(x => x.CountryName))</p>
-                            <p class="text-left"><strong>Budget: </strong>$@Model.Budget.ToString("#,##")</p>
-                            <p class="text-left"><strong>Revenue: </strong>$@Model.Revenue.ToString("#,##")</p>
-                            <p class="text-left"><strong>Overview: </strong>@Model.Overview</p>
+                            @if (Model.Deathday != null)
+                            {
+                                <p class="text-left">
+                                    <strong>Deathday: </strong>@Model.Deathday.Value.ToString("MMM d, yyyy") (@Model.Age years old)
+                                </p>
+                            }
+                            <p class="text-left"><strong>Birthplace: </strong>@Model.Birthplace</p>
                         </div>
                     </div>
                     <hr />
@@ -76,17 +63,16 @@
                 <h4 class="side-t-w3l-agile">Top Billed <span>Cast</span></h4>
                 <div class="w3_agile_latest_movies">
                     <div id="owl-demo" class="owl-carousel owl-theme">
-                        @foreach (var actor in Model.Cast)
+                        @foreach (var movie in Model.Movies)
                         {
                             <di class="item">
                                 <div class="w3l-movie-gride-agile w3l-movie-gride-slider ">
-                                    <a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.ActorId" class="hvr-sweep-to-bottom">
-                                        <img src="@actor.ActorProfilePicPath" title="@actor.ActorName" class="img-responsive" alt=" " />
+                                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.MovieId" class="hvr-sweep-to-bottom">
+                                        <img src="@movie.MoviePosterPath" title="@movie.MovieTitle" class="img-responsive" />
                                     </a>
                                     <div class="mid-1 agileits_w3layouts_mid_1_home">
                                         <div class="w3l-movie-text " style="height:45px;">
-                                            <h6><a style="font-weight:bold;" asp-controller="Actors" asp-action="Details" asp-route-id="@actor.ActorId">@actor.ActorName</a></h6>
-                                            <h6><a>@actor.CharacterName</a></h6>
+                                            <h6><a style="font-weight:bold;" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.MovieId">@movie.MovieTitle</a></h6>
                                         </div>
                                     </div>
                                 </div>
@@ -303,57 +289,5 @@
             </div>
             <div class="clearfix"></div>
         </div>
-
     </div>
 </div>
-
-@section Scripts{
-    <script>
-        $(".rating-enabled").starRating({
-           starSize: 25,
-           initialRating: @getMovieRating,
-           disableAfterRate: false,
-    callback: function(currentRating, $el){
-        // make a server call here
-            $(this).click(function () {
-                var rate = currentRating;
-                var movieId = @Model.Id;
-                var data = { movieId: movieId, rate: currentRating };
-                $.ajax({
-                    type: "POST",
-                    url: "/api/Ratings",
-                    data: JSON.stringify(data),
-                    success: function (data) {
-                        $('#averageRating').html(data.averageRating.toFixed(2));
-                    },
-                    contentType: 'application/json',
-                })
-            })
-    }
-});
-    </script>
-
-    <script>
-        $(".rating-disabled").starRating({
-           starSize: 25,
-           initialRating: @Model.Rating,
-           readOnly: true,
-        });
-    </script>
-}
-
-@*<li class="list-group-item">
-        Rating:
-        <div class="movie_rating" data-rating="<%= movie.rating %>"></div>
-    </li>
-
-    $(".movie_rating").each( function() {
-        var rating = $(this).attr("data-rating");
-        $(this).rateYo(
-            {
-                rating: rating,
-                fullStar: true,
-                readOnly: true
-            }
-        );
-    });*@

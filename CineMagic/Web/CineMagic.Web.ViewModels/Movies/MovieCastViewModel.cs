@@ -18,7 +18,7 @@
         {
             configuration.CreateMap<MovieActor, MovieCastViewModel>()
                 .ForMember(x => x.ActorProfilePicPath, opt =>
-                opt.MapFrom(x => x.Actor.ProfilePicPath ?? "/images/NoProfilePic.jpg"));
+                opt.MapFrom(x => x.Actor.ProfilePicPath ?? "/images/no-profile-pic.jpg"));
         }
     }
 }

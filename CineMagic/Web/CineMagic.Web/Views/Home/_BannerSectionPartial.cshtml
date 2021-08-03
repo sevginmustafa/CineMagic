@@ -38,10 +38,10 @@
             <!--//header-w3l-->
             <!--/banner-info-->
             <div class="baner-info">
-                <h3>Latest <span>On</span>Line <span>Mo</span>vies</h3>
+                <h3>Popular Today</h3>
                 <h4>@Model.BannerSectionMovie.Title</h4>
-                <a class="w3_play_icon1" href="#small-dialog1">
-                    Watch Trailer
+                <a class="w3_play_icon1" asp-controller="Movies" asp-action="Details" asp-route-id="@Model.BannerSectionMovie.Id">
+                    See Details 
                 </a>
             </div>
             <!--/banner-ingo-->

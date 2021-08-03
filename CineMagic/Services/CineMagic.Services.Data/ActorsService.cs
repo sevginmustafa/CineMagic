@@ -21,6 +21,13 @@
             this.actorsRepository = actorsRepository;
         }
 
+        public async Task<T> GetActorByIdAsync<T>(int id)
+         => await this.actorsRepository
+            .AllAsNoTracking()
+            .Where(x => x.Id == id)
+            .To<T>()
+            .FirstOrDefaultAsync();
+
         public IQueryable<T> GetActorsBornTodayAsQueryable<T>(int gender)
         {
             var actors = Enumerable.Empty<T>().AsQueryable();

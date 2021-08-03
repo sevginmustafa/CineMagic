@@ -52,5 +52,12 @@
 
             return this.View(model);
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var actor = await this.actorsService.GetActorByIdAsync<ActorSinglePageViewModel>(id);
+
+            return this.View(actor);
+        }
     }
 }

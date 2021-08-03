@@ -20,7 +20,7 @@
         {
             configuration.CreateMap<Actor, ActorStandartViewModel>()
                 .ForMember(x => x.ProfilePicPath, opt =>
-                opt.MapFrom(x => x.ProfilePicPath ?? "/images/NoProfilePic.jpg"));
+                opt.MapFrom(x => x.ProfilePicPath ?? "/images/no-profile-pic.jpg"));
         }
     }
 }

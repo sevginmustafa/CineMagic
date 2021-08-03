@@ -11,5 +11,7 @@
         IQueryable<T> GetActorsBornTodayAsQueryable<T>(int gender);
 
         IQueryable<T> GetMostPopularActorsAsQueryable<T>(int gender, int count);
+
+        Task<T> GetActorByIdAsync<T>(int id);
     }
 }

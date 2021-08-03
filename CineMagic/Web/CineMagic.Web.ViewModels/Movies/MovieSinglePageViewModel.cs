@@ -42,6 +42,8 @@
 
         public double Rating { get; set; }
 
+        public int DirectorId { get; set; }
+
         public string DirectorName { get; set; }
 
         public ICollection<MovieGenresViewModel> Genres { get; set; }
