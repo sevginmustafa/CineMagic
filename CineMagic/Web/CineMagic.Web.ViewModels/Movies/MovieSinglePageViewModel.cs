@@ -37,10 +37,6 @@
 
         public double Popularity { get; set; }
 
-        public double CurrentAverageVote { get; set; }
-
-        public int CurrentNumberOfVotes { get; set; }
-
         public double Rating { get; set; }
 
         public int DirectorId { get; set; }

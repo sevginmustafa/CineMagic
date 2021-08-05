@@ -27,9 +27,7 @@
                 <div class="single video_agile_player">
                     <div class="row text-center">
                         <div class="col-md-6">
-                            ​<picture>
-                                <img src="@Model.ProfilePicPath" class="img-fluid img-thumbnail">
-                            </picture>
+                            <div><img src="@Model.ProfilePicPath" class="img-responsive" /></div>
                         </div>
                         <div class="col-md-6">
                             <p class="text-left"><strong>Popularity: </strong>@Model.Popularity.ToString("f2")</p>
@@ -57,13 +55,7 @@
                                 </p>
                             }
                             <p class="text-left"><strong>Birthplace: </strong>@Model.Birthplace</p>
-                            <p class="addReadMore showlesscontent text-left">
-                                @if (Model.Biography.Length <= 700)
-                                {
-                                    <strong>Biography: </strong>
-                                }
-                                @Model.Biography
-                            </p>
+                            <p class="addReadMore showlesscontent text-left"><strong>Biography: </strong>@Model.Biography</p>
                         </div>
                     </div>
                     <hr />
@@ -305,7 +297,7 @@
     <script>
         function AddReadMore() {
             //This limit you can set after how much characters you want to show Read More.
-            var charLmt = 700;
+            var charLmt = 500;
             // Text to show when text is collapsed
             var readMoreTxt = " ... Read More";
             // Text to show when text is expanded
@@ -321,7 +313,7 @@
                 if (allstr.length > charLmt) {
                     var firstSet = allstr.substring(0, charLmt);
                     var secdHalf = allstr.substring(charLmt, allstr.length);
-                    var strtoadd = "<b>Biography: </b>"+ firstSet + "<span id='text_readmore' class='SecSec'>" + secdHalf + "</span><span class='readMore'  title='Click to Show More'>" + readMoreTxt + "</span><span class='readLess' title='Click to Show Less'>" + readLessTxt + "</span>";
+                    var strtoadd = firstSet + "<span id='text_readmore' class='SecSec'>" + secdHalf + "</span><span class='readMore'  title='Click to Show More'>" + readMoreTxt + "</span><span class='readLess' title='Click to Show Less'>" + readLessTxt + "</span>";
                     $(this).html(strtoadd);
                 }
 

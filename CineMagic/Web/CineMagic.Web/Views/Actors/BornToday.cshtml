@@ -67,6 +67,9 @@
     <div class="blog-pagenat-wthree">
         <ul class="pagination">
             <li class="page-item @if (!Model.Actors.HasPreviousPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="BornToday" asp-route-gender="@((int)Model.Gender)">First</a>
+            </li>
+            <li class="page-item @if (!Model.Actors.HasPreviousPage) {<text>disabled</text>}">
                 <a class="page-link" asp-action="BornToday" asp-route-gender="@((int)Model.Gender)" asp-route-page="@Model.Actors.PreviousPage">Previous</a>
             </li>
             @for (int i = Model.Actors.PageNumber - 3; i < Model.Actors.PageNumber; i++)
@@ -95,6 +98,9 @@
             }
             <li class="page-item @if (!Model.Actors.HasNextPage) {<text>disabled</text>}">
                 <a class="page-link" asp-action="BornToday" asp-route-gender="@((int)Model.Gender)" asp-route-page="@Model.Actors.NextPage">Next</a>
+            </li>
+            <li class="page-item @if (!Model.Actors.HasNextPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="BornToday" asp-route-gender="@((int)Model.Gender)" asp-route-page="@Model.Actors.TotalPages">Last</a>
             </li>
         </ul>
     </div>

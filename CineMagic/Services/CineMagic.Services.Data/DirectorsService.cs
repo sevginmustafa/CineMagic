@@ -21,6 +21,13 @@
             this.directorsRepository = directorsRepository;
         }
 
+        public async Task<T> GetDirectorByIdAsync<T>(int id)
+        => await this.directorsRepository
+            .AllAsNoTracking()
+            .Where(x => x.Id == id)
+            .To<T>()
+            .FirstOrDefaultAsync();
+
         public IQueryable<T> GetDirectorsBornTodayAsQueryable<T>(int gender)
         {
             var directors = Enumerable.Empty<T>().AsQueryable();

@@ -103,6 +103,9 @@
     <div class="blog-pagenat-wthree">
         <ul class="pagination">
             <li class="page-item @if (!Model.Movies.HasPreviousPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="All" asp-route-letter="@Model.AlphabetPagingViewModel.SelectedLetter">First</a>
+            </li>
+            <li class="page-item @if (!Model.Movies.HasPreviousPage) {<text>disabled</text>}">
                 <a class="page-link" asp-action="All" asp-route-letter="@Model.AlphabetPagingViewModel.SelectedLetter" asp-route-page="@Model.Movies.PreviousPage">Previous</a>
             </li>
             @for (int i = Model.Movies.PageNumber - 3; i < Model.Movies.PageNumber; i++)
@@ -131,6 +134,9 @@
             }
             <li class="page-item @if (!Model.Movies.HasNextPage) {<text>disabled</text>}">
                 <a class="page-link" asp-action="All" asp-route-name="@Model.AlphabetPagingViewModel.SelectedLetter" asp-route-page="@Model.Movies.NextPage">Next</a>
+            </li>
+            <li class="page-item @if (!Model.Movies.HasNextPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="All" asp-route-name="@Model.AlphabetPagingViewModel.SelectedLetter" asp-route-page="@Model.Movies.TotalPages">Last</a>
             </li>
         </ul>
     </div>

@@ -17,14 +17,12 @@
 
         public DateTime MovieReleaseDate { get; set; }
 
-        public double MovieCurrentAverageVote { get; set; }
-
         public double Rating { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Movie, MovieWatchlistViewModel>()
-                .ForMember(x => x.Rating, opt => opt.MapFrom(x => x.Ratings.Count > 0 ? x.Ratings.Average(x => x.Rate) : 0));
+            configuration.CreateMap<Watchlist, MovieWatchlistViewModel>()
+                .ForMember(x => x.Rating, opt => opt.MapFrom(x => x.Movie.Ratings.Count > 0 ? x.Movie.Ratings.Average(x => x.Rate) : 0));
         }
     }
 }

@@ -11,5 +11,7 @@
         IQueryable<T> GetDirectorsBornTodayAsQueryable<T>(int gender);
 
         IQueryable<T> GetMostPopularDirectorsAsQueryable<T>(int gender, int count);
+
+        Task<T> GetDirectorByIdAsync<T>(int id);
     }
 }

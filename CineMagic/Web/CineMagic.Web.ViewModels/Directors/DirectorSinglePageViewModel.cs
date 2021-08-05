@@ -1,4 +1,4 @@
-﻿namespace CineMagic.Web.ViewModels.Actors
+﻿namespace CineMagic.Web.ViewModels.Directors
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,7 @@
     using CineMagic.Data.Models;
     using CineMagic.Services.Mapping;
 
-    public class ActorSinglePageViewModel : IMapFrom<Actor>, IHaveCustomMappings
+    public class DirectorSinglePageViewModel : IMapFrom<Director>
     {
         public int Id { get; set; }
 
@@ -31,13 +31,13 @@
 
         public double Popularity { get; set; }
 
-        public virtual ICollection<ActorMoviesViewModel> Movies { get; set; }
+        public virtual ICollection<DirectorMoviesViewModel> Movies { get; set; }
 
-        //public virtual ICollection<ActorComment> Comments { get; set; }
+        //public virtual ICollection<DirectorComment> Comments { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Actor, ActorSinglePageViewModel>().
+            configuration.CreateMap<Director, DirectorSinglePageViewModel>().
                 ForMember(x => x.ProfilePicPath, opt => opt.MapFrom(x => x.ProfilePicPath ?? "/images/no-profile-pic.jpg"));
         }
     }

@@ -36,13 +36,13 @@
     @foreach (var person in Model.Directors)
     {
         <div class="col-md-2 w3l-movie-gride-agile requested-movies">
-            <a href="single.html" class="hvr-sweep-to-bottom">
+            <a asp-controller="Directors" asp-action="Details" asp-route-id="@person.Id" class="hvr-sweep-to-bottom">
                 <img src="@person.ProfilePicPath" title="@person.Name" class="img-responsive">
                 <div class="w3l-action-icon"></div>
             </a>
             <div class="mid-1 agileits_w3layouts_mid_1_home">
                 <div class="w3l-movie-text">
-                    <h6><a class="text-left" href="single.html">@person.Name</a></h6>
+                    <h6><a class="text-left" asp-controller="Directors" asp-action="Details" asp-route-id="@person.Id">@person.Name</a></h6>
                 </div>
             </div>
             @if (person.Gender == "Male")
@@ -66,6 +66,9 @@
 {
     <div class="blog-pagenat-wthree">
         <ul class="pagination">
+            <li class="page-item @if (!Model.Directors.HasPreviousPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="BornToday" asp-route-gender="@((int)Model.Gender)">First</a>
+            </li>
             <li class="page-item @if (!Model.Directors.HasPreviousPage) {<text>disabled</text>}">
                 <a class="page-link" asp-action="BornToday" asp-route-gender="@((int)Model.Gender)" asp-route-page="@Model.Directors.PreviousPage">Previous</a>
             </li>
@@ -95,6 +98,9 @@
             }
             <li class="page-item @if (!Model.Directors.HasNextPage) {<text>disabled</text>}">
                 <a class="page-link" asp-action="BornToday" asp-route-gender="@((int)Model.Gender)" asp-route-page="@Model.Directors.NextPage">Next</a>
+            </li>
+            <li class="page-item @if (!Model.Directors.HasNextPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="BornToday" asp-route-gender="@((int)Model.Gender)" asp-route-page="@Model.Directors.TotalPages">Last</a>
             </li>
         </ul>
     </div>

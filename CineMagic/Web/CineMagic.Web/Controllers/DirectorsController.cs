@@ -52,5 +52,12 @@
 
             return this.View(model);
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var director = await this.directorsService.GetDirectorByIdAsync<DirectorSinglePageViewModel>(id);
+
+            return this.View(director);
+        }
     }
 }
