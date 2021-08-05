@@ -57,8 +57,13 @@
                                 </p>
                             }
                             <p class="text-left"><strong>Birthplace: </strong>@Model.Birthplace</p>
-                            <p class="addReadMore showlesscontent text-left">@Model.Biography</p>
-
+                            <p class="addReadMore showlesscontent text-left">
+                                @if (Model.Biography.Length <= 700)
+                                {
+                                    <strong>Biography: </strong>
+                                }
+                                @Model.Biography
+                            </p>
                         </div>
                     </div>
                     <hr />
@@ -300,7 +305,7 @@
     <script>
         function AddReadMore() {
             //This limit you can set after how much characters you want to show Read More.
-            var carLmt = 700;
+            var charLmt = 700;
             // Text to show when text is collapsed
             var readMoreTxt = " ... Read More";
             // Text to show when text is expanded
@@ -313,9 +318,9 @@
                     return;
 
                 var allstr = $(this).text();
-                if (allstr.length > carLmt) {
-                    var firstSet = allstr.substring(0, carLmt);
-                    var secdHalf = allstr.substring(carLmt, allstr.length);
+                if (allstr.length > charLmt) {
+                    var firstSet = allstr.substring(0, charLmt);
+                    var secdHalf = allstr.substring(charLmt, allstr.length);
                     var strtoadd = "<b>Biography: </b>"+ firstSet + "<span id='text_readmore' class='SecSec'>" + secdHalf + "</span><span class='readMore'  title='Click to Show More'>" + readMoreTxt + "</span><span class='readLess' title='Click to Show Less'>" + readLessTxt + "</span>";
                     $(this).html(strtoadd);
                 }

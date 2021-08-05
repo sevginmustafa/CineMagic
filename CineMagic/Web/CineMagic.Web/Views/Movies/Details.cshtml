@@ -32,7 +32,7 @@
             }
             else
             {
-                <div class="rating-disabled"></div><span id="averageRating">@Model.Rating.ToString("f2")</span><span> / 5.00</span>
+                <div class="rating-disabled" data-toggle="modal" data-target="#myModal4"></div><span id="averageRating">@Model.Rating.ToString("f2")</span><span> / 5.00</span>
             }
         </div>
 
@@ -68,7 +68,7 @@
                             <p class="text-left"><strong>Budget: </strong>$@Model.Budget.ToString("#,##")</p>
                             <p class="text-left"><strong>Revenue: </strong>$@Model.Revenue.ToString("#,##")</p>
                             <p class="addReadMore showlesscontent text-left">
-                                @if (Model.Overview.Length < 311)
+                                @if (Model.Overview.Length < 600)
                                 {
                                     <strong>Overview: </strong>
                                 }
@@ -350,7 +350,7 @@
     <script>
         function AddReadMore() {
             //This limit you can set after how much characters you want to show Read More.
-            var carLmt = 250;
+            var charLmt = 600;
             // Text to show when text is collapsed
             var readMoreTxt = " ... Read More";
             // Text to show when text is expanded
@@ -363,9 +363,9 @@
                     return;
 
                 var allstr = $(this).text();
-                if (allstr.length > carLmt) {
-                    var firstSet = allstr.substring(0, carLmt);
-                    var secdHalf = allstr.substring(carLmt, allstr.length);
+                if (allstr.length > charLmt) {
+                    var firstSet = allstr.substring(0, charLmt);
+                    var secdHalf = allstr.substring(charLmt, allstr.length);
                     var strtoadd = "<b>Overview: </b>" + firstSet + "<span id='text_readmore' class='SecSec'>" + secdHalf + "</span><span class='readMore'  title='Click to Show More'>" + readMoreTxt + "</span><span class='readLess' title='Click to Show Less'>" + readLessTxt + "</span>";
                     $(this).html(strtoadd);
                 }
@@ -382,20 +382,3 @@
         });
     </script>
 }
-}
-
-@*<li class="list-group-item">
-        Rating:
-        <div class="movie_rating" data-rating="<%= movie.rating %>"></div>
-    </li>
-
-    $(".movie_rating").each( function() {
-        var rating = $(this).attr("data-rating");
-        $(this).rateYo(
-            {
-                rating: rating,
-                fullStar: true,
-                readOnly: true
-            }
-        );
-    });*@

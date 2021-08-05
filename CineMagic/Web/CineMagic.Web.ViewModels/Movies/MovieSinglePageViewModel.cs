@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+
     using AutoMapper;
     using CineMagic.Data.Models;
     using CineMagic.Services.Mapping;
@@ -51,8 +52,6 @@
         public virtual ICollection<MovieCastViewModel> Cast { get; set; }
 
         public ICollection<MovieCountriesViewModel> ProductionCountries { get; set; }
-
-        //public virtual ICollection<Rating> Ratings { get; set; }
 
         public virtual ICollection<string> WatchlistUsers { get; set; }
 
