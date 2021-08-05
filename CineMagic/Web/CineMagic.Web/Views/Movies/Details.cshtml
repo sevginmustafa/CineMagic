@@ -67,7 +67,13 @@
                             <p class="text-left"><strong>Country: </strong>@string.Join(", ", Model.ProductionCountries.Select(x => x.CountryName))</p>
                             <p class="text-left"><strong>Budget: </strong>$@Model.Budget.ToString("#,##")</p>
                             <p class="text-left"><strong>Revenue: </strong>$@Model.Revenue.ToString("#,##")</p>
-                            <p class="text-left"><strong>Overview: </strong>@Model.Overview</p>
+                            <p class="addReadMore showlesscontent text-left">
+                                @if (Model.Overview.Length < 311)
+                                {
+                                    <strong>Overview: </strong>
+                                }
+                                @Model.Overview
+                            </p>
                         </div>
                     </div>
                     <hr />
@@ -340,6 +346,42 @@
            readOnly: true,
         });
     </script>
+
+    <script>
+        function AddReadMore() {
+            //This limit you can set after how much characters you want to show Read More.
+            var carLmt = 250;
+            // Text to show when text is collapsed
+            var readMoreTxt = " ... Read More";
+            // Text to show when text is expanded
+            var readLessTxt = " Read Less";
+
+
+            //Traverse all selectors with this class and manupulate HTML part to show Read More
+            $(".addReadMore").each(function () {
+                if ($(this).find(".firstSec").length)
+                    return;
+
+                var allstr = $(this).text();
+                if (allstr.length > carLmt) {
+                    var firstSet = allstr.substring(0, carLmt);
+                    var secdHalf = allstr.substring(carLmt, allstr.length);
+                    var strtoadd = "<b>Overview: </b>" + firstSet + "<span id='text_readmore' class='SecSec'>" + secdHalf + "</span><span class='readMore'  title='Click to Show More'>" + readMoreTxt + "</span><span class='readLess' title='Click to Show Less'>" + readLessTxt + "</span>";
+                    $(this).html(strtoadd);
+                }
+
+            });
+            //Read More and Read Less Click Event binding
+            $(document).on("click", ".readMore,.readLess", function () {
+                $(this).closest(".addReadMore").toggleClass("showlesscontent showmorecontent");
+            });
+        }
+        $(function () {
+            //Calling function after Page Load
+            AddReadMore();
+        });
+    </script>
+}
 }
 
 @*<li class="list-group-item">

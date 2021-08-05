@@ -22,6 +22,8 @@
 
         public int? Age => this.Birthday != null ? (DateTime.Today - this.Birthday.Value).Days / 365 : null;
 
+        public int KnownCredits => this.Movies.Count;
+
         public DateTime? Deathday { get; set; }
 
         public string Birthplace { get; set; }

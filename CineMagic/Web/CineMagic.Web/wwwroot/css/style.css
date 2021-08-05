@@ -72,6 +72,10 @@ ul.contact_info li a,
 }
 
 
+#text_readmore {
+    font-family: 'Lato', sans-serif;
+}
+
 /*--/model--*/
 
 .modal-content {
@@ -139,6 +143,26 @@ ul.contact_info li a,
 
 /*--//model--*/
 
+.addReadMore.showlesscontent .SecSec,
+.addReadMore.showlesscontent .readLess {
+    display: none;
+}
+
+.addReadMore.showmorecontent .readMore {
+    display: none;
+}
+
+.addReadMore .readMore,
+.addReadMore .readLess {
+    margin-left: 2px;
+    color: blue;
+    cursor: pointer;
+}
+
+.addReadMoreWrapTxt.showmorecontent .SecSec,
+.addReadMoreWrapTxt.showmorecontent .readLess {
+    display: block;
+}
 
 /*--header-w3-agileits --*/
 

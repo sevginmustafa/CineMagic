@@ -32,7 +32,9 @@
                             </picture>
                         </div>
                         <div class="col-md-6">
+                            <p class="text-left"><strong>Popularity: </strong>@Model.Popularity.ToString("f2")</p>
                             <p class="text-left"><strong>Known For: </strong>Acting</p>
+                            <p class="text-left"><strong>Known Credits: </strong>@Model.KnownCredits</p>
                             <p class="text-left"><strong>Gender: </strong>@Model.Gender</p>
                             @if (Model.Birthday != null)
                             {
@@ -55,12 +57,14 @@
                                 </p>
                             }
                             <p class="text-left"><strong>Birthplace: </strong>@Model.Birthplace</p>
+                            <p class="addReadMore showlesscontent text-left">@Model.Biography</p>
+
                         </div>
                     </div>
                     <hr />
                 </div>
 
-                <h4 class="side-t-w3l-agile">Top Billed <span>Cast</span></h4>
+                <h4 class="side-t-w3l-agile">Known <span>For</span></h4>
                 <div class="w3_agile_latest_movies">
                     <div id="owl-demo" class="owl-carousel owl-theme">
                         @foreach (var movie in Model.Movies)
@@ -291,3 +295,40 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        function AddReadMore() {
+            //This limit you can set after how much characters you want to show Read More.
+            var carLmt = 700;
+            // Text to show when text is collapsed
+            var readMoreTxt = " ... Read More";
+            // Text to show when text is expanded
+            var readLessTxt = " Read Less";
+
+
+            //Traverse all selectors with this class and manupulate HTML part to show Read More
+            $(".addReadMore").each(function () {
+                if ($(this).find(".firstSec").length)
+                    return;
+
+                var allstr = $(this).text();
+                if (allstr.length > carLmt) {
+                    var firstSet = allstr.substring(0, carLmt);
+                    var secdHalf = allstr.substring(carLmt, allstr.length);
+                    var strtoadd = "<b>Biography: </b>"+ firstSet + "<span id='text_readmore' class='SecSec'>" + secdHalf + "</span><span class='readMore'  title='Click to Show More'>" + readMoreTxt + "</span><span class='readLess' title='Click to Show Less'>" + readLessTxt + "</span>";
+                    $(this).html(strtoadd);
+                }
+
+            });
+            //Read More and Read Less Click Event binding
+            $(document).on("click", ".readMore,.readLess", function () {
+                $(this).closest(".addReadMore").toggleClass("showlesscontent showmorecontent");
+            });
+        }
+        $(function () {
+            //Calling function after Page Load
+            AddReadMore();
+        });
+    </script>
+}
