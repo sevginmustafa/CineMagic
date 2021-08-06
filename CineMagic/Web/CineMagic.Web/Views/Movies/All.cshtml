@@ -48,12 +48,23 @@
                 }
             </ul>
 
+            <h4 class="side-t-w3l-agile">Search By <span>Title</span></h4>
+            <div class="side-bar-form">
+                <form asp-action="All" method="get">
+                    <input type="search" name="SearchByTitle" placeholder="Search here...." value="@Model.SearchString">
+                    <input type="submit" value=" ">
+                </form>
+            </div>
+            <div class="w3ls-news-result">
+                <h4>Results Returned: <span>@Model.Movies.Count</span></h4>
+            </div>
+
             <div id="myTabContent" class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
                     <div class="agile-news-table">
-                        <div class="w3ls-news-result">
-                            <h4>Search Results : <span>25</span></h4>
-                        </div>
+                        <p><i>You can also type something in the input field below to filter the current page movies:</i></p>
+                        <input id="myInput" type="text">
+                        <br><br>
                         <table id="table-breakpoint">
                             <thead>
                                 <tr>
@@ -70,7 +81,7 @@
                                     <th>Rating</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="myTable">
                                 @foreach (var movie in Model.Movies)
                                 {
                                     <tr>
@@ -140,4 +151,17 @@
             </li>
         </ul>
     </div>
+}
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 }

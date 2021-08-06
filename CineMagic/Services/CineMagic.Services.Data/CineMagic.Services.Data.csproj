@@ -8,6 +8,12 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DTOs\**" />
+    <EmbeddedResource Remove="DTOs\**" />
+    <None Remove="DTOs\**" />
+  </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
@@ -22,10 +28,6 @@
     <ProjectReference Include="..\..\Data\CineMagic.Data.Common\CineMagic.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\CineMagic.Data.Models\CineMagic.Data.Models.csproj" />
     <ProjectReference Include="..\CineMagic.Services.Mapping\CineMagic.Services.Mapping.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DTOs\" />
   </ItemGroup>
 
 </Project>

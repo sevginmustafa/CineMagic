@@ -28,7 +28,7 @@
         {
             var userId = this.User.GetId();
 
-            var bannerSectionMovie = this.moviesService.GetBannerSectionMovie<MovieHomePageBannerViewModel>();
+            var bannerSectionMovie = await this.moviesService.GetBannerSectionMovieAsync<MovieHomePageBannerViewModel>();
             var mostRecentMovie = await this.moviesService.GetRecentMoviesAsync<MovieRespTabsViewModel>(HomePageLeadMovieCount);
             var recentMovies = await this.moviesService.GetRecentMoviesAsync<MovieStandartViewModel>(HomePageFeaturedMoviesTabCount);
             var mostPopularMovie = await this.moviesService.GetPopularMoviesAsync<MovieRespTabsViewModel>(HomePageLeadMovieCount);

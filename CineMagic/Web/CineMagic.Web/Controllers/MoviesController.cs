@@ -15,17 +15,26 @@
     public class MoviesController : Controller
     {
         private readonly IMoviesService moviesService;
-    
+
         public MoviesController(IMoviesService moviesService)
         {
             this.moviesService = moviesService;
         }
 
-        public async Task<IActionResult> All(string letter, int page = 1)
+        public async Task<IActionResult> All(string letter, string searchByTitle, int page = 1)
         {
             const int ItemsPerPage = 20;
 
-            var movies = this.moviesService.GetMoviesByLetterAsQueryable<MovieDetailedViewModel>(letter);
+            var movies = Enumerable.Empty<MovieDetailedViewModel>().AsQueryable();
+
+            if (letter != null)
+            {
+                movies = this.moviesService.GetMoviesByLetterAsQueryable<MovieDetailedViewModel>(letter);
+            }
+            else
+            {
+                movies = this.moviesService.SearchMoviesByNameAsQueryable<MovieDetailedViewModel>(searchByTitle);
+            }
 
             var moviesPaginated = await PaginatedList<MovieDetailedViewModel>.CreateAsync(movies, page, ItemsPerPage);
 
@@ -38,6 +47,7 @@
             {
                 Movies = moviesPaginated,
                 AlphabetPagingViewModel = alphabetPagingViewModel,
+                SearchString = searchByTitle,
             };
 
             return this.View(viewModel);

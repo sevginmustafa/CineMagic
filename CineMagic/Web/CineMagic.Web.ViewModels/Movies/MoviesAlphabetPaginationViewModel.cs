@@ -5,5 +5,7 @@
         public PaginatedList<MovieDetailedViewModel> Movies { get; set; }
 
         public AlphabetPagingViewModel AlphabetPagingViewModel { get; set; }
+
+        public string SearchString { get; set; }
     }
 }

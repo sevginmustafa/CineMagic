@@ -27,25 +27,15 @@
             this.watchlistRepository = watchlistRepository;
         }
 
-        public T GetBannerSectionMovie<T>()
-        {
-            try
-            {
-                var movie = this.moviesRepository
-                   .AllAsNoTracking()
-                   .OrderByDescending(x => x.ReleaseDate)
-                   .ThenByDescending(x => x.Popularity)
-                   .Take(7)
-                   .To<T>()
-                   .ToList()[(int)DateTime.Now.DayOfWeek];
-
-                return movie;
-            }
-            catch (Exception)
-            {
-                return default;
-            }
-        }
+        public async Task<T> GetBannerSectionMovieAsync<T>()
+            => await this.moviesRepository
+            .AllAsNoTracking()
+            .OrderByDescending(x => x.ReleaseDate)
+            .ThenByDescending(x => x.Popularity)
+            .Take(7)
+            .OrderBy(x => Guid.NewGuid())
+            .To<T>()
+            .FirstOrDefaultAsync();
 
         public async Task<IEnumerable<T>> GetRecentMoviesAsync<T>(int count)
             => await this.moviesRepository
@@ -119,6 +109,19 @@
             return movies;
         }
 
+        public IQueryable<T> SearchMoviesByNameAsQueryable<T>(string title)
+        {
+            if (title != null)
+            {
+                return this.moviesRepository
+                     .AllAsNoTracking()
+                     .Where(x => x.Title.Contains(title))
+                     .To<T>();
+            }
+
+            return this.GetAllMoviesAsQueryable<T>();
+        }
+
         public IQueryable<T> GetMoviesByGenreNameAsQueryable<T>(string name)
             => this.moviesRepository
             .AllAsNoTracking()
@@ -141,13 +144,13 @@
             .To<T>();
 
         public IQueryable<T> GetAllMoviesAsQueryable<T>()
-        => this.moviesRepository
+            => this.moviesRepository
             .AllAsNoTracking()
             .OrderBy(x => x.Title)
             .To<T>();
 
         public async Task<T> GetMovieByIdAsync<T>(int id)
-        => await this.moviesRepository
+            => await this.moviesRepository
             .AllAsNoTracking()
             .Where(x => x.Id == id)
             .To<T>()
