@@ -15,6 +15,7 @@
     {
         private const string AllPaginationFilter = "All";
         private const string DigitPaginationFilter = "0 - 9";
+        private const int BannerSectionMoviesCount = 10;
 
         private readonly IDeletableEntityRepository<Movie> moviesRepository;
         private readonly IRepository<Watchlist> watchlistRepository;
@@ -31,8 +32,7 @@
             => await this.moviesRepository
             .AllAsNoTracking()
             .OrderByDescending(x => x.ReleaseDate)
-            .ThenByDescending(x => x.Popularity)
-            .Take(7)
+            .Take(BannerSectionMoviesCount)
             .OrderBy(x => Guid.NewGuid())
             .To<T>()
             .FirstOrDefaultAsync();
@@ -87,7 +87,7 @@
             {
                 movies = this.moviesRepository
                     .AllAsNoTracking()
-                    .Where(x => x.Title.ToLower().StartsWith(letter))
+                    .Where(x => x.Title.ToLower().StartsWith(letter.ToLower()))
                     .OrderBy(x => x.Title)
                     .To<T>();
             }
@@ -109,13 +109,13 @@
             return movies;
         }
 
-        public IQueryable<T> SearchMoviesByNameAsQueryable<T>(string title)
+        public IQueryable<T> SearchMoviesByTitleAsQueryable<T>(string title)
         {
-            if (title != null)
+            if (!string.IsNullOrWhiteSpace(title))
             {
                 return this.moviesRepository
                      .AllAsNoTracking()
-                     .Where(x => x.Title.Contains(title))
+                     .Where(x => x.Title.ToLower().Contains(title.ToLower()))
                      .To<T>();
             }
 

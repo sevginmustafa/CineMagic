@@ -34,6 +34,6 @@
 
         Task RemoveFromUserWatchlistAsync(int movieId, string userId);
 
-        IQueryable<T> SearchMoviesByNameAsQueryable<T>(string title);
+        IQueryable<T> SearchMoviesByTitleAsQueryable<T>(string title);
     }
 }

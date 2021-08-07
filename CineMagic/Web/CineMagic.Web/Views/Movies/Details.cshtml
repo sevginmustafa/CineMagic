@@ -14,7 +14,7 @@
     <div class="breadcrumb-inner">
         <ul>
             <li><a asp-controller="Home" asp-action="Index">Home</a><i>//</i></li>
-            <li><a asp-controller="Movies" asp-action="All">All Movies</a><i>//</i></li>
+            <li><a asp-action="All">All Movies</a><i>//</i></li>
             <li class="active">@Model.Title</li>
         </ul>
     </div>
@@ -48,11 +48,11 @@
                             {
                                 if (Model.WatchlistUsers.Contains(userId))
                                 {
-                                    <a asp-controller="Movies" asp-action="RemoveFromWatchlist" asp-route-movieId="@Model.Id" class="watchlist_remove">Remove from Watchlist</a>
+                                    <a asp-action="RemoveFromWatchlist" asp-route-movieId="@Model.Id" class="watchlist_remove">Remove from Watchlist</a>
                                 }
                                 else
                                 {
-                                    <a asp-controller="Movies" asp-action="AddToWatchlist" asp-route-movieId="@Model.Id" class="watchlist_add">Add to Watchlist</a>
+                                    <a asp-action="AddToWatchlist" asp-route-movieId="@Model.Id" class="watchlist_add">Add to Watchlist</a>
                                 }
                             }
                             else

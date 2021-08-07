@@ -86,7 +86,7 @@
                                 {
                                     <tr>
                                         <td>@counter</td>
-                                        <td class="w3-list-img"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id"><img src="@movie.PosterPath" /> <span>@movie.Title</span></a></td>
+                                        <td class="w3-list-img"><a asp-action="Details" asp-route-id="@movie.Id"><img src="@movie.PosterPath" /> <span>@movie.Title</span></a></td>
                                         <td>@movie.DirectorName</td>
                                         <td class="w3-list-info">@string.Join(", ", movie.Genres.Select(x => x.GenreName))</td>
                                         <td>@movie.ReleaseDate.Year</td>

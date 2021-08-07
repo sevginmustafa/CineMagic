@@ -33,7 +33,7 @@
             }
             else
             {
-                movies = this.moviesService.SearchMoviesByNameAsQueryable<MovieDetailedViewModel>(searchByTitle);
+                movies = this.moviesService.SearchMoviesByTitleAsQueryable<MovieDetailedViewModel>(searchByTitle);
             }
 
             var moviesPaginated = await PaginatedList<MovieDetailedViewModel>.CreateAsync(movies, page, ItemsPerPage);

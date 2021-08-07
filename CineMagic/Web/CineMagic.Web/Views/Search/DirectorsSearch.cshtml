@@ -1,0 +1,96 @@
+﻿@using CineMagic.Web.ViewModels.Directors
+@model PaginatedList<DirectorStandartViewModel>
+
+@{
+    this.ViewData["Title"] = "Search Directors";
+}
+
+<div class="w3_breadcrumb">
+    <div class="breadcrumb-inner">
+        <ul>
+            <li><a asp-controller="Home" asp-action="Index">Home</a><i>//</i></li>
+            <li class="active">Search Directors</li>
+        </ul>
+    </div>
+</div>
+
+<br />
+<div class="inner-agile-w3l-part-head">
+    <p class="w3ls_head_para">Results for: <div>"@this.TempData["SearchString"]"</div></p>
+</div>
+
+<div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+    <ul id="myTab" class="nav nav-tabs nav-justified" role="tablist">
+        <li>
+            <a asp-action="MoviesSearch" asp-route-title="@this.TempData["SearchString"]">Movies</a>
+        </li>
+        <li>
+            <a asp-action="ActorsSearch" asp-route-name="@this.TempData["SearchString"]">Actors</a>
+        </li>
+        <li class="active">
+            <a>Directors</a>
+        </li>
+    </ul>
+</div>
+
+<div class="wthree_agile-requested-movies">
+    @foreach (var person in Model)
+    {
+        <div class="col-md-2 w3l-movie-gride-agile requested-movies">
+            <a asp-action="Details" asp-route-id="@person.Id" class="hvr-sweep-to-bottom">
+                <img src="@person.ProfilePicPath" title="@person.Name" class="img-responsive">
+                <div class="w3l-action-icon"></div>
+            </a>
+            <div class="mid-1 agileits_w3layouts_mid_1_home">
+                <div class="w3l-movie-text">
+                    <h6><a class="text-left" asp-action="Details" asp-route-id="@person.Id">@person.Name</a></h6>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="clearfix"></div>
+</div>
+
+@if (Model.TotalPages > 1)
+{
+    <div class="blog-pagenat-wthree">
+        <ul class="pagination">
+            <li class="page-item @if (!Model.HasPreviousPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="DirectorsSearch" asp-route-name="@this.TempData["SearchString"]">First</a>
+            </li>
+            <li class="page-item @if (!Model.HasPreviousPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="DirectorsSearch" asp-route-name="@this.TempData["SearchString"]" asp-route-page="@Model.PreviousPage">Previous</a>
+            </li>
+            @for (int i = Model.PageNumber - 3; i < Model.PageNumber; i++)
+            {
+                if (i > 0)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="DirectorsSearch" asp-route-name="@this.TempData["SearchString"]" asp-route-page="@i">@i</a>
+                    </li>
+                }
+            }
+            <li class="page-item active">
+                <span class="page-link">
+                    @Model.PageNumber
+                    <span class="sr-only">(current)</span>
+                </span>
+            </li>
+            @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + 3; i++)
+            {
+                if (i <= Model.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="DirectorsSearch" asp-route-name="@this.TempData["SearchString"]" asp-route-page="@i">@i</a>
+                    </li>
+                }
+            }
+            <li class="page-item @if (!Model.HasNextPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="DirectorsSearch" asp-route-name="@this.TempData["SearchString"]" asp-route-page="@Model.NextPage">Next</a>
+            </li>
+            <li class="page-item @if (!Model.HasNextPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="DirectorsSearch" asp-route-name="@this.TempData["SearchString"]" asp-route-page="@Model.TotalPages">Last</a>
+            </li>
+        </ul>
+    </div>
+}

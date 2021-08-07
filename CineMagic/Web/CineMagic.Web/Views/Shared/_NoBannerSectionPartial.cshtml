@@ -24,8 +24,8 @@
                         </ul> <!-- cd-header-buttons -->
                     </div>
                     <div id="cd-search" class="cd-search">
-                        <form action="#" method="post">
-                            <input name="Search" type="search" placeholder="Search...">
+                        <form asp-area="" asp-controller="Search" asp-action="MoviesSearch" method="get">
+                            <input name="Title" type="search" placeholder="Search...">
                         </form>
                     </div>
                 </div>
