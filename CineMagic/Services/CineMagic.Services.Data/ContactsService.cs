@@ -1,8 +1,5 @@
 ﻿namespace CineMagic.Services.Data
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
     using System.Threading.Tasks;
 
     using CineMagic.Common;
@@ -14,18 +11,21 @@
 
     public class ContactsService : IContactsService
     {
-        private readonly IRepository<ContactFormEntry> contactsRepository;
+        private readonly IRepository<ContactFormEntry> userContactsRepository;
+        private readonly IRepository<AdminContactFormEntry> adminContactsRepository;
         private readonly IEmailSender emailSender;
 
         public ContactsService(
-            IRepository<ContactFormEntry> contactsRepository,
+            IRepository<ContactFormEntry> userContactsRepository,
+            IRepository<AdminContactFormEntry> adminContactsRepository,
             IEmailSender emailSender)
         {
-            this.contactsRepository = contactsRepository;
+            this.userContactsRepository = userContactsRepository;
+            this.adminContactsRepository = adminContactsRepository;
             this.emailSender = emailSender;
         }
 
-        public async Task GetEnquiryFromUser(ContactFormInputModel inputModel)
+        public async Task GetEnquiryFromUserAsync(ContactFormInputModel inputModel)
         {
             var enquiry = new ContactFormEntry
             {
@@ -35,20 +35,36 @@
                 Message = inputModel.Message,
             };
 
-            await this.contactsRepository.AddAsync(enquiry);
-            await this.contactsRepository.SaveChangesAsync();
+            await this.userContactsRepository.AddAsync(enquiry);
+            await this.userContactsRepository.SaveChangesAsync();
 
-            await this.emailSender.SendEmailAsync(
-                enquiry.Email,
-                enquiry.Name,
-                GlobalConstants.SystemEmail,
-                enquiry.Subject,
-                enquiry.Message);
+            // await this.emailSender.SendEmailAsync(
+            //    enquiry.Email,
+            //    enquiry.Name,
+            //    GlobalConstants.SystemEmail,
+            //    enquiry.Subject,
+            //    enquiry.Message);
         }
 
-        public Task SendEnquiryToUser(ContactFormInputModel inputModel)
+        public async Task SendEnquiryToUserAsync(ContactFormInputModel inputModel)
         {
-            throw new NotImplementedException();
+            var enquiry = new AdminContactFormEntry
+            {
+                Name = inputModel.Name,
+                Email = inputModel.Email,
+                Subject = inputModel.Subject,
+                Message = inputModel.Message,
+            };
+
+            await this.adminContactsRepository.AddAsync(enquiry);
+            await this.adminContactsRepository.SaveChangesAsync();
+
+            await this.emailSender.SendEmailAsync(
+                GlobalConstants.SystemEmail,
+                enquiry.Name,
+                enquiry.Email,
+                enquiry.Subject,
+                enquiry.Message);
         }
     }
 }

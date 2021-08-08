@@ -31,9 +31,14 @@
                 return this.View(inputModel);
             }
 
-            await this.contactsService.GetEnquiryFromUser(inputModel);
+            await this.contactsService.GetEnquiryFromUserAsync(inputModel);
 
-            return this.Redirect("/");
+            return this.RedirectToAction(nameof(this.SuccessMessage));
+        }
+
+        public IActionResult SuccessMessage()
+        {
+            return this.View();
         }
     }
 }

@@ -6,8 +6,8 @@
 
     public interface IContactsService
     {
-        Task GetEnquiryFromUser(ContactFormInputModel inputModel);
+        Task GetEnquiryFromUserAsync(ContactFormInputModel inputModel);
 
-        Task SendEnquiryToUser(ContactFormInputModel inputModel);
+        Task SendEnquiryToUserAsync(ContactFormInputModel inputModel);
     }
 }

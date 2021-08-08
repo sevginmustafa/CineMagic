@@ -32,6 +32,24 @@ namespace CineMagic.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AdminContactFormEntries",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Subject = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AdminContactFormEntries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -845,6 +863,9 @@ namespace CineMagic.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "ActorComments");
+
+            migrationBuilder.DropTable(
+                name: "AdminContactFormEntries");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
