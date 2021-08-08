@@ -66,7 +66,7 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IEmailSender>(x => new SendGridEmailSender(this.configuration["SendGrid:ApiKey"]));
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IGetDataFromTMDBService, GetDataFromTMDBService>();
             services.AddTransient<IFillDatabaseService, FillDatabaseService>();
@@ -78,6 +78,7 @@
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IRatingsService, RatingsService>();
             services.AddTransient<ISearchService, SearchService>();
+            services.AddTransient<IContactsService, ContactsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

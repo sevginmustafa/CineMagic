@@ -14,7 +14,7 @@
         <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
         <li><a asp-area="" asp-controller="Movies" asp-action="All">Movies</a></li>
         <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown">Genre<b class="caret"></b></a>
+            <a class="dropdown-toggle" data-toggle="dropdown">Genres<b class="caret"></b></a>
             <ul class="dropdown-menu multi-column columns-3">
                 <li>
                     @foreach (var genre in genres)
@@ -32,7 +32,7 @@
             </ul>
         </li>
         <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown">Country<b class="caret"></b></a>
+            <a class="dropdown-toggle" data-toggle="dropdown">Countries<b class="caret"></b></a>
             <ul class="dropdown-menu multi-column columns-3">
                 <li>
                     @foreach (var country in countries)
@@ -85,6 +85,6 @@
                 </li>
             </ul>
         </li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a asp-area="" asp-controller="Contacts" asp-action="Index">Contacts</a></li>
     </ul>
 </div>

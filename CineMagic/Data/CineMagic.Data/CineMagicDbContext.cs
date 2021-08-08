@@ -28,6 +28,10 @@
 
         public DbSet<ActorComment> ActorComments { get; set; }
 
+        public DbSet<AdminContactFormEntry> AdminContactFormEntries { get; set; }
+
+        public DbSet<ContactFormEntry> ContactFormEntries { get; set; }
+
         public DbSet<Country> Countries { get; set; }
 
         public DbSet<Director> Directors { get; set; }

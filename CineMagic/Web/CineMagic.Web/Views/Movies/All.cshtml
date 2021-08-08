@@ -18,14 +18,13 @@
     <div class="breadcrumb-inner">
         <ul>
             <li><a asp-controller="Home" asp-action="Index">Home</a><i>//</i></li>
-            <li class="active">All Movies</li>
+            <li class="active">@this.ViewData["Title"]</li>
         </ul>
     </div>
 </div>
 
 <div class="w3_content_agilleinfo_inner">
     <div class="agile_featured_movies">
-        <!---728x90--->
 
         <div class="inner-agile-w3l-part-head">
             <h3 class="w3l-inner-h-title">Movie List</h3>

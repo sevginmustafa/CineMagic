@@ -10,6 +10,16 @@
             public const int FullNameMaxLength = 100;
         }
 
+        public static class ContactForm
+        {
+            public const int NameMinLength = 3;
+            public const int NameMaxLength = 100;
+            public const int SubjectMinLength = 5;
+            public const int SubjectMaxLength = 100;
+            public const int MessageMinLength = 5;
+            public const int MessageMaxLength = 5000;
+        }
+
         public static class Movie
         {
             public const int TitleMaxLength = 100;

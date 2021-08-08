@@ -1,19 +1,19 @@
 ﻿@using CineMagic.Web.ViewModels.Movies
 @model PaginatedList<MovieStandartViewModel>
 @{
-    ViewData["Title"] = "Countries";
+    this.ViewData["Title"] = "Countries";
 }
 
 <div class="w3_breadcrumb">
     <div class="breadcrumb-inner">
         <ul>
             <li><a asp-controller="Home" asp-action="Index">Home</a><i>//</i></li>
-            <li class="active">Country</li>
+            <li class="active">@this.ViewData["Title"] - @this.TempData["CountryName"]</li>
         </ul>
     </div>
 </div>
 
-<hr />
+<br />
 <div class="inner-agile-w3l-part-head">
     <h3 class="w3l-inner-h-title">@this.TempData["CountryName"]</h3>
     <p class="w3ls_head_para">Movies by Country</p>

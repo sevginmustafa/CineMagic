@@ -2,14 +2,14 @@
 @model ActorSinglePageViewModel
 
 @{
-    this.ViewData["Title"] = "Details";
+    this.ViewData["Title"] = "Actors";
 }
 
 <div class="w3_breadcrumb">
     <div class="breadcrumb-inner">
         <ul>
             <li><a asp-controller="Home" asp-action="Index">Home</a><i>//</i></li>
-            <li><a asp-controller="Movies" asp-action="All">All Actors</a><i>//</i></li>
+            <li><a asp-controller="Movies" asp-action="All">@this.ViewData["Title"]</a><i>//</i></li>
             <li class="active">@Model.Name</li>
         </ul>
     </div>
@@ -58,7 +58,7 @@
                             <p class="addReadMore showlesscontent text-left"><strong>Biography: </strong>@Model.Biography</p>
                         </div>
                     </div>
-                    <hr />
+                    <br />
                 </div>
 
                 <h4 class="side-t-w3l-agile">Known <span>For</span></h4>

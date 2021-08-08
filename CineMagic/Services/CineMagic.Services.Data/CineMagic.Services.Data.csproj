@@ -25,9 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CineMagic.Common\CineMagic.Common.csproj" />
     <ProjectReference Include="..\..\Data\CineMagic.Data.Common\CineMagic.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\CineMagic.Data.Models\CineMagic.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\CineMagic.Web.ViewModels\CineMagic.Web.ViewModels.csproj" />
     <ProjectReference Include="..\CineMagic.Services.Mapping\CineMagic.Services.Mapping.csproj" />
+    <ProjectReference Include="..\CineMagic.Services.Messaging\CineMagic.Services.Messaging.csproj" />
   </ItemGroup>
 
 </Project>
