@@ -16,6 +16,7 @@
         private readonly IDeletableEntityRepository<Actor> actorsRepository;
         private readonly IDeletableEntityRepository<Genre> genresRepository;
         private readonly IDeletableEntityRepository<Country> countriesRepository;
+        private readonly IDeletableEntityRepository<Language> languagesRepository;
         private readonly IGetDataFromTMDBService getDataFromTMDBService;
 
         public FillDatabaseService(
@@ -24,6 +25,7 @@
             IDeletableEntityRepository<Actor> actorsRepository,
             IDeletableEntityRepository<Genre> genresRepository,
             IDeletableEntityRepository<Country> countriesRepository,
+            IDeletableEntityRepository<Language> languagesRepository,
             IGetDataFromTMDBService getDataFromTMDBService)
         {
             this.moviesRepository = moviesRepository;
@@ -31,6 +33,7 @@
             this.actorsRepository = actorsRepository;
             this.genresRepository = genresRepository;
             this.countriesRepository = countriesRepository;
+            this.languagesRepository = languagesRepository;
             this.getDataFromTMDBService = getDataFromTMDBService;
         }
 
@@ -67,7 +70,6 @@
                         Runtime = movieDTO.Runtime.Value,
                         Tagline = movieDTO.Tagline,
                         Overview = movieDTO.Overview,
-                        Language = movieDTO.Language.Select(x => x.Name).FirstOrDefault(),
                         Budget = movieDTO.Budget,
                         Revenue = movieDTO.Revenue,
                         Popularity = movieDTO.Popularity,
@@ -110,6 +112,22 @@
                         }
 
                         movie.ProductionCountries.Add(new MovieCountry { CountryId = findCountry.Id });
+                    }
+
+                    foreach (var language in movieDTO.Languages)
+                    {
+                        var findLanguage = this.languagesRepository.AllAsNoTracking().FirstOrDefault(x => x.Name == language.Name);
+
+                        if (findLanguage == null)
+                        {
+                            findLanguage = new Language { Name = language.Name };
+
+                            await this.languagesRepository.AddAsync(findLanguage);
+
+                            await this.languagesRepository.SaveChangesAsync();
+                        }
+
+                        movie.Languages.Add(new MovieLanguage { LanguageId = findLanguage.Id });
                     }
 
                     var castAndCrew = this.getDataFromTMDBService.GetMovieCastAndCrewDataAsJSON(movieDTO.Id);

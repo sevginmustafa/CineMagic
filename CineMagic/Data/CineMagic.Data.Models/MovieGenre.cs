@@ -1,8 +1,10 @@
 ﻿namespace CineMagic.Data.Models
 {
+    using System;
+
     using CineMagic.Data.Common.Models;
 
-    public class MovieGenre : BaseDeletableModel<int>
+    public class MovieGenre : IDeletableEntity
     {
         public int MovieId { get; set; }
 
@@ -11,5 +13,9 @@
         public int GenreId { get; set; }
 
         public virtual Genre Genre { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedOn { get; set; }
     }
 }

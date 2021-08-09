@@ -22,7 +22,8 @@
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Movie, MovieStandartViewModel>()
-                .ForMember(x => x.Rating, opt => opt.MapFrom(x => x.Ratings.Count > 0 ? x.Ratings.Average(x => x.Rate) : 0));
+                .ForMember(x => x.Rating, opt =>
+                opt.MapFrom(x => x.Ratings.Count > 0 ? x.Ratings.Average(x => x.Rate) : 0));
         }
     }
 }

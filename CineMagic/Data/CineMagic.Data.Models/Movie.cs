@@ -16,9 +16,10 @@
             this.Genres = new HashSet<MovieGenre>();
             this.Cast = new HashSet<MovieActor>();
             this.ProductionCountries = new HashSet<MovieCountry>();
+            this.Languages = new HashSet<MovieLanguage>();
             this.Ratings = new HashSet<Rating>();
             this.Watchlists = new HashSet<Watchlist>();
-            this.Reviews = new HashSet<Review>();
+            this.Reviews = new HashSet<MovieReview>();
             this.Comments = new HashSet<MovieComment>();
         }
 
@@ -49,10 +50,6 @@
         [MaxLength(OverviewMaxLength)]
         public string Overview { get; set; }
 
-        [Required]
-        [MaxLength(LanguageMaxLength)]
-        public string Language { get; set; }
-
         public double Budget { get; set; }
 
         public double Revenue { get; set; }
@@ -75,11 +72,13 @@
 
         public virtual ICollection<MovieCountry> ProductionCountries { get; set; }
 
+        public virtual ICollection<MovieLanguage> Languages { get; set; }
+
         public virtual ICollection<Rating> Ratings { get; set; }
 
         public virtual ICollection<Watchlist> Watchlists { get; set; }
 
-        public virtual ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<MovieReview> Reviews { get; set; }
 
         public virtual ICollection<MovieComment> Comments { get; set; }
     }

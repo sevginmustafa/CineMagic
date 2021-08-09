@@ -4,15 +4,15 @@
 
     using CineMagic.Data.Common.Models;
 
-    public class MovieCountry : IDeletableEntity
+    public class MovieReview : IDeletableEntity
     {
         public int MovieId { get; set; }
 
         public virtual Movie Movie { get; set; }
 
-        public int CountryId { get; set; }
+        public int? ReviewId { get; set; }
 
-        public virtual Country Country { get; set; }
+        public virtual Review Review { get; set; }
 
         public bool IsDeleted { get; set; }
 

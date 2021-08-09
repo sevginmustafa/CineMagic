@@ -30,6 +30,10 @@
 
         public DbSet<AdminContactFormEntry> AdminContactFormEntries { get; set; }
 
+        public DbSet<Author> Authors { get; set; }
+
+        public DbSet<AuthorReview> AuthorsReviews { get; set; }
+
         public DbSet<ContactFormEntry> ContactFormEntries { get; set; }
 
         public DbSet<Country> Countries { get; set; }
@@ -39,6 +43,8 @@
         public DbSet<DirectorComment> DirectorComments { get; set; }
 
         public DbSet<Genre> Genres { get; set; }
+
+        public DbSet<Language> Languages { get; set; }
 
         public DbSet<Movie> Movies { get; set; }
 
@@ -51,6 +57,10 @@
         public DbSet<MovieCountry> MoviesCountries { get; set; }
 
         public DbSet<MovieGenre> MoviesGenres { get; set; }
+
+        public DbSet<MovieLanguage> MoviesLanguages { get; set; }
+
+        public DbSet<MovieReview> MoviesReviews { get; set; }
 
         public DbSet<Rating> Ratings { get; set; }
 
@@ -81,6 +91,24 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<AuthorReview>()
+                .HasKey(x => new { x.AuthorId, x.ReviewId });
+
+            builder.Entity<MovieActor>()
+                 .HasKey(x => new { x.MovieId, x.ActorId });
+
+            builder.Entity<MovieCountry>()
+                 .HasKey(x => new { x.MovieId, x.CountryId });
+
+            builder.Entity<MovieGenre>()
+                 .HasKey(x => new { x.MovieId, x.GenreId });
+
+            builder.Entity<MovieLanguage>()
+                  .HasKey(x => new { x.MovieId, x.LanguageId });
+
+            builder.Entity<MovieReview>()
+                .HasKey(x => new { x.MovieId, x.ReviewId });
+
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 

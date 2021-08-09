@@ -53,7 +53,7 @@
 
         //public virtual ICollection<Review> Reviews { get; set; }
 
-        //public virtual ICollection<MovieComment> Comments { get; set; }
+        public virtual ICollection<MovieCommentsViewModel> Comments { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

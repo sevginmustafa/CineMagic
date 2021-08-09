@@ -29,7 +29,6 @@
             public const int RuntimeMaxLength = 10;
             public const int TaglineMaxLength = 150;
             public const int OverviewMaxLength = 1000;
-            public const int LanguageMaxLength = 50;
         }
 
         public static class Person
@@ -38,7 +37,17 @@
             public const int ProfilePicPathMaxLength = 200;
         }
 
+        public static class Author
+        {
+            public const int NameMaxLength = 50;
+        }
+
         public static class Country
+        {
+            public const int NameMaxLength = 50;
+        }
+
+        public static class Language
         {
             public const int NameMaxLength = 50;
         }
@@ -55,6 +64,7 @@
 
         public static class Comment
         {
+            public const int ContentMinLength = 3;
             public const int ContentMaxLength = 1000;
         }
 

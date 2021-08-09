@@ -1,6 +1,7 @@
 ﻿namespace CineMagic.Data.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using CineMagic.Data.Common.Models;
@@ -9,6 +10,12 @@
 
     public class Review : BaseModel<int>
     {
+        public Review()
+        {
+            this.MovieReviews = new HashSet<MovieReview>();
+            this.Authors = new HashSet<AuthorReview>();
+        }
+
         [Required]
         [MaxLength(TitleMaxLength)]
         public string Title { get; set; }
@@ -19,13 +26,8 @@
 
         public DateTime Date { get; set; }
 
-        public int MovieId { get; set; }
+        public virtual ICollection<MovieReview> MovieReviews { get; set; }
 
-        public virtual Movie Movie { get; set; }
-
-        [Required]
-        public string UserId { get; set; }
-
-        public virtual ApplicationUser User { get; set; }
+        public virtual ICollection<AuthorReview> Authors { get; set; }
     }
 }

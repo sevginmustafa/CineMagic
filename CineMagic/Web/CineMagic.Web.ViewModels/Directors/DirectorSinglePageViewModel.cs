@@ -37,8 +37,9 @@
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Director, DirectorSinglePageViewModel>().
-                ForMember(x => x.ProfilePicPath, opt => opt.MapFrom(x => x.ProfilePicPath ?? "/images/no-profile-pic.jpg"));
+            configuration.CreateMap<Director, DirectorSinglePageViewModel>()
+              .ForMember(x => x.ProfilePicPath, opt =>
+              opt.MapFrom(x => x.ProfilePicPath ?? "/images/no-profile-pic.jpg"));
         }
     }
 }

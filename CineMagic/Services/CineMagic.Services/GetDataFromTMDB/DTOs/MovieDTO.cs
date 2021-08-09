@@ -25,9 +25,6 @@
 
         public string Overview { get; set; }
 
-        [JsonProperty("spoken_languages")]
-        public ICollection<LanguageDTO> Language { get; set; }
-
         public double Budget { get; set; }
 
         public double Revenue { get; set; }
@@ -42,6 +39,9 @@
 
         [JsonProperty("production_countries")]
         public ICollection<CountryDTO> ProductionCountries { get; set; }
+
+        [JsonProperty("spoken_languages")]
+        public ICollection<LanguageDTO> Languages { get; set; }
 
         public virtual ICollection<GenreDTO> Genres { get; set; }
     }
