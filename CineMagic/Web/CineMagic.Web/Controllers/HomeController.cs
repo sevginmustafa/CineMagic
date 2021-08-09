@@ -13,7 +13,7 @@
     public class HomeController : Controller
     {
         private const int HomePageLeadMovieCount = 1;
-        private const int HomePageFeaturedMoviesTabCount = 12;
+        private const int HomePageTabFeaturedMoviesCount = 13;
         private const int HomePageLatestMoviesCount = 10;
         private const int HomePageWatchlistMoviesCount = 10;
 
@@ -30,11 +30,11 @@
 
             var bannerSectionMovie = await this.moviesService.GetBannerSectionMovieAsync<MovieHomePageBannerViewModel>();
             var mostRecentMovie = await this.moviesService.GetRecentMoviesAsync<MovieRespTabsViewModel>(HomePageLeadMovieCount);
-            var recentMovies = await this.moviesService.GetRecentMoviesAsync<MovieStandartViewModel>(HomePageFeaturedMoviesTabCount);
+            var recentMovies = await this.moviesService.GetRecentMoviesAsync<MovieStandartViewModel>(HomePageTabFeaturedMoviesCount);
             var mostPopularMovie = await this.moviesService.GetPopularMoviesAsync<MovieRespTabsViewModel>(HomePageLeadMovieCount);
-            var popularMovies = await this.moviesService.GetPopularMoviesAsync<MovieStandartViewModel>(HomePageFeaturedMoviesTabCount);
+            var popularMovies = await this.moviesService.GetPopularMoviesAsync<MovieStandartViewModel>(HomePageTabFeaturedMoviesCount);
             var bestRatedMovie = await this.moviesService.GetTopRatedMoviesAsync<MovieRespTabsViewModel>(HomePageLeadMovieCount);
-            var topRatedMovies = await this.moviesService.GetTopRatedMoviesAsync<MovieStandartViewModel>(HomePageFeaturedMoviesTabCount);
+            var topRatedMovies = await this.moviesService.GetTopRatedMoviesAsync<MovieStandartViewModel>(HomePageTabFeaturedMoviesCount);
             var latestMovies = await this.moviesService.GetLatestMoviesAsync<MovieStandartViewModel>(HomePageLatestMoviesCount);
             var watchlistMovies = await this.moviesService.GetWatchlistMoviesAsync<MovieWatchlistViewModel>(userId, HomePageWatchlistMoviesCount);
 

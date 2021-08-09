@@ -109,6 +109,12 @@
             builder.Entity<MovieReview>()
                 .HasKey(x => new { x.MovieId, x.ReviewId });
 
+            builder.Entity<Rating>()
+               .HasKey(x => new { x.MovieId, x.UserId });
+
+            builder.Entity<Watchlist>()
+               .HasKey(x => new { x.MovieId, x.UserId });
+
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 

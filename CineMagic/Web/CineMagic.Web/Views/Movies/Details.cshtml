@@ -8,6 +8,63 @@
 
     var userId = this.User.GetId();
     var getMovieRating = await RatingsService.GetUserRatingAsync(Model.Id, userId);
+
+    void DisplayComments(int? parentId)
+    {
+        var comments = this.Model.Comments.Where(x => x.ParentId == parentId);
+
+        if (!comments.Any())
+        {
+            return;
+        }
+
+        @foreach (var comment in comments)
+        {
+            <div class="media response-info">
+                <div class="media-left response-text-left">
+                    <a href="#">
+                        <img class="media-object" src="/images/no-user-profile-pic.jpg" alt="">
+                    </a>
+                    <h5><a href="#">@comment.UserUsername</a></h5>
+                </div>
+                <div class="media-body response-text-right">
+                    <p>
+                        @comment.Content
+                    </p>
+                    <ul>
+                        <li>@comment.CreatedOn.ToString("MMM d, yyyy")</li>
+                        @if (this.User.Identity.IsAuthenticated)
+                        {
+                            <li><a onclick="showCommentForm(@comment.Id)"><i class="fa fa-reply" aria-hidden="true"></i> Reply</a></li>
+                        }
+                    </ul>
+                    @{ DisplayComments(comment.Id); }
+
+                    <div class="media response-info">
+                        <div class="media-left response-text-left">
+                            <a href="#">
+                                <img class="media-object" src="images/admin.jpg" alt="">
+                            </a>
+                            <h5><a href="#">Admin</a></h5>
+                        </div>
+                        <div class="media-body response-text-right">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available,
+                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.There are many variations of passages of Lorem Ipsum available.
+                            </p>
+                            <ul>
+                                <li>November 02, 2016</li>
+                                <li><a href="single.html"><i class="fa fa-reply" aria-hidden="true"></i> Reply</a></li>
+                            </ul>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        }
+    }
 }
 
 <div class="w3_breadcrumb">
@@ -63,7 +120,7 @@
                             <p class="text-left"><strong>Genre: </strong>@string.Join(", ", Model.Genres.Select(x => x.GenreName))</p>
                             <p class="text-left"><strong>Director: </strong><a asp-controller="Directors" asp-action="Details" asp-route-id="@Model.DirectorId">@Model.DirectorName</a></p>
                             <p class="text-left"><strong>IMDB: </strong><a href="@Model.IMDBLink">Link to IMDB</a> </p>
-                            <p class="text-left"><strong>Language: </strong>@Model.Language</p>
+                            <p class="text-left"><strong>Languages: </strong>@string.Join(", ", Model.Languages)</p>
                             <p class="text-left"><strong>Country: </strong>@string.Join(", ", Model.ProductionCountries.Select(x => x.CountryName))</p>
                             <p class="text-left"><strong>Budget: </strong>$@Model.Budget.ToString("#,##")</p>
                             <p class="text-left"><strong>Revenue: </strong>$@Model.Revenue.ToString("#,##")</p>
@@ -112,71 +169,17 @@
 
                 <div class="response">
                     <h4>Comments</h4>
-                    @*<div class="media response-info">
-                            <div class="media-left response-text-left">
-                                <a href="#">
-                                    <img class="media-object" src="images/admin.jpg" alt="">
-                                </a>
-                                <h5><a href="#">Admin</a></h5>
-                            </div>
-                            <div class="media-body response-text-right">
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.There are many variations of passages of Lorem Ipsum available.
-                                </p>
-                                <ul>
-                                    <li>October 15, 2016</li>
-                                    <li><a href="single.html"><i class="fa fa-reply" aria-hidden="true"></i> Reply</a></li>
-                                </ul>
-                                <div class="media response-info">
-                                    <div class="media-left response-text-left">
-                                        <a href="#">
-                                            <img class="media-object" src="images/admin.jpg" alt="">
-                                        </a>
-                                        <h5><a href="#">Admin</a></h5>
-                                    </div>
-                                    <div class="media-body response-text-right">
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available,
-                                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.There are many variations of passages of Lorem Ipsum available.
-                                        </p>
-                                        <ul>
-                                            <li>November 02, 2016</li>
-                                            <li><a href="single.html"><i class="fa fa-reply" aria-hidden="true"></i> Reply</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="clearfix"> </div>
-                                </div>
-                            </div>
-                            <div class="clearfix"> </div>
-                        </div>*@
-                    @foreach (var comment in Model.Comments)
+                    <br />
+                    @if (this.User.Identity.IsAuthenticated)
                     {
-                        <div class="media response-info">
-                            <div class="media-left response-text-left">
-                                <a href="#">
-                                    <img class="media-object" src="images/admin.jpg" alt="">
-                                </a>
-                                <h5><a href="#">@comment.User.Username</a></h5>
-                            </div>
-                            <div class="media-body response-text-right">
-                                <p>
-                                    @comment.Content
-                                </p>
-                                <ul>
-                                    <li>@comment.CreatedOn.ToString("MMM d, yyyy")</li>
-                                    <li><a href="single.html"><i class="fa fa-reply" aria-hidden="true"></i> Reply</a></li>
-                                </ul>
-                            </div>
-                            <div class="clearfix"> </div>
+                        <div class="px-4 pt-3">
+                            <button type="button" class="btn btn-primary float-right" onclick="showCommentForm(0)">
+                                <i class="fa fa-plus"></i>&nbsp; Comment
+                            </button>
                         </div>
                     }
 
-                </div>
-
-                @if (this.User.Identity.IsAuthenticated)
-                {
-                    <div class="all-comments-info">
+                    <div class="all-comments-info" id="CommentForm" style="display: none">
                         <h5>LEAVE A COMMENT</h5>
                         <div class="agile-info-wthree-box">
                             <form asp-controller="Comments" asp-action="CreateMovieComment" method="post">
@@ -192,9 +195,11 @@
                             </form>
                         </div>
                     </div>
-                }
 
+                    @{ DisplayComments(null); }
+                </div>
             </div>
+
             <div class="col-md-4 latest-news-agile-right-content">
                 <h4 class="side-t-w3l-agile">For Latest <span>Movies</span></h4>
                 <div class="side-bar-form">
@@ -378,5 +383,15 @@
             //Calling function after Page Load
             AddReadMore();
         });
+    </script>
+
+    <script>
+        function showCommentForm(parentId) {
+            $("#CommentForm input[name='ParentId']").val(parentId);
+            $("#CommentForm").show();
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#CommentForm").offset().top
+            }, 1000);
+        }
     </script>
 }

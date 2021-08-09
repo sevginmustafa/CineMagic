@@ -11,9 +11,9 @@
 
         public int MovieId { get; set; }
 
-        public MovieCommentUserViewModel User { get; set; }
+        public string UserUsername { get; set; }
 
-        public MovieCommentsViewModel Parent { get; set; }
+        public int? ParentId { get; set; }
 
         public string Content { get; set; }
 

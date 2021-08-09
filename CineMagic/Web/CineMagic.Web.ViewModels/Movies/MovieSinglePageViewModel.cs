@@ -29,8 +29,6 @@
 
         public string Overview { get; set; }
 
-        public string Language { get; set; }
-
         public double Budget { get; set; }
 
         public double Revenue { get; set; }
@@ -49,6 +47,8 @@
 
         public ICollection<MovieCountriesViewModel> ProductionCountries { get; set; }
 
+        public virtual ICollection<string> Languages { get; set; }
+
         public virtual ICollection<string> WatchlistUsers { get; set; }
 
         //public virtual ICollection<Review> Reviews { get; set; }
@@ -58,6 +58,7 @@
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Movie, MovieSinglePageViewModel>()
+                .ForMember(x => x.Languages, opt => opt.MapFrom(x => x.Languages.Select(x => x.Language.Name)))
                 .ForMember(x => x.WatchlistUsers, opt => opt.MapFrom(x => x.Watchlists.Select(x => x.UserId)))
                 .ForMember(x => x.Rating, opt => opt.MapFrom(x => x.Ratings.Count > 0 ? x.Ratings.Average(x => x.Rate) : 0));
         }

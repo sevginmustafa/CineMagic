@@ -73,7 +73,7 @@
                                     <th>Genre</th>
                                     <th>Year</th>
                                     <th>Runtime</th>
-                                    <th>Language</th>
+                                    <th>Languages</th>
                                     <th>Country</th>
                                     <th>Budget</th>
                                     <th>Revenue</th>
@@ -90,7 +90,7 @@
                                         <td class="w3-list-info">@string.Join(", ", movie.Genres.Select(x => x.GenreName))</td>
                                         <td>@movie.ReleaseDate.Year</td>
                                         <td>@movie.Runtime min</td>
-                                        <td>@movie.Language</td>
+                                        <td class="w3-list-info">@string.Join(", ", movie.Languages)</td>
                                         <td class="w3-list-info">@string.Join(", ", movie.ProductionCountries.Select(x => x.CountryName))</td>
                                         <td>@movie.Budget</td>
                                         <td>@movie.Revenue</td>
