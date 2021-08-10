@@ -1,15 +1,10 @@
-﻿namespace CineMagic.Web.ViewModels.Movies
+﻿namespace CineMagic.Web.ViewModels.Comments
 {
     using System;
 
-    using CineMagic.Data.Models;
-    using CineMagic.Services.Mapping;
-
-    public class MovieCommentsViewModel : IMapFrom<MovieComment>
+    public abstract class BaseCommentViewModel
     {
         public int Id { get; set; }
-
-        public int MovieId { get; set; }
 
         public string UserUsername { get; set; }
 

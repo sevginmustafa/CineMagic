@@ -1,8 +1,47 @@
-﻿@using CineMagic.Web.ViewModels.Directors
+﻿@using CineMagic.Web.Infrastructure
+@using CineMagic.Web.ViewModels.Directors
 @model DirectorSinglePageViewModel
 
 @{
     this.ViewData["Title"] = "Directors";
+
+    var userId = this.User.GetId();
+
+    void DisplayComments(int? parentId)
+    {
+        var comments = this.Model.Comments.Where(x => x.ParentId == parentId);
+
+        if (!comments.Any())
+        {
+            return;
+        }
+
+        @foreach (var comment in comments)
+        {
+            <div class="media response-info">
+                <div class="media-left response-text-left">
+                    <a href="#">
+                        <img class="media-object" src="/images/no-user-profile-pic.jpg" alt="">
+                    </a>
+                    <h5><a href="#">@comment.UserUsername</a></h5>
+                </div>
+                <div class="media-body response-text-right">
+                    <p>
+                        @comment.Content
+                    </p>
+                    <ul>
+                        <li>@comment.CreatedOn.ToString("MMM d, yyyy")</li>
+                        @if (this.User.Identity.IsAuthenticated)
+                        {
+                            <li><a href="#" onclick="showCommentForm(@comment.Id)"><i class="fa fa-reply" aria-hidden="true"></i> Reply</a></li>
+                        }
+                    </ul>
+                    @{ DisplayComments(comment.Id); }
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        }
+    }
 }
 
 <div class="w3_breadcrumb">
@@ -59,6 +98,7 @@
                         </div>
                     </div>
                     <br />
+                    <br />
                 </div>
 
                 <h4 class="side-t-w3l-agile">Known <span>For</span></h4>
@@ -82,102 +122,57 @@
                     </div>
                 </div>
 
-                <div class="admin-text">
-                    <h5>WRITTEN BY ADMIN</h5>
-                    <div class="admin-text-left">
-                        <a href="#"><img src="images/admin.jpg" alt=""></a>
-                    </div>
-                    <div class="admin-text-right">
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </p>
-                        <span>View all posts by :<a href="#"> Admin </a></span>
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
-                <div class="response">
-                    <h4>Responses</h4>
-                    <div class="media response-info">
-                        <div class="media-left response-text-left">
-                            <a href="#">
-                                <img class="media-object" src="images/admin.jpg" alt="">
-                            </a>
-                            <h5><a href="#">Admin</a></h5>
+                @*<div class="admin-text">
+                        <h5>WRITTEN BY ADMIN</h5>
+                        <div class="admin-text-left">
+                            <a href="#"><img src="images/admin.jpg" alt=""></a>
                         </div>
-                        <div class="media-body response-text-right">
+                        <div class="admin-text-right">
                             <p>
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available,
-                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.There are many variations of passages of Lorem Ipsum available.
+                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                             </p>
-                            <ul>
-                                <li>October 15, 2016</li>
-                                <li><a href="single.html"><i class="fa fa-reply" aria-hidden="true"></i> Reply</a></li>
-                            </ul>
-                            <div class="media response-info">
-                                <div class="media-left response-text-left">
-                                    <a href="#">
-                                        <img class="media-object" src="images/admin.jpg" alt="">
-                                    </a>
-                                    <h5><a href="#">Admin</a></h5>
+                            <span>View all posts by :<a href="#"> Admin </a></span>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>*@
+
+                <div class="response">
+                    <h4>Comments</h4>
+                    <br />
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <div class="px-4 pt-3">
+                            <button type="button" class="btn btn-add-comment float-right" onclick="showCommentForm(0)">
+                                <i class="fa fa-plus"></i>&nbsp; Comment
+                            </button>
+                        </div>
+                    }
+
+                    <div class="all-comments-info" id="CommentForm" style="display: none">
+                        <h5>LEAVE A COMMENT</h5>
+                        <div class="agile-info-wthree-box">
+                            <form asp-controller="Comments" asp-action="CreateDirectorComment" method="post">
+                                <div class="col-md-6 form-info">
+                                    <textarea name="Content" placeholder="Message" required=""></textarea>
+                                    <input type="submit" value="SEND">
                                 </div>
-                                <div class="media-body response-text-right">
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available,
-                                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.There are many variations of passages of Lorem Ipsum available.
-                                    </p>
-                                    <ul>
-                                        <li>November 02, 2016</li>
-                                        <li><a href="single.html"><i class="fa fa-reply" aria-hidden="true"></i> Reply</a></li>
-                                    </ul>
+                                <div class="col-md-6 form-info">
+                                    <input type="hidden" name="DirectorId" value="@Model.Id">
+                                    <input type="hidden" name="UserId" value="@userId">
+                                    <input type="hidden" name="ParentId" value="0" />
                                 </div>
                                 <div class="clearfix"> </div>
-                            </div>
+                            </form>
                         </div>
-                        <div class="clearfix"> </div>
                     </div>
-                    <div class="media response-info">
-                        <div class="media-left response-text-left">
-                            <a href="#">
-                                <img class="media-object" src="images/admin.jpg" alt="">
-                            </a>
-                            <h5><a href="#">Admin</a></h5>
-                        </div>
-                        <div class="media-body response-text-right">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available,
-                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.There are many variations of passages of Lorem Ipsum available.
-                            </p>
-                            <ul>
-                                <li>November 03, 2016</li>
-                                <li><a href="single.html"><i class="fa fa-reply" aria-hidden="true"></i> Reply</a></li>
-                            </ul>
-                        </div>
-                        <div class="clearfix"> </div>
-                    </div>
-                </div>
-                <!---728x90--->
-                <div class="all-comments-info">
-                    <h5>LEAVE A COMMENT</h5>
-                    <div class="agile-info-wthree-box">
-                        <form>
-                            <div class="col-md-6 form-info">
-                                <input type="text" name="name" placeholder="Your Name" required="">
-                                <input type="email" name="email" placeholder="Your Email" required="">
-                                <input type="text" name="phone" placeholder="Your Phone" required="">
-                            </div>
-                            <div class="col-md-6 form-info">
 
-                                <textarea placeholder="Message" required=""></textarea>
-                                <input type="submit" value="SEND">
-                            </div>
-                            <div class="clearfix"> </div>
+                    @{ DisplayComments(null); }
 
-
-                        </form>
-                    </div>
                 </div>
             </div>
+
+
             <div class="col-md-4 latest-news-agile-right-content">
                 <h4 class="side-t-w3l-agile">For Latest <span>Movies</span></h4>
                 <div class="side-bar-form">
@@ -327,5 +322,15 @@
             //Calling function after Page Load
             AddReadMore();
         });
+    </script>
+
+    <script>
+        function showCommentForm(parentId) {
+            $("#CommentForm input[name='ParentId']").val(parentId);
+            $("#CommentForm").show();
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#CommentForm").offset().top
+            }, 1000);
+        }
     </script>
 }

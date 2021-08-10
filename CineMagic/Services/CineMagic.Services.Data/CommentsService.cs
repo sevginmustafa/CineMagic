@@ -1,9 +1,5 @@
 ﻿namespace CineMagic.Services.Data
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
     using CineMagic.Data.Common.Repositories;
@@ -14,18 +10,28 @@
     public class CommentsService : ICommentsService
     {
         private readonly IRepository<MovieComment> movieCommentsRepository;
+        private readonly IRepository<ActorComment> actorCommentsRepository;
+        private readonly IRepository<DirectorComment> directorCommentsRepository;
 
-        public CommentsService(IRepository<MovieComment> movieCommentsRepository)
+        public CommentsService(
+            IRepository<MovieComment> movieCommentsRepository,
+            IRepository<ActorComment> actorCommentsRepository,
+            IRepository<DirectorComment> directorCommentsRepository)
         {
             this.movieCommentsRepository = movieCommentsRepository;
+            this.actorCommentsRepository = actorCommentsRepository;
+            this.directorCommentsRepository = directorCommentsRepository;
         }
 
-        public async Task CreateMovieComment(MovieCommentInputModel inputModel)
+        public async Task CreateMovieCommentAsync(MovieCommentInputModel inputModel)
         {
+            var parentId = inputModel.ParentId != 0 ? inputModel.ParentId : null;
+
             var comment = new MovieComment
             {
                 MovieId = inputModel.MovieId,
                 UserId = inputModel.UserId,
+                ParentId = parentId,
                 Content = inputModel.Content,
             };
 
@@ -33,22 +39,37 @@
             await this.movieCommentsRepository.SaveChangesAsync();
         }
 
-        public async Task ReplyToMovieComment(MovieCommentInputModel inputModel)
+        public async Task CreateActorCommentAsync(ActorCommentInputModel inputModel)
         {
-            var parent = this.movieCommentsRepository
-                .AllAsNoTracking()
-                .FirstOrDefault(x => x.MovieId == inputModel.MovieId && x.UserId == inputModel.UserId);
+            var parentId = inputModel.ParentId != 0 ? inputModel.ParentId : null;
 
-            var reply = new MovieComment
+            var comment = new ActorComment
             {
-                MovieId = inputModel.MovieId,
+                ActorId = inputModel.ActorId,
                 UserId = inputModel.UserId,
-                Parent = parent,
+                ParentId = parentId,
                 Content = inputModel.Content,
             };
 
-            await this.movieCommentsRepository.AddAsync(reply);
-            await this.movieCommentsRepository.SaveChangesAsync();
+            await this.actorCommentsRepository.AddAsync(comment);
+            await this.actorCommentsRepository.SaveChangesAsync();
         }
+
+        public async Task CreateDirectorCommentAsync(DirectorCommentInputModel inputModel)
+        {
+            var parentId = inputModel.ParentId != 0 ? inputModel.ParentId : null;
+
+            var comment = new DirectorComment
+            {
+                DirectorId = inputModel.DirectorId,
+                UserId = inputModel.UserId,
+                ParentId = parentId,
+                Content = inputModel.Content,
+            };
+
+            await this.directorCommentsRepository.AddAsync(comment);
+            await this.directorCommentsRepository.SaveChangesAsync();
+        }
+
     }
 }

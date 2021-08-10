@@ -1339,6 +1339,20 @@ div#video8 > #play {
         left: 11px;
     }
 
+
+.btn-add-comment {
+    color: #fff;
+    background-color: #04a388;
+    border-color: #04a388;
+}
+
+    .btn-add-comment:hover {
+        transition: all .5s ease;
+        background-color: #fe423f;
+        border-color: #fe423f;
+    }
+
+
 /*-- /latest-movies--*/
 h3.agile_w3_title {
     margin: 1.5em 0 1em;

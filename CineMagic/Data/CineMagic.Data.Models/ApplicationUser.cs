@@ -19,7 +19,6 @@ namespace CineMagic.Data.Models
 
             this.Ratings = new HashSet<Rating>();
             this.Watchlists = new HashSet<Watchlist>();
-            this.Reviews = new HashSet<Review>();
             this.MovieComments = new HashSet<MovieComment>();
             this.ActorComments = new HashSet<ActorComment>();
             this.DirectorComments = new HashSet<DirectorComment>();
@@ -44,8 +43,6 @@ namespace CineMagic.Data.Models
         public virtual ICollection<Rating> Ratings { get; set; }
 
         public virtual ICollection<Watchlist> Watchlists { get; set; }
-
-        public virtual ICollection<Review> Reviews { get; set; }
 
         public virtual ICollection<MovieComment> MovieComments { get; set; }
 

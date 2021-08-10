@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
 
     using AutoMapper;
     using CineMagic.Data.Models;
     using CineMagic.Services.Mapping;
+    using CineMagic.Web.ViewModels.Comments;
 
     public class MovieSinglePageViewModel : IMapFrom<Movie>, IHaveCustomMappings
     {

@@ -6,6 +6,10 @@
 
     public interface ICommentsService
     {
-        Task CreateMovieComment(MovieCommentInputModel inputModel);
+        Task CreateMovieCommentAsync(MovieCommentInputModel inputModel);
+
+        Task CreateActorCommentAsync(ActorCommentInputModel inputModel);
+
+        Task CreateDirectorCommentAsync(DirectorCommentInputModel inputModel);
     }
 }

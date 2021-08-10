@@ -25,9 +25,37 @@
                 return this.View(inputModel);
             }
 
-            await this.commentsService.CreateMovieComment(inputModel);
+            await this.commentsService.CreateMovieCommentAsync(inputModel);
 
             return this.RedirectToAction("Details", "Movies", new { id = inputModel.MovieId });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> CreateActorComment(ActorCommentInputModel inputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(inputModel);
+            }
+
+            await this.commentsService.CreateActorCommentAsync(inputModel);
+
+            return this.RedirectToAction("Details", "Actors", new { id = inputModel.ActorId });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> CreateDirectorComment(DirectorCommentInputModel inputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(inputModel);
+            }
+
+            await this.commentsService.CreateDirectorCommentAsync(inputModel);
+
+            return this.RedirectToAction("Details", "Directors", new { id = inputModel.DirectorId });
         }
     }
 }

@@ -35,31 +35,10 @@
                         <li>@comment.CreatedOn.ToString("MMM d, yyyy")</li>
                         @if (this.User.Identity.IsAuthenticated)
                         {
-                            <li><a onclick="showCommentForm(@comment.Id)"><i class="fa fa-reply" aria-hidden="true"></i> Reply</a></li>
+                            <li><a href="#" onclick="showCommentForm(@comment.Id)"><i class="fa fa-reply" aria-hidden="true"></i> Reply</a></li>
                         }
                     </ul>
                     @{ DisplayComments(comment.Id); }
-
-                    <div class="media response-info">
-                        <div class="media-left response-text-left">
-                            <a href="#">
-                                <img class="media-object" src="images/admin.jpg" alt="">
-                            </a>
-                            <h5><a href="#">Admin</a></h5>
-                        </div>
-                        <div class="media-body response-text-right">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available,
-                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.There are many variations of passages of Lorem Ipsum available.
-                            </p>
-                            <ul>
-                                <li>November 02, 2016</li>
-                                <li><a href="single.html"><i class="fa fa-reply" aria-hidden="true"></i> Reply</a></li>
-                            </ul>
-                        </div>
-                        <div class="clearfix"> </div>
-                    </div>
-
                 </div>
                 <div class="clearfix"> </div>
             </div>
@@ -120,13 +99,14 @@
                             <p class="text-left"><strong>Genre: </strong>@string.Join(", ", Model.Genres.Select(x => x.GenreName))</p>
                             <p class="text-left"><strong>Director: </strong><a asp-controller="Directors" asp-action="Details" asp-route-id="@Model.DirectorId">@Model.DirectorName</a></p>
                             <p class="text-left"><strong>IMDB: </strong><a href="@Model.IMDBLink">Link to IMDB</a> </p>
-                            <p class="text-left"><strong>Languages: </strong>@string.Join(", ", Model.Languages)</p>
+                            <p class="text-left"><strong>Language: </strong>@string.Join(", ", Model.Languages)</p>
                             <p class="text-left"><strong>Country: </strong>@string.Join(", ", Model.ProductionCountries.Select(x => x.CountryName))</p>
                             <p class="text-left"><strong>Budget: </strong>$@Model.Budget.ToString("#,##")</p>
                             <p class="text-left"><strong>Revenue: </strong>$@Model.Revenue.ToString("#,##")</p>
                             <p class="addReadMore showlesscontent text-left"><strong>Overview: </strong>@Model.Overview</p>
                         </div>
                     </div>
+                    <br />
                     <br />
                 </div>
 
@@ -173,7 +153,7 @@
                     @if (this.User.Identity.IsAuthenticated)
                     {
                         <div class="px-4 pt-3">
-                            <button type="button" class="btn btn-primary float-right" onclick="showCommentForm(0)">
+                            <button type="button" class="btn btn-add-comment float-right" onclick="showCommentForm(0)">
                                 <i class="fa fa-plus"></i>&nbsp; Comment
                             </button>
                         </div>
@@ -190,6 +170,7 @@
                                 <div class="col-md-6 form-info">
                                     <input type="hidden" name="MovieId" value="@Model.Id">
                                     <input type="hidden" name="UserId" value="@userId">
+                                    <input type="hidden" name="ParentId" value="0" />
                                 </div>
                                 <div class="clearfix"> </div>
                             </form>
@@ -197,8 +178,10 @@
                     </div>
 
                     @{ DisplayComments(null); }
+
                 </div>
             </div>
+
 
             <div class="col-md-4 latest-news-agile-right-content">
                 <h4 class="side-t-w3l-agile">For Latest <span>Movies</span></h4>

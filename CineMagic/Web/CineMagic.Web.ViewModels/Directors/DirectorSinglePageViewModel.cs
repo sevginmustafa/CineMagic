@@ -6,8 +6,9 @@
     using AutoMapper;
     using CineMagic.Data.Models;
     using CineMagic.Services.Mapping;
+    using CineMagic.Web.ViewModels.Comments;
 
-    public class DirectorSinglePageViewModel : IMapFrom<Director>
+    public class DirectorSinglePageViewModel : IMapFrom<Director>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
@@ -33,13 +34,13 @@
 
         public virtual ICollection<DirectorMoviesViewModel> Movies { get; set; }
 
-        //public virtual ICollection<DirectorComment> Comments { get; set; }
+        public virtual ICollection<DirectorCommentsViewModel> Comments { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Director, DirectorSinglePageViewModel>()
-              .ForMember(x => x.ProfilePicPath, opt =>
-              opt.MapFrom(x => x.ProfilePicPath ?? "/images/no-profile-pic.jpg"));
+                .ForMember(x => x.ProfilePicPath, opt =>
+                opt.MapFrom(x => x.ProfilePicPath ?? "/images/no-profile-pic.jpg"));
         }
     }
 }

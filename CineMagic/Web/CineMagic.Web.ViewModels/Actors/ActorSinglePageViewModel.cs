@@ -6,6 +6,7 @@
     using AutoMapper;
     using CineMagic.Data.Models;
     using CineMagic.Services.Mapping;
+    using CineMagic.Web.ViewModels.Comments;
 
     public class ActorSinglePageViewModel : IMapFrom<Actor>, IHaveCustomMappings
     {
@@ -33,7 +34,7 @@
 
         public virtual ICollection<ActorMoviesViewModel> Movies { get; set; }
 
-        //public virtual ICollection<ActorComment> Comments { get; set; }
+        public virtual ICollection<ActorCommentsViewModel> Comments { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
