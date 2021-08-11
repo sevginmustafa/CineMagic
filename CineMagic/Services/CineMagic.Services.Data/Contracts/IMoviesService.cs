@@ -35,5 +35,11 @@
         Task RemoveFromUserWatchlistAsync(int movieId, string userId);
 
         IQueryable<T> SearchMoviesByTitleAsQueryable<T>(string title);
+
+        Task<IEnumerable<T>> GetSimilarMoviesAsync<T>(int movieId, int count);
+
+        Task<IEnumerable<T>> GetActorMostPopularMoviesAsync<T>(int actorId, int count);
+
+        Task<IEnumerable<T>> GetDirectorBestProfitMoviesAsync<T>(int directorId, int count);
     }
 }

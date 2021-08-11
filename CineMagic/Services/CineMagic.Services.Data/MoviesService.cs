@@ -69,7 +69,6 @@
             .To<T>()
             .ToListAsync();
 
-        // TODO
         public async Task<IEnumerable<T>> GetWatchlistMoviesAsync<T>(string userId, int count)
             => await this.watchlistRepository
             .AllAsNoTracking()
@@ -178,5 +177,50 @@
                 await this.watchlistRepository.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<T>> GetSimilarMoviesAsync<T>(int movieId, int count)
+        {
+            var movie = await this.moviesRepository
+                .AllAsNoTracking().Include(x => x.Genres)
+                .FirstOrDefaultAsync(x => x.Id == movieId);
+
+            // TODO: Make 404 Not Found
+            if (movie == null)
+            {
+                return Enumerable.Empty<T>();
+            }
+
+            var genresIds = movie.Genres.Select(x => x.GenreId).ToList();
+
+            var movies = this.moviesRepository.All().AsQueryable();
+
+            foreach (var genreId in genresIds)
+            {
+                movies = movies.Where(x => x.Genres.Any(x => x.GenreId == genreId));
+            }
+
+            return await movies
+                .Take(count)
+                .To<T>()
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetActorMostPopularMoviesAsync<T>(int actorId, int count)
+            => await this.moviesRepository
+            .AllAsNoTracking()
+            .Where(x => x.Cast.Any(x => x.ActorId == actorId))
+            .OrderByDescending(x => x.Popularity)
+            .Take(count)
+            .To<T>()
+            .ToListAsync();
+
+        public async Task<IEnumerable<T>> GetDirectorBestProfitMoviesAsync<T>(int directorId, int count)
+            => await this.moviesRepository
+            .AllAsNoTracking()
+            .Where(x => x.Cast.Any(x => x.ActorId == directorId))
+            .OrderByDescending(x => x.Revenue)
+            .Take(count)
+            .To<T>()
+            .ToListAsync();
     }
 }

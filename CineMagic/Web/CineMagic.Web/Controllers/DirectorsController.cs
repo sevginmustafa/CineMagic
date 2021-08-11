@@ -15,10 +15,14 @@
     public class DirectorsController : Controller
     {
         private readonly IDirectorsService directorsService;
+        private readonly IMoviesService moviesService;
 
-        public DirectorsController(IDirectorsService directorsService)
+        public DirectorsController(
+            IDirectorsService directorsService,
+            IMoviesService moviesService)
         {
             this.directorsService = directorsService;
+            this.moviesService = moviesService;
         }
 
         public async Task<IActionResult> BornToday(int gender, int page = 1)
@@ -39,7 +43,8 @@
 
         public async Task<IActionResult> MostPopularDirectors(int gender, int page = 1)
         {
-            var directors = this.directorsService.GetMostPopularDirectorsAsQueryable<DirectorStandartViewModel>(gender, GlobalConstants.MostPopularPeopleCount);
+            var directors = this.directorsService
+                .GetMostPopularDirectorsAsQueryable<DirectorStandartViewModel>(gender, GlobalConstants.MostPopularPeopleCount);
 
             var directorsPaginated = await PaginatedList<DirectorStandartViewModel>
                 .CreateAsync(directors, page, GlobalConstants.ItemsStandartCountPagination);
@@ -55,9 +60,19 @@
 
         public async Task<IActionResult> Details(int id)
         {
-            var director = await this.directorsService.GetDirectorByIdAsync<DirectorSinglePageViewModel>(id);
+            var director = await this.directorsService
+                .GetDirectorByIdAsync<DirectorSinglePageViewModel>(id);
 
-            return this.View(director);
+            var movies = await this.moviesService
+                .GetDirectorBestProfitMoviesAsync<DirectorBestProfitMoviesViewModel>(id, GlobalConstants.SinglePageRighSectionMoviesCount);
+
+            var viewModel = new DirectorSinglePageListViewModel
+            {
+                Director = director,
+                Movies = movies,
+            };
+
+            return this.View(viewModel);
         }
     }
 }

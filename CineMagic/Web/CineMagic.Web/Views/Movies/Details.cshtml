@@ -1,17 +1,17 @@
 ﻿@using CineMagic.Web.Infrastructure
 @using CineMagic.Web.ViewModels.Movies
 @inject CineMagic.Services.Data.Contracts.IRatingsService RatingsService
-@model MovieSinglePageViewModel
+@model MovieSinglePageListViewModel
 
 @{
     this.ViewData["Title"] = "Movies";
 
     var userId = this.User.GetId();
-    var getMovieRating = await RatingsService.GetUserRatingAsync(Model.Id, userId);
+    var getMovieRating = await RatingsService.GetUserRatingAsync(Model.Movie.Id, userId);
 
     void DisplayComments(int? parentId)
     {
-        var comments = this.Model.Comments.Where(x => x.ParentId == parentId);
+        var comments = this.Model.Movie.Comments.OrderByDescending(x => x.CreatedOn).Where(x => x.ParentId == parentId);
 
         if (!comments.Any())
         {
@@ -51,7 +51,7 @@
         <ul>
             <li><a asp-controller="Home" asp-action="Index">Home</a><i>//</i></li>
             <li><a asp-action="All">@this.ViewData["Title"]</a><i>//</i></li>
-            <li class="active">@Model.Title</li>
+            <li class="active">@Model.Movie.Title</li>
         </ul>
     </div>
 </div>
@@ -60,15 +60,15 @@
     <div class="agile_featured_movies">
 
         <div class="inner-agile-w3l-part-head">
-            <h3 class="w3l-inner-h-title">@Model.Title (@Model.ReleaseDate.Year)</h3>
-            <p class="w3ls_head_para">@Model.Tagline</p>
+            <h3 class="w3l-inner-h-title">@Model.Movie.Title (@Model.Movie.ReleaseDate.Year)</h3>
+            <p class="w3ls_head_para">@Model.Movie.Tagline</p>
             @if (this.User.Identity.IsAuthenticated)
             {
-                <div class="rating-enabled"></div><span id="averageRating">@Model.Rating.ToString("f2")</span><span> / 5.00</span>
+                <div class="rating-enabled"></div><span id="averageRating">@Model.Movie.Rating.ToString("f2")</span><span> / 5.00</span>
             }
             else
             {
-                <div class="rating-disabled" data-toggle="modal" data-target="#myModal4"></div><span id="averageRating">@Model.Rating.ToString("f2")</span><span> / 5.00</span>
+                <div class="rating-disabled" data-toggle="modal" data-target="#myModal4"></div><span id="averageRating">@Model.Movie.Rating.ToString("f2")</span><span> / 5.00</span>
             }
         </div>
 
@@ -77,33 +77,33 @@
                 <div class="single video_agile_player">
                     <div class="row text-center">
                         <div class="col-md-6">
-                            <div data-video="@Model.TrailerPath" id="video"> <img src="@Model.PosterPath" class="img-responsive" /></div>
+                            <div data-video="@Model.Movie.TrailerPath" id="video"> <img src="@Model.Movie.PosterPath" class="img-responsive" /></div>
                         </div>
                         <div class="col-md-6">
                             @if (this.User.Identity.IsAuthenticated)
                             {
-                                if (Model.WatchlistUsers.Contains(userId))
+                                if (Model.Movie.WatchlistUsers.Contains(userId))
                                 {
-                                    <a asp-action="RemoveFromWatchlist" asp-route-movieId="@Model.Id" class="watchlist_remove">Remove from Watchlist</a>
+                                    <a asp-action="RemoveFromWatchlist" asp-route-movieId="@Model.Movie.Id" class="watchlist_remove">Remove from Watchlist</a>
                                 }
                                 else
                                 {
-                                    <a asp-action="AddToWatchlist" asp-route-movieId="@Model.Id" class="watchlist_add">Add to Watchlist</a>
+                                    <a asp-action="AddToWatchlist" asp-route-movieId="@Model.Movie.Id" class="watchlist_add">Add to Watchlist</a>
                                 }
                             }
                             else
                             {
                                 <a href="#" class="watchlist_add" data-toggle="modal" data-target="#myModal4">Add to Watchlist</a>
                             }
-                            <p class="text-left" style="color:red"><i class="fa fa-clock-o" title="Edit"></i> @Model.Runtime min </p>
-                            <p class="text-left"><strong>Genre: </strong>@string.Join(", ", Model.Genres.Select(x => x.GenreName))</p>
-                            <p class="text-left"><strong>Director: </strong><a asp-controller="Directors" asp-action="Details" asp-route-id="@Model.DirectorId">@Model.DirectorName</a></p>
-                            <p class="text-left"><strong>IMDB: </strong><a href="@Model.IMDBLink">Link to IMDB</a> </p>
-                            <p class="text-left"><strong>Language: </strong>@string.Join(", ", Model.Languages)</p>
-                            <p class="text-left"><strong>Country: </strong>@string.Join(", ", Model.ProductionCountries.Select(x => x.CountryName))</p>
-                            <p class="text-left"><strong>Budget: </strong>$@Model.Budget.ToString("#,##")</p>
-                            <p class="text-left"><strong>Revenue: </strong>$@Model.Revenue.ToString("#,##")</p>
-                            <p class="addReadMore showlesscontent text-left"><strong>Overview: </strong>@Model.Overview</p>
+                            <p class="text-left" style="color:red"><i class="fa fa-clock-o" title="Edit"></i> @Model.Movie.Runtime min </p>
+                            <p class="text-left"><strong>Genre: </strong>@string.Join(", ", Model.Movie.Genres.Select(x => x.GenreName))</p>
+                            <p class="text-left"><strong>Director: </strong><a asp-controller="Directors" asp-action="Details" asp-route-id="@Model.Movie.DirectorId">@Model.Movie.DirectorName</a></p>
+                            <p class="text-left"><strong>IMDB: </strong><a href="@Model.Movie.IMDBLink">Link to IMDB</a> </p>
+                            <p class="text-left"><strong>Language: </strong>@string.Join(", ", Model.Movie.Languages)</p>
+                            <p class="text-left"><strong>Country: </strong>@string.Join(", ", Model.Movie.ProductionCountries.Select(x => x.CountryName))</p>
+                            <p class="text-left"><strong>Budget: </strong>$@Model.Movie.Budget.ToString("#,##")</p>
+                            <p class="text-left"><strong>Revenue: </strong>$@Model.Movie.Revenue.ToString("#,##")</p>
+                            <p class="addReadMore showlesscontent text-left"><strong>Overview: </strong>@Model.Movie.Overview</p>
                         </div>
                     </div>
                     <br />
@@ -113,7 +113,7 @@
                 <h4 class="side-t-w3l-agile">Top Billed <span>Cast</span></h4>
                 <div class="w3_agile_latest_movies">
                     <div id="owl-demo" class="owl-carousel owl-theme">
-                        @foreach (var actor in Model.Cast)
+                        @foreach (var actor in Model.Movie.Cast)
                         {
                             <di class="item">
                                 <div class="w3l-movie-gride-agile w3l-movie-gride-slider ">
@@ -135,7 +135,7 @@
                 @*<div class="admin-text">
                         <h5>WRITTEN BY ADMIN</h5>
                         <div class="admin-text-left">
-                            <a href="#"><img src="images/admin.jpg" alt=""></a>
+                            <img class="media-object" src="/images/no-user-profile-pic.jpg" alt="">
                         </div>
                         <div class="admin-text-right">
                             <p>
@@ -168,7 +168,7 @@
                                     <input type="submit" value="SEND">
                                 </div>
                                 <div class="col-md-6 form-info">
-                                    <input type="hidden" name="MovieId" value="@Model.Id">
+                                    <input type="hidden" name="MovieId" value="@Model.Movie.Id">
                                     <input type="hidden" name="UserId" value="@userId">
                                     <input type="hidden" name="ParentId" value="0" />
                                 </div>
@@ -184,14 +184,41 @@
 
 
             <div class="col-md-4 latest-news-agile-right-content">
-                <h4 class="side-t-w3l-agile">For Latest <span>Movies</span></h4>
+                <h4 class="side-t-w3l-agile">Search By <span>Title</span></h4>
                 <div class="side-bar-form">
-                    <form action="#" method="post">
-                        <input type="search" name="email" placeholder="Search here...." required="required">
+                    <form asp-controller="Search" asp-action="MoviesSearch" method="get">
+                        <input type="search" name="Title" placeholder="Search here...." required="required">
                         <input type="submit" value=" ">
                     </form>
                 </div>
-                <h4 class="side-t-w3l-agile">
+
+                <div class="agile-info-recent">
+                    <h4 class="side-t-w3l-agile">More Like <span>This</span></h4>
+                    <br />
+                    <div class="w3ls-recent-grids">
+                        @foreach (var movie in Model.SimilarMovies)
+                        {
+                            <div class="w3l-recent-grid">
+                                <div class="wom" style="margin:unset">
+                                    <a asp-action="Details" asp-route-id="@movie.Id"><img src="@movie.PosterPath" alt=" " class="img-responsive"></a>
+                                </div>
+                                <div class="wom-right">
+                                    <h5><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+                                    <p>@movie.Tagline</p>
+                                    <br />
+                                    <ul class="w3l-sider-list">
+                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>@movie.ReleaseDate.ToString("MMM d, yyyy")</li>
+                                        @*<li><i class="fa fa-eye" aria-hidden="true"></i> 2602</li>*@
+                                    </ul>
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                            <br />
+                        }
+                    </div>
+                </div>
+
+                @*<h4 class="side-t-w3l-agile">
                     Hot <span>Topics</span>
                 </h4>
                 <ul class="side-bar-agile">
@@ -200,98 +227,10 @@
                     <li><a href="single.html">Storks have moved on from delivering babies to packages ...</a><p>Aug 1, 2016</p></li>
                     <li><a href="single.html">John Abraham, Sonakshi Sinha and Tahir ...</a><p>Sep 29, 2016</p></li>
                     <li><a href="single.html">John Abraham, Sonakshi Sinha and Tahir ...</a><p>Sep 29, 2016</p></li>
-                </ul>
-                <h4 class="side-t-w3l-agile">
-                    Latest <span>Trailer</span>
-                </h4>
-                <div class="video_agile_player sidebar-player">
-                    <div class="video-grid-single-page-agileits">
-                        <div data-video="fNKUgX8PhMA" id="video1"> <img src="images/22.jpg" alt="" class="img-responsive"> <div id="play"></div></div>
-                    </div>
+                </ul>*@
 
-
-                    <div class="player-text side-bar-info">
-                        <p class="fexi_header">Me Before You </p>
-                        <p class="fexi_header_para">
-                            <span class="conjuring_w3">Story Line<label>:</label></span>Me Before You Official Trailer #2 (2016) - Emilia Clarke, Sam Claflin Movie HD
-
-                            A girl in a small town forms an unlikely....
-                        </p>
-                        <p class="fexi_header_para"><span>Release On<label>:</label></span>Feb 3, 2016 </p>
-                        <p class="fexi_header_para">
-                            <span>Genres<label>:</label> </span>
-                            <a href="genre.html">Drama</a> |
-                            <a href="genre.html">Adventure</a> |
-                            <a href="genre.html">Family</a>
-                        </p>
-                        <p class="fexi_header_para fexi_header_para1">
-                            <span>Star Rating<label>:</label></span>
-                            <a href="#"><i class="fa fa-star" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-star" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                        </p>
-                    </div>
-
-                </div>
                 <div class="clearfix"> </div>
-                <div class="agile-info-recent">
-                    <h4 class="side-t-w3l-agile">Latest <span>Trailer</span></h4>
-                    <div class="w3ls-recent-grids">
-                        <div class="w3l-recent-grid">
-                            <div class="wom">
-                                <a href="single.html"><img src="images/m12.jpg" alt=" " class="img-responsive"></a>
-                            </div>
-                            <div class="wom-right">
-                                <h5><a href="single.html">Lorem Integer rutrum</a></h5>
-                                <p>
-                                    Mauris fermentum dictum magna. Sed laoreet aliquam leo.
-                                    Ut tellus dolor, dapibus eget.
-                                </p>
-                                <ul class="w3l-sider-list">
-                                    <li><i class="fa fa-clock-o" aria-hidden="true"></i>On Jan 12, 2016</li>
-                                    <li><i class="fa fa-eye" aria-hidden="true"></i> 2602</li>
-                                </ul>
-                            </div>
-                            <div class="clearfix"> </div>
-                        </div>
-                        <div class="w3l-recent-grid">
-                            <div class="wom">
-                                <a href="single.html"><img src="images/m13.jpg" alt=" " class="img-responsive"></a>
-                            </div>
-                            <div class="wom-right">
-                                <h5><a href="single.html">Lorem Integer rutrum</a></h5>
-                                <p>
-                                    Mauris fermentum dictum magna. Sed laoreet aliquam leo.
-                                    Ut tellus dolor, dapibus eget.
-                                </p>
-                                <ul class="w3l-sider-list">
-                                    <li><i class="fa fa-clock-o" aria-hidden="true"></i>On Mar 3, 2016</li>
-                                    <li><i class="fa fa-eye" aria-hidden="true"></i> 2742</li>
-                                </ul>
-                            </div>
-                            <div class="clearfix"> </div>
-                        </div>
-                        <div class="w3l-recent-grid">
-                            <div class="wom">
-                                <a href="single.html"><img src="images/m14.jpg" alt=" " class="img-responsive"></a>
-                            </div>
-                            <div class="wom-right">
-                                <h5><a href="single.html">Lorem Integer rutrum</a></h5>
-                                <p>
-                                    Mauris fermentum dictum magna. Sed laoreet aliquam leo.
-                                    Ut tellus dolor, dapibus eget.
-                                </p>
-                                <ul class="w3l-sider-list">
-                                    <li><i class="fa fa-clock-o" aria-hidden="true"></i>On Oct 13, 2016</li>
-                                    <li><i class="fa fa-eye" aria-hidden="true"></i> 2802</li>
-                                </ul>
-                            </div>
-                            <div class="clearfix"> </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
             <div class="clearfix"></div>
         </div>
@@ -309,7 +248,7 @@
         // make a server call here
             $(this).click(function () {
                 var rate = currentRating;
-                var movieId = @Model.Id;
+                var movieId = @Model.Movie.Id;
                 var data = { movieId: movieId, rate: currentRating };
                 $.ajax({
                     type: "POST",
@@ -328,7 +267,7 @@
     <script>
         $(".rating-disabled").starRating({
            starSize: 25,
-           initialRating: @Model.Rating,
+           initialRating: @Model.Movie.Rating,
            readOnly: true,
         });
     </script>

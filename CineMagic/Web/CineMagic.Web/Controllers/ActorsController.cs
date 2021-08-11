@@ -15,10 +15,14 @@
     public class ActorsController : Controller
     {
         private readonly IActorsService actorsService;
+        private readonly IMoviesService moviesService;
 
-        public ActorsController(IActorsService actorsService)
+        public ActorsController(
+            IActorsService actorsService,
+            IMoviesService moviesService)
         {
             this.actorsService = actorsService;
+            this.moviesService = moviesService;
         }
 
         public async Task<IActionResult> BornToday(int gender, int page = 1)
@@ -57,7 +61,16 @@
         {
             var actor = await this.actorsService.GetActorByIdAsync<ActorSinglePageViewModel>(id);
 
-            return this.View(actor);
+            var movies = await this.moviesService
+                .GetActorMostPopularMoviesAsync<ActorMostPopularMoviesViewModel>(id, GlobalConstants.SinglePageRighSectionMoviesCount);
+
+            var viewModel = new ActorSinglePageListViewModel
+            {
+                Actor = actor,
+                Movies = movies,
+            };
+
+            return this.View(viewModel);
         }
     }
 }

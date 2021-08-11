@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using CineMagic.Common;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Web.Infrastructure;
     using CineMagic.Web.ViewModels;
@@ -57,7 +57,15 @@
         {
             var movie = await this.moviesService.GetMovieByIdAsync<MovieSinglePageViewModel>(id);
 
-            return this.View(movie);
+            var similarMovies = await this.moviesService.GetSimilarMoviesAsync<SimilarMoviesViewModel>(id, GlobalConstants.SinglePageRighSectionMoviesCount);
+
+            var viewModel = new MovieSinglePageListViewModel
+            {
+                Movie = movie,
+                SimilarMovies = similarMovies,
+            };
+
+            return this.View(viewModel);
         }
 
         [Authorize]

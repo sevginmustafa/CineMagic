@@ -70,6 +70,5 @@
             await this.directorCommentsRepository.AddAsync(comment);
             await this.directorCommentsRepository.SaveChangesAsync();
         }
-
     }
 }

@@ -13,5 +13,7 @@
         public const int ItemsStandartCountPagination = 10;
 
         public const int MostPopularPeopleCount = 50;
+
+        public const int SinglePageRighSectionMoviesCount = 5;
     }
 }
