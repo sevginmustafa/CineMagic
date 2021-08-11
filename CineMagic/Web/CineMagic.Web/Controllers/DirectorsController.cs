@@ -64,7 +64,7 @@
                 .GetDirectorByIdAsync<DirectorSinglePageViewModel>(id);
 
             var movies = await this.moviesService
-                .GetDirectorBestProfitMoviesAsync<DirectorBestProfitMoviesViewModel>(id, GlobalConstants.SinglePageRighSectionMoviesCount);
+                .GetDirectorBestProfitMoviesAsync<DirectorHighestGrossingMoviesViewModel>(id, GlobalConstants.SinglePageRighSectionMoviesCount);
 
             var viewModel = new DirectorSinglePageListViewModel
             {

@@ -828,6 +828,37 @@ namespace CineMagic.Data.Migrations
                     b.ToTable("MoviesReviews");
                 });
 
+            modelBuilder.Entity("CineMagic.Data.Models.Privacy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(20000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Privacies");
+                });
+
             modelBuilder.Entity("CineMagic.Data.Models.Rating", b =>
                 {
                     b.Property<int>("MovieId")
@@ -859,9 +890,6 @@ namespace CineMagic.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -882,8 +910,6 @@ namespace CineMagic.Data.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Reviews");
                 });
@@ -1275,13 +1301,6 @@ namespace CineMagic.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CineMagic.Data.Models.Review", b =>
-                {
-                    b.HasOne("CineMagic.Data.Models.ApplicationUser", null)
-                        .WithMany("Reviews")
-                        .HasForeignKey("ApplicationUserId");
-                });
-
             modelBuilder.Entity("CineMagic.Data.Models.Watchlist", b =>
                 {
                     b.HasOne("CineMagic.Data.Models.Movie", "Movie")
@@ -1372,8 +1391,6 @@ namespace CineMagic.Data.Migrations
                     b.Navigation("MovieComments");
 
                     b.Navigation("Ratings");
-
-                    b.Navigation("Reviews");
 
                     b.Navigation("Roles");
 

@@ -62,6 +62,8 @@
 
         public DbSet<MovieReview> MoviesReviews { get; set; }
 
+        public DbSet<Privacy> Privacies { get; set; }
+
         public DbSet<Rating> Ratings { get; set; }
 
         public DbSet<Review> Reviews { get; set; }

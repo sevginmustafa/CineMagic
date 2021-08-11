@@ -217,7 +217,7 @@
         public async Task<IEnumerable<T>> GetDirectorBestProfitMoviesAsync<T>(int directorId, int count)
             => await this.moviesRepository
             .AllAsNoTracking()
-            .Where(x => x.Cast.Any(x => x.ActorId == directorId))
+            .Where(x => x.DirectorId == directorId)
             .OrderByDescending(x => x.Revenue)
             .Take(count)
             .To<T>()

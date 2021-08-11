@@ -5,7 +5,7 @@
     using CineMagic.Data.Models;
     using CineMagic.Services.Mapping;
 
-    public class DirectorBestProfitMoviesViewModel : IMapFrom<Movie>
+    public class DirectorHighestGrossingMoviesViewModel : IMapFrom<Movie>
     {
         public int Id { get; set; }
 
@@ -15,6 +15,6 @@
 
         public string Tagline { get; set; }
 
-        public DateTime ReleaseDate { get; set; }
+        public double Revenue { get; set; }
     }
 }

@@ -8,6 +8,7 @@
     using CineMagic.Web.Infrastructure;
     using CineMagic.Web.ViewModels;
     using CineMagic.Web.ViewModels.Movies;
+    using CineMagic.Web.ViewModels.Privacies;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : Controller
@@ -18,10 +19,14 @@
         private const int HomePageWatchlistMoviesCount = 10;
 
         private readonly IMoviesService moviesService;
+        private readonly IPrivaciesService privaciesService;
 
-        public HomeController(IMoviesService moviesService)
+        public HomeController(
+            IMoviesService moviesService,
+            IPrivaciesService privaciesService)
         {
             this.moviesService = moviesService;
+            this.privaciesService = privaciesService;
         }
 
         public async Task<IActionResult> Index()
@@ -54,9 +59,11 @@
             return this.View(viewModels);
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Privacy()
         {
-            return this.View();
+            var privacy = await this.privaciesService.GetPrivacyContentAsync<PrivacyContentViewModel>();
+
+            return this.View(privacy);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

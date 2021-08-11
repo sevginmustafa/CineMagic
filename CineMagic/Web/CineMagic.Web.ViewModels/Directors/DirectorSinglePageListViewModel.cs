@@ -6,6 +6,6 @@
     {
         public DirectorSinglePageViewModel Director { get; set; }
 
-        public IEnumerable<DirectorBestProfitMoviesViewModel> Movies { get; set; }
+        public IEnumerable<DirectorHighestGrossingMoviesViewModel> Movies { get; set; }
     }
 }

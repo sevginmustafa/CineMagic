@@ -104,16 +104,16 @@
                 <h4 class="side-t-w3l-agile">Known <span>For</span></h4>
                 <div class="w3_agile_latest_movies">
                     <div id="owl-demo" class="owl-carousel owl-theme">
-                        @foreach (var movie in Model.Movies)
+                        @foreach (var movie in Model.Actor.Movies)
                         {
                             <di class="item">
                                 <div class="w3l-movie-gride-agile w3l-movie-gride-slider ">
-                                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="hvr-sweep-to-bottom">
-                                        <img src="@movie.PosterPath" title="@movie.Title" class="img-responsive" />
+                                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.MovieId" class="hvr-sweep-to-bottom">
+                                        <img src="@movie.MoviePosterPath" title="@movie.MovieTitle" class="img-responsive" />
                                     </a>
                                     <div class="mid-1 agileits_w3layouts_mid_1_home">
                                         <div class="w3l-movie-text " style="height:45px;">
-                                            <h6><a style="font-weight:bold;" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h6>
+                                            <h6><a style="font-weight:bold;" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.MovieId">@movie.MovieTitle</a></h6>
                                         </div>
                                     </div>
                                 </div>
@@ -183,21 +183,28 @@
 
 
                 <div class="agile-info-recent">
-                    <h4 class="side-t-w3l-agile">More Like <span>This</span></h4>
+                    @if (Model.Actor.Gender == "Male")
+                    {
+                        <h4 class="side-t-w3l-agile">His Most Popular <span>Movies</span></h4>
+                    }
+                    else
+                    {
+                        <h4 class="side-t-w3l-agile">Her Most Popular <span>Movies</span></h4>
+                    }
                     <br />
                     <div class="w3ls-recent-grids">
                         @foreach (var movie in Model.Movies)
                         {
                             <div class="w3l-recent-grid">
                                 <div class="wom" style="margin:unset">
-                                    <a asp-action="Details" asp-route-id="@movie.Id"><img src="@movie.PosterPath" alt=" " class="img-responsive"></a>
+                                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id"><img src="@movie.PosterPath" alt=" " class="img-responsive"></a>
                                 </div>
                                 <div class="wom-right">
-                                    <h5><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+                                    <h5><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
                                     <p>@movie.Tagline</p>
                                     <br />
                                     <ul class="w3l-sider-list">
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>@movie.ReleaseDate.ToString("MMM d, yyyy")</li>
+                                        <li><i class="fa fa-fire" style="color:red" aria-hidden="true"></i>@movie.Popularity</li>
                                         @*<li><i class="fa fa-eye" aria-hidden="true"></i> 2602</li>*@
                                     </ul>
                                 </div>

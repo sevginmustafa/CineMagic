@@ -95,7 +95,7 @@
                             {
                                 <a href="#" class="watchlist_add" data-toggle="modal" data-target="#myModal4">Add to Watchlist</a>
                             }
-                            <p class="text-left" style="color:red"><i class="fa fa-clock-o" title="Edit"></i> @Model.Movie.Runtime min </p>
+                            <p class="text-left" style="color:red"><i class="fa fa-clock-o"></i> @Model.Movie.Runtime min </p>
                             <p class="text-left"><strong>Genre: </strong>@string.Join(", ", Model.Movie.Genres.Select(x => x.GenreName))</p>
                             <p class="text-left"><strong>Director: </strong><a asp-controller="Directors" asp-action="Details" asp-route-id="@Model.Movie.DirectorId">@Model.Movie.DirectorName</a></p>
                             <p class="text-left"><strong>IMDB: </strong><a href="@Model.Movie.IMDBLink">Link to IMDB</a> </p>
@@ -207,7 +207,7 @@
                                     <p>@movie.Tagline</p>
                                     <br />
                                     <ul class="w3l-sider-list">
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>@movie.ReleaseDate.ToString("MMM d, yyyy")</li>
+                                        <li><i class="fa fa-calendar" aria-hidden="true"></i>@movie.ReleaseDate.ToString("MMM d, yyyy")</li>
                                         @*<li><i class="fa fa-eye" aria-hidden="true"></i> 2602</li>*@
                                     </ul>
                                 </div>

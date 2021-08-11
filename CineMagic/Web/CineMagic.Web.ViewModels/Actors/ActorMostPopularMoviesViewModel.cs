@@ -1,7 +1,5 @@
 ﻿namespace CineMagic.Web.ViewModels.Actors
 {
-    using System;
-
     using CineMagic.Data.Models;
     using CineMagic.Services.Mapping;
 
@@ -15,6 +13,6 @@
 
         public string Tagline { get; set; }
 
-        public DateTime ReleaseDate { get; set; }
+        public double Popularity { get; set; }
     }
 }
