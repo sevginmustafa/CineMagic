@@ -2,13 +2,12 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using static CineMagic.Data.Common.DataValidation.User;
+    using static CineMagic.Common.ModelValidation.User;
 
     public class AjaxRegisterInputModel
     {
         [Required]
-        [MinLength(UsernameMinLength, ErrorMessage = "Username should be more than 3 characters long!")]
-        [MaxLength(UsernameMaxLength, ErrorMessage = "Username should be less than 30 characters long!")]
+        [StringLength(UsernameMaxLength, ErrorMessage = UsernameErrorMessage, MinimumLength = UsernameMinLength)]
         public string Username { get; set; }
 
         [Required]

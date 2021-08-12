@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using static CineMagic.Data.Common.DataValidation.Comment;
+    using static CineMagic.Common.ModelValidation.Comment;
 
     public class MovieCommentInputModel
     {
@@ -14,8 +14,7 @@
         public int? ParentId { get; set; }
 
         [Required]
-        [MinLength(ContentMinLength, ErrorMessage = "Content should be more than 3 characters long!")]
-        [MaxLength(ContentMaxLength, ErrorMessage = "Content should be less than 1000 characters long!")]
+        [StringLength(ContentMaxLength, ErrorMessage = ContentErrorMessage, MinimumLength = ContentMinLength)]
         public string Content { get; set; }
     }
 }

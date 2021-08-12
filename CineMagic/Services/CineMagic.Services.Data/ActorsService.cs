@@ -10,6 +10,8 @@
     using CineMagic.Data.Models;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Services.Mapping;
+    using CineMagic.Web.ViewModels.Actors;
+    using CineMagic.Web.ViewModels.InputModels.Administration;
     using Microsoft.EntityFrameworkCore;
 
     public class ActorsService : IActorsService
@@ -76,5 +78,39 @@
 
             return actors;
         }
+
+        public async Task CreateAsync(ActorCreateInputModel inputModel)
+        {
+            var actor = new Actor
+            {
+                Name = inputModel.Name,
+                ProfilePicPath = inputModel.ProfilePicPath,
+                Biography = inputModel.Biography,
+                Gender = inputModel.Gender,
+                Birthday = inputModel.Birthday,
+                Deathday = inputModel.Deathday,
+                Birthplace = inputModel.Birthplace,
+                Popularity = inputModel.Popularity,
+            };
+
+            bool findActor = await this.actorsRepository
+                .AllAsNoTracking()
+                .AnyAsync(x => x.Name == actor.Name);
+
+            //if (findActor)
+            //{
+            //    throw new ArgumentException(
+            //        string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
+            //}
+
+            await this.actorsRepository.AddAsync(actor);
+            await this.actorsRepository.SaveChangesAsync();
+        }
+
+        public IQueryable<T> GetAllActorsAsQueryable<T>()
+        => this.actorsRepository
+            .AllAsNoTracking()
+            .OrderByDescending(x => x.CreatedOn)
+            .To<T>();
     }
 }

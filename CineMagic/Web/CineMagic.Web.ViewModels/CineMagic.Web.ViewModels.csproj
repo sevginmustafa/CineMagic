@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CineMagic.Common\CineMagic.Common.csproj" />
     <ProjectReference Include="..\..\Data\CineMagic.Data.Models\CineMagic.Data.Models.csproj" />
     <ProjectReference Include="..\..\Services\CineMagic.Services.Mapping\CineMagic.Services.Mapping.csproj" />
   </ItemGroup>

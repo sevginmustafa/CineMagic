@@ -25,6 +25,7 @@
         public string ProfilePicPath { get; set; }
 
         [Required]
+        [MaxLength(BiographyMaxLength)]
         public string Biography { get; set; }
 
         public Gender Gender { get; set; }
@@ -33,6 +34,7 @@
 
         public DateTime? Deathday { get; set; }
 
+        [MaxLength(BirthplaceMaxLength)]
         public string Birthplace { get; set; }
 
         public double Popularity { get; set; }

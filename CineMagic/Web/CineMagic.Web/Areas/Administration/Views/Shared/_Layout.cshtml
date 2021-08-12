@@ -1,0 +1,24 @@
+﻿@{
+    this.Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class=" container-fluid">
+    <br />
+    <h2>Admin Dashboard</h2>
+    <div>
+        <h4>Change your admin settings</h4>
+        <br />
+        <div class="row">
+            <div class="col-md-3">
+                <partial name="_AdminNav" />
+            </div>
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <br />
+</div>
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

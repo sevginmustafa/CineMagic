@@ -1,0 +1,15 @@
+﻿@{
+    this.ViewData["ActivePage"] = ActorNavPages.Actors;
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="@ActorNavPages.CreateActorNavClass(ViewContext)"><a asp-controller="Actors" asp-action="Create">Create actor</a></li>
+                <li class="@ActorNavPages.GetAllNavClass(ViewContext)"><a asp-controller="Actors" asp-action="GetAll">List actors</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
