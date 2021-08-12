@@ -90,7 +90,9 @@
                             @if (Model.Actor.Deathday != null)
                             {
                                 <p class="text-left">
-                                    <strong>Deathday: </strong>@Model.Actor.Deathday.Value.ToString("MMM d, yyyy") (@Model.Actor.Age years old)
+                                    <strong>Deathday: </strong>@Model.Actor.Deathday.Value.ToString("MMM d, yyyy")
+                                    @if (Model.Actor.Birthday != null)
+                                    {<text>(@Model.Actor.Age years old)</text>}
                                 </p>
                             }
                             <p class="text-left"><strong>Birthplace: </strong>@Model.Actor.Birthplace</p>

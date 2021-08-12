@@ -1,11 +1,8 @@
 ﻿namespace CineMagic.Web.Areas.Administration.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
+
     using CineMagic.Common;
-    using CineMagic.Data;
     using CineMagic.Data.Common.Repositories;
     using CineMagic.Data.Models;
     using CineMagic.Services.Data.Contracts;
@@ -13,8 +10,6 @@
     using CineMagic.Web.ViewModels.Actors;
     using CineMagic.Web.ViewModels.InputModels.Administration;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Rendering;
-    using Microsoft.EntityFrameworkCore;
 
     [Area("Administration")]
     public class ActorsController : Controller
@@ -53,103 +48,32 @@
             return this.RedirectToAction("GetAll", "Actors", new { area = "Administration" });
         }
 
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return this.NotFound();
-        //    }
+        public async Task<IActionResult> Edit(int id)
+        {
+            var viewModel = await this.actorsService.GetViewModelByIdAsync<ActorEditViewModel>(id);
 
-        //    var actor = await this.actorsRepository.Actors
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (actor == null)
-        //    {
-        //        return this.NotFound();
-        //    }
+            return this.View(viewModel);
+        }
 
-        //    return View(actor);
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Edit(ActorEditViewModel actorEditViewModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(actorEditViewModel);
+            }
 
+            await this.actorsService.EditAsync(actorEditViewModel);
 
+            return this.RedirectToAction("GetAll", "Actors", new { area = "Administration" });
+        }
 
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return this.NotFound();
-        //    }
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.actorsService.DeleteAsync(id);
 
-        //    var actor = await this.actorsRepository.Actors.FindAsync(id);
-        //    if (actor == null)
-        //    {
-        //        return this.NotFound();
-        //    }
-        //    return View(actor);
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("Name,ProfilePicPath,Biography,Gender,Birthday,Deathday,Birthplace,Popularity,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Actor actor)
-        //{
-        //    if (id != actor.Id)
-        //    {
-        //        return this.NotFound();
-        //    }
-
-        //    if (this.ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            this.actorsRepository.Update(actor);
-        //            await this.actorsRepository.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!this.ActorExists(actor.Id))
-        //            {
-        //                return this.NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return this.RedirectToAction(nameof(this.Index));
-        //    }
-        //    return this.View(actor);
-        //}
-
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return this.NotFound();
-        //    }
-
-        //    var actor = await this.actorsRepository.Actors
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (actor == null)
-        //    {
-        //        return this.NotFound();
-        //    }
-
-        //    return View(actor);
-        //}
-
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var actor = await this.actorsRepository.Actors.FindAsync(id);
-        //    this.actorsRepository.Actors.Remove(actor);
-        //    await this.actorsRepository.SaveChangesAsync();
-        //    return this.RedirectToAction(nameof(this.Index));
-        //}
-
-        //private bool ActorExists(int id)
-        //{
-        //    return this.actorsRepository.Actors.Any(e => e.Id == id);
-        //}
+            return this.RedirectToAction("GetAll", "Actors", new { area = "Administration" });
+        }
 
         public async Task<IActionResult> GetAll(int page = 1)
         {

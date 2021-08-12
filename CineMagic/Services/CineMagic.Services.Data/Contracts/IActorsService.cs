@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-
+    using CineMagic.Web.ViewModels.Actors;
     using CineMagic.Web.ViewModels.InputModels.Administration;
 
     public interface IActorsService
@@ -17,6 +17,12 @@
         Task<T> GetActorByIdAsync<T>(int id);
 
         Task CreateAsync(ActorCreateInputModel inputModel);
+
+        Task DeleteAsync(int id);
+
+        Task EditAsync(ActorEditViewModel actorEditViewModel);
+
+        Task<T> GetViewModelByIdAsync<T>(int id);
 
         IQueryable<T> GetAllActorsAsQueryable<T>();
     }

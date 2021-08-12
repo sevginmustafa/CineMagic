@@ -1,91 +1,57 @@
-﻿@model CineMagic.Data.Models.Actor
+﻿@using CineMagic.Data.Models.Enums
+@model CineMagic.Web.ViewModels.InputModels.Administration.ActorCreateInputModel
 
 @{
-    this.ViewData["ActivePage"] = ActorNavPages.Actors;
     ViewData["Title"] = "Create Actor";
+    this.ViewData["ActivePage"] = ActorNavPages.Actors;
 }
 
-<h2>Create</h2>
-
-<h4>Actor</h4>
+<h2>@ViewData["Title"]</h2>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col-md-6">
+        <form asp-action="Create" method="post">
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProfilePicPath" class="control-label"></label>
+                <label asp-for="ProfilePicPath"></label>
                 <input asp-for="ProfilePicPath" class="form-control" />
                 <span asp-validation-for="ProfilePicPath" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Biography" class="control-label"></label>
-                <input asp-for="Biography" class="form-control" />
+                <label asp-for="Biography"></label>
+                <textarea asp-for="Biography" class="form-control"></textarea>
                 <span asp-validation-for="Biography" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
-                <select asp-for="Gender" class="form-control"></select>
+                <label asp-for="Gender"></label>
+                <select asp-for="Gender" class="form-control" asp-items="@Html.GetEnumSelectList<Gender>().Skip(1)"></select>
                 <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Birthday" class="control-label"></label>
+                <label asp-for="Birthday"></label>
                 <input asp-for="Birthday" class="form-control" />
                 <span asp-validation-for="Birthday" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Deathday" class="control-label"></label>
+                <label asp-for="Deathday"></label>
                 <input asp-for="Deathday" class="form-control" />
                 <span asp-validation-for="Deathday" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Birthplace" class="control-label"></label>
+                <label asp-for="Birthplace"></label>
                 <input asp-for="Birthplace" class="form-control" />
                 <span asp-validation-for="Birthplace" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Popularity" class="control-label"></label>
+                <label asp-for="Popularity"></label>
                 <input asp-for="Popularity" class="form-control" />
                 <span asp-validation-for="Popularity" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="DeletedOn" class="control-label"></label>
-                <input asp-for="DeletedOn" class="form-control" />
-                <span asp-validation-for="DeletedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedOn" class="control-label"></label>
-                <input asp-for="CreatedOn" class="form-control" />
-                <span asp-validation-for="CreatedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedOn" class="control-label"></label>
-                <input asp-for="ModifiedOn" class="form-control" />
-                <span asp-validation-for="ModifiedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+            <button type="submit" class="btn btn-success">Save changes</button>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

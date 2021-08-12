@@ -112,5 +112,65 @@
             .AllAsNoTracking()
             .OrderByDescending(x => x.CreatedOn)
             .To<T>();
+
+        public async Task DeleteAsync(int id)
+        {
+            var findActor = await this.actorsRepository
+                .AllAsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            // if (findActor == null)
+            // {
+            //     throw new ArgumentException(
+            //string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
+            // }
+
+            findActor.IsDeleted = true;
+            findActor.DeletedOn = DateTime.UtcNow;
+
+            this.actorsRepository.Update(findActor);
+            await this.actorsRepository.SaveChangesAsync();
+        }
+
+        public async Task EditAsync(ActorEditViewModel actorEditViewModel)
+        {
+            var findActor = await this.actorsRepository
+                .AllAsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == actorEditViewModel.Id);
+
+            // if (findActor == null)
+            // {
+            //     throw new ArgumentException(
+            //string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
+            // }
+
+            findActor.Name = actorEditViewModel.Name;
+            findActor.ProfilePicPath = actorEditViewModel.ProfilePicPath;
+            findActor.Biography = actorEditViewModel.Biography;
+            findActor.Gender = actorEditViewModel.Gender;
+            findActor.Birthday = actorEditViewModel.Birthday;
+            findActor.Deathday = actorEditViewModel.Deathday;
+            findActor.Birthplace = actorEditViewModel.Birthplace;
+            findActor.Popularity = actorEditViewModel.Popularity;
+
+            this.actorsRepository.Update(findActor);
+            await this.actorsRepository.SaveChangesAsync();
+        }
+
+        public async Task<T> GetViewModelByIdAsync<T>(int id)
+        {
+            var actor = await this.actorsRepository
+                 .AllAsNoTracking()
+                 .Where(m => m.Id == id)
+                 .To<T>()
+                 .FirstOrDefaultAsync();
+
+            //if (actor == null)
+            //{
+            //    throw new NullReferenceException(string.Format(ExceptionMessages.MovieNotFound, id));
+            //}
+
+            return actor;
+        }
     }
 }

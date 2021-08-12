@@ -48,11 +48,14 @@
             public const int BiographyMaxLength = 20000;
             public const int BirthplaceMinLength = 3;
             public const int BirthplaceMaxLength = 300;
+            public const int PopularityMaxValue = 100;
 
             public const string NameErrorMessage = "Name should be between {2} and {1} symbols";
             public const string ProfilePicPathErrorMessage = "Profile Pic Path should be between {2} and {1} symbols";
             public const string BiographyErrorMessage = "Biography should be between {2} and {1} symbols";
             public const string BirthplaceErrorMessage = "Birthplace should be between {2} and {1} symbols";
+
+            public const string ProfilePicPathDisplayName = "Profile Image Path";
         }
 
         public static class Author

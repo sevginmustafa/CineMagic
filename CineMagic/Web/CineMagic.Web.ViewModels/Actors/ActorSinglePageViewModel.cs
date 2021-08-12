@@ -12,6 +12,8 @@
     {
         public int Id { get; set; }
 
+       
+
         public string Name { get; set; }
 
         public string ProfilePicPath { get; set; }
@@ -22,11 +24,26 @@
 
         public DateTime? Birthday { get; set; }
 
-        public int? Age => this.Birthday != null ? (DateTime.Today - this.Birthday.Value).Days / 365 : null;
-
         public int KnownCredits => this.Movies.Count;
 
         public DateTime? Deathday { get; set; }
+
+        public int? Age
+        {
+            get
+            {
+                if (this.Deathday.HasValue && this.Birthday.HasValue)
+                {
+                    return (this.Deathday.Value - this.Birthday.Value).Days / 365;
+                }
+                else if (this.Birthday.HasValue)
+                {
+                    return (DateTime.Today - this.Birthday.Value).Days / 365;
+                }
+
+                return null;
+            }
+        }
 
         public string Birthplace { get; set; }
 
