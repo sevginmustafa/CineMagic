@@ -81,6 +81,16 @@
 
         public async Task CreateAsync(ActorCreateInputModel inputModel)
         {
+            bool findActor = await this.actorsRepository
+                  .AllAsNoTracking()
+                  .AnyAsync(x => x.Name == inputModel.Name);
+
+            //if (findActor)
+            //{
+            //    throw new ArgumentException(
+            //        string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
+            //}
+
             var actor = new Actor
             {
                 Name = inputModel.Name,
@@ -92,16 +102,6 @@
                 Birthplace = inputModel.Birthplace,
                 Popularity = inputModel.Popularity,
             };
-
-            bool findActor = await this.actorsRepository
-                .AllAsNoTracking()
-                .AnyAsync(x => x.Name == actor.Name);
-
-            //if (findActor)
-            //{
-            //    throw new ArgumentException(
-            //        string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            //}
 
             await this.actorsRepository.AddAsync(actor);
             await this.actorsRepository.SaveChangesAsync();

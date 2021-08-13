@@ -9,6 +9,7 @@
     using CineMagic.Data.Models;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Services.Mapping;
+    using CineMagic.Web.ViewModels.InputModels.Administration;
     using Microsoft.EntityFrameworkCore;
 
     public class MoviesService : IMoviesService
@@ -222,5 +223,51 @@
             .Take(count)
             .To<T>()
             .ToListAsync();
+
+        public async Task CreateAsync(MovieCreateInputModel inputModel)
+        {
+            var findMovie = await this.moviesRepository
+                .AllAsNoTracking()
+                .AnyAsync(x => x.Title == inputModel.Title);
+
+            if (findMovie)
+            {
+                // throw error
+            }
+
+            var movie = new Movie
+            {
+                Title = inputModel.Title,
+                PosterPath = inputModel.PosterPath,
+                TrailerPath = inputModel.TrailerPath,
+                IMDBLink = inputModel.IMDBLink,
+                ReleaseDate = inputModel.ReleaseDate,
+                Runtime = inputModel.Runtime,
+                Tagline = inputModel.Tagline,
+                Overview = inputModel.Overview,
+                Budget = inputModel.Budget,
+                Revenue = inputModel.Revenue,
+                Popularity = inputModel.Popularity,
+                DirectorId = inputModel.DirectorId,
+            };
+
+            foreach (var genreId in inputModel.SelectedGenres)
+            {
+                movie.Genres.Add(new MovieGenre { GenreId = genreId });
+            }
+
+            foreach (var countryId in inputModel.SelectedCountries)
+            {
+                movie.ProductionCountries.Add(new MovieCountry { CountryId = countryId });
+            }
+
+            foreach (var languageId in inputModel.SelectedGenres)
+            {
+                movie.Languages.Add(new MovieLanguage { LanguageId = languageId });
+            }
+
+            await this.moviesRepository.AddAsync(movie);
+            await this.moviesRepository.SaveChangesAsync();
+        }
     }
 }

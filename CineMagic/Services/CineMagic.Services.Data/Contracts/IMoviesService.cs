@@ -1,5 +1,6 @@
 ﻿namespace CineMagic.Services.Data.Contracts
 {
+    using CineMagic.Web.ViewModels.InputModels.Administration;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -41,5 +42,15 @@
         Task<IEnumerable<T>> GetActorMostPopularMoviesAsync<T>(int actorId, int count);
 
         Task<IEnumerable<T>> GetDirectorBestProfitMoviesAsync<T>(int directorId, int count);
+
+        Task CreateAsync(MovieCreateInputModel inputModel);
+
+        //Task DeleteAsync(int id);
+
+        //Task EditAsync(DirectorEditViewModel directorEditViewModel);
+
+        //Task<T> GetViewModelByIdAsync<T>(int id);
+
+        //IQueryable<T> GetAllDirectorsAsQueryable<T>();
     }
 }

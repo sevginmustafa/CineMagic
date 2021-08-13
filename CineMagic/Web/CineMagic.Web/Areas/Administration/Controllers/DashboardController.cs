@@ -1,8 +1,6 @@
 ﻿namespace CineMagic.Web.Areas.Administration.Controllers
 {
-    using CineMagic.Services.Data;
     using CineMagic.Services.Data.Contracts;
-    using CineMagic.Web.ViewModels.Administration.Dashboard;
 
     using Microsoft.AspNetCore.Mvc;
 
@@ -15,10 +13,10 @@
             this.settingsService = settingsService;
         }
 
+        [HttpGet("/Administration")]
         public IActionResult Index()
         {
-            var viewModel = new IndexViewModel { SettingsCount = this.settingsService.GetCount(), };
-            return this.View(viewModel);
+            return this.View();
         }
     }
 }

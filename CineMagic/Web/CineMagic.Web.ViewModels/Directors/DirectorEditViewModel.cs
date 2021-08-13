@@ -1,4 +1,4 @@
-﻿namespace CineMagic.Web.ViewModels.Actors
+﻿namespace CineMagic.Web.ViewModels.Directors
 {
     using System;
     using System.ComponentModel.DataAnnotations;
@@ -9,7 +9,7 @@
 
     using static CineMagic.Common.ModelValidation.Person;
 
-    public class ActorEditViewModel:IMapFrom<Actor>
+    public class DirectorEditViewModel : IMapFrom<Director>
     {
         public int Id { get; set; }
 

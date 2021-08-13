@@ -10,5 +10,7 @@
         Task<IEnumerable<T>> GetAllGenresAsync<T>();
 
         Task<IEnumerable<T>> GetPopularGenresAsync<T>();
+
+        Task<IEnumerable<T>> GetAllAsync<T>();
     }
 }

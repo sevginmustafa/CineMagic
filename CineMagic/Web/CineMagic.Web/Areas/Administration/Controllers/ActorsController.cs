@@ -77,9 +77,9 @@
 
         public async Task<IActionResult> GetAll(int page = 1)
         {
-            var actors = this.actorsService.GetAllActorsAsQueryable<ActorAdministrationViewModel>();
+            var actors = this.actorsService.GetAllActorsAsQueryable<ActorsAdministrationViewModel>();
 
-            var paginatedList = await PaginatedList<ActorAdministrationViewModel>
+            var paginatedList = await PaginatedList<ActorsAdministrationViewModel>
                 .CreateAsync(actors, page, GlobalConstants.AdministrationItemsPerPage);
 
             return this.View(paginatedList);

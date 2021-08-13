@@ -77,7 +77,7 @@
                                     <th>Country</th>
                                     <th>Budget</th>
                                     <th>Revenue</th>
-                                    <th>Rating</th>
+                                    <th>Popularity</th>
                                 </tr>
                             </thead>
                             <tbody id="myTable">
@@ -94,7 +94,7 @@
                                         <td class="w3-list-info">@string.Join(", ", movie.ProductionCountries.Select(x => x.CountryName))</td>
                                         <td>@movie.Budget</td>
                                         <td>@movie.Revenue</td>
-                                        <td>@movie.CurrentAverageVote</td>
+                                        <td>@movie.Popularity.ToString("f2")</td>
                                     </tr>
 
                                     counter++;

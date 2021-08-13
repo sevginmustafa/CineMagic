@@ -1,0 +1,109 @@
+﻿@model CineMagic.Web.ViewModels.InputModels.Administration.MovieCreateInputModel
+
+@{
+    ViewData["Title"] = "Create Movie";
+    this.ViewData["ActivePage"] = MovieNavPages.Movies;
+
+    var directors = Model.Directors.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var genres = Model.Genres.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var countries = Model.ProductionCountries.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var languages = Model.Languages.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" enctype="application/x-www-form-urlencoded" method="post">
+            <div class="form-group">
+                <label asp-for="Title"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PosterPath"></label>
+                <input asp-for="PosterPath" class="form-control" />
+                <span asp-validation-for="PosterPath" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrailerPath"></label>
+                <input asp-for="TrailerPath" class="form-control" />
+                <span asp-validation-for="TrailerPath" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IMDBLink"></label>
+                <input asp-for="IMDBLink" class="form-control" />
+                <span asp-validation-for="IMDBLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReleaseDate"></label>
+                <input asp-for="ReleaseDate" class="form-control" />
+                <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Runtime"></label>
+                <input asp-for="Runtime" class="form-control" />
+                <span asp-validation-for="Runtime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tagline"></label>
+                <input asp-for="Tagline" class="form-control" />
+                <span asp-validation-for="Tagline" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Overview"></label>
+                <textarea asp-for="Overview" class="form-control"></textarea>
+                <span asp-validation-for="Overview" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Budget"></label>
+                <input asp-for="Budget" class="form-control" />
+                <span asp-validation-for="Budget" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Revenue"></label>
+                <input asp-for="Revenue" class="form-control" />
+                <span asp-validation-for="Revenue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Popularity"></label>
+                <input asp-for="Popularity" class="form-control" />
+                <span asp-validation-for="Popularity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DirectorId"></label>
+                <select  class="multiple-select" asp-for="DirectorId" asp-items="directors">
+                </select>
+                <span asp-validation-for="DirectorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedGenres"></label>
+                <select multiple="multiple" class="multiple-select" asp-for="SelectedGenres" asp-items="genres">
+                </select>
+                <span asp-validation-for="SelectedGenres" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedCountries"></label>
+                <select multiple="multiple" class="multiple-select" asp-for="SelectedCountries" asp-items="countries">
+                </select>
+                <span asp-validation-for="SelectedCountries" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedLanguages"></label>
+                <select multiple="multiple" class="multiple-select" asp-for="SelectedLanguages" asp-items="languages">
+                </select>
+                <span asp-validation-for="SelectedLanguages" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-success">Save changes</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $('.multiple-select').multipleSelect()
+        })
+    </script>
+}

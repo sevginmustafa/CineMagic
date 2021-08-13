@@ -1,4 +1,4 @@
-﻿namespace CineMagic.Web.ViewModels.Actors
+﻿namespace CineMagic.Web.ViewModels.Directors
 {
     using System;
 
@@ -6,7 +6,7 @@
     using CineMagic.Data.Models;
     using CineMagic.Services.Mapping;
 
-    public class ActorAdministrationViewModel : IMapFrom<Actor>, IHaveCustomMappings
+    public class DirectorsAdministrationViewModel : IMapFrom<Director>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
@@ -41,7 +41,7 @@
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Actor, ActorAdministrationViewModel>()
+            configuration.CreateMap<Director, DirectorsAdministrationViewModel>()
                 .ForMember(x => x.ProfilePicPath, opt =>
                 opt.MapFrom(x => x.ProfilePicPath ?? "/images/no-profile-pic.jpg"));
         }

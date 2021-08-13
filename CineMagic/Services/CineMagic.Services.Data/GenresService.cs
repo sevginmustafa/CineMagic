@@ -21,6 +21,13 @@
             this.genresRepository = genresRepository;
         }
 
+        public async Task<IEnumerable<T>> GetAllAsync<T>()
+            => await this.genresRepository
+            .AllAsNoTracking()
+            .OrderBy(x => x.Name)
+            .To<T>()
+            .ToListAsync();
+
         public async Task<IEnumerable<T>> GetAllGenresAsync<T>()
         {
             var genres = await this.genresRepository

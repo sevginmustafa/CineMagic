@@ -1,9 +1,9 @@
-﻿@using CineMagic.Web.ViewModels.Actors
-@model PaginatedList<ActorsAdministrationViewModel>
+﻿@using CineMagic.Web.ViewModels.Movies
+@model PaginatedList<MoviesAdministrationViewModel>
 
 @{
-    this.ViewData["Title"] = "All Actors";
-    this.ViewData["ActivePage"] = ActorNavPages.Actors;
+    this.ViewData["Title"] = "All Movies";
+    this.ViewData["ActivePage"] = MovieNavPages.Movies;
 }
 
 @{
@@ -31,41 +31,33 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Name</th>
-                                <th>Age</th>
-                                <th>Birthday</th>
-                                <th>Deathday</th>
-                                <th>Birthplace</th>
+                                <th>Title</th>
+                                <th>DirectorName</th>
+                                <th>Year</th>
+                                <th>Runtime</th>
+                                <th>Budget</th>
+                                <th>Revenue</th>
                                 <th>Popularity</th>
                                 <th>Edit / Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var actor in Model)
+                            @foreach (var movie in Model)
                             {
                                 <tr>
                                     <td>@counter</td>
-                                    <td class="w3-list-img"><a><img src="@actor.ProfilePicPath" /> <span>@actor.Name</span></a></td>
-                                    <td>@actor.Age</td>
+                                    <td class="w3-list-img"><a><img src="@movie.PosterPath" /> <span>@movie.Title</span></a></td>
+                                    <td>@movie.DirectorName</td>
+                                    <td>@movie.ReleaseDate.Year</td>
+                                    <td>@movie.Runtime min</td>
+                                    <td>$@movie.Budget</td>
+                                    <td>$@movie.Revenue</td>
+                                    <td>@movie.Popularity.ToString("f2")</td>
                                     <td>
-                                        @if (actor.Birthday.HasValue)
-                                        {
-                                            @actor.Birthday.Value.ToString("MMM d, yyyy")
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (actor.Deathday.HasValue)
-                                        {
-                                            @actor.Deathday.Value.ToString("MMM d, yyyy")
-                                        }
-                                    </td>
-                                    <td>@actor.Birthplace</td>
-                                    <td>@actor.Popularity.ToString("f2")</td>
-                                    <td>
-                                        <form asp-action="Edit" asp-route-id="@actor.Id" method="get">
+                                        <form asp-action="Edit" asp-route-id="@movie.Id" method="get">
                                             <button type="submit" class="badge badge-warning">Edit</button>
                                         </form>
-                                        <form asp-action="Delete" asp-route-id="@actor.Id" method="post" id="deleteForm">
+                                        <form asp-action="Delete" asp-route-id="@movie.Id" method="post" id="deleteForm">
                                         </form>
                                         <button type="submit" class="badge badge-danger" data-toggle="modal" data-target="#modalDelete">Delete</button>
                                     </td>
@@ -86,17 +78,17 @@
     <div class="blog-pagenat-wthree">
         <ul class="pagination">
             <li class="page-item @if (!Model.HasPreviousPage) {<text>disabled</text>}">
-                <a class="page-link" asp-area="Administration" asp-controller="Actors" asp-action="GetAll">First</a>
+                <a class="page-link" asp-area="Administration" asp-controller="Movies" asp-action="GetAll">First</a>
             </li>
             <li class="page-item @if (!Model.HasPreviousPage) {<text>disabled</text>}">
-                <a class="page-link" asp-area="Administration" asp-controller="Actors" asp-action="GetAll" asp-route-page="@Model.PreviousPage">Previous</a>
+                <a class="page-link" asp-area="Administration" asp-controller="Movies" asp-action="GetAll" asp-route-page="@Model.PreviousPage">Previous</a>
             </li>
             @for (int i = Model.PageNumber - 3; i < Model.PageNumber; i++)
             {
                 if (i > 0)
                 {
                     <li class="page-item">
-                        <a class="page-link" asp-area="Administration" asp-controller="Actors" asp-action="GetAll" asp-route-page="@i">@i</a>
+                        <a class="page-link" asp-area="Administration" asp-controller="Movies" asp-action="GetAll" asp-route-page="@i">@i</a>
                     </li>
                 }
             }
@@ -111,15 +103,15 @@
                 if (i <= Model.TotalPages)
                 {
                     <li class="page-item">
-                        <a class="page-link" asp-area="Administration" asp-controller="Actors" asp-action="GetAll" asp-route-page="@i">@i</a>
+                        <a class="page-link" asp-area="Administration" asp-controller="Movies" asp-action="GetAll" asp-route-page="@i">@i</a>
                     </li>
                 }
             }
             <li class="page-item @if (!Model.HasNextPage) {<text>disabled</text>}">
-                <a class="page-link" asp-area="Administration" asp-controller="Actors" asp-action="GetAll" asp-route-page="@Model.NextPage">Next</a>
+                <a class="page-link" asp-area="Administration" asp-controller="Movies" asp-action="GetAll" asp-route-page="@Model.NextPage">Next</a>
             </li>
             <li class="page-item @if (!Model.HasNextPage) {<text>disabled</text>}">
-                <a class="page-link" asp-area="Administration" asp-controller="Actors" asp-action="GetAll" asp-route-page="@Model.TotalPages">Last</a>
+                <a class="page-link" asp-area="Administration" asp-controller="Movies" asp-action="GetAll" asp-route-page="@Model.TotalPages">Last</a>
             </li>
         </ul>
     </div>
@@ -129,7 +121,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <b>Are you sure you want to delete this actor?</b>
+                <b>Are you sure you want to delete this movie?</b>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>

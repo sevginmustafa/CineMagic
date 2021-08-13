@@ -40,7 +40,6 @@
 
         public DateTime ReleaseDate { get; set; }
 
-        [MaxLength(RuntimeMaxLength)]
         public int Runtime { get; set; }
 
         [MaxLength(TaglineMaxLength)]

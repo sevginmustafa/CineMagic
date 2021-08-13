@@ -1,18 +1,16 @@
-﻿namespace CineMagic.Web.ViewModels.Actors
+﻿namespace CineMagic.Web.ViewModels.InputModels.Administration
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using CineMagic.Data.Models;
     using CineMagic.Data.Models.Enums;
-    using CineMagic.Services.Mapping;
 
     using static CineMagic.Common.ModelValidation.Person;
 
-    public class ActorEditViewModel:IMapFrom<Actor>
+    public abstract class PersonCreateInputModel
     {
-        public int Id { get; set; }
-
         [Required]
         [StringLength(NameMaxLength, ErrorMessage = NameErrorMessage, MinimumLength = NameMinLength)]
         public string Name { get; set; }
@@ -38,5 +36,9 @@
 
         [Range(0, PopularityMaxValue)]
         public double Popularity { get; set; }
+
+        public virtual ICollection<MovieActor> Movies { get; set; }
+
+        public virtual ICollection<ActorComment> Comments { get; set; }
     }
 }

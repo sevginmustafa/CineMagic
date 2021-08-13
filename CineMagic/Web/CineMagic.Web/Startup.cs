@@ -73,6 +73,7 @@
             services.AddTransient<IMoviesService, MoviesService>();
             services.AddTransient<IGenresService, GenresService>();
             services.AddTransient<ICountriesService, CountriesService>();
+            services.AddTransient<ILanguagesService, LanguagesService>();
             services.AddTransient<IActorsService, ActorsService>();
             services.AddTransient<IDirectorsService, DirectorsService>();
             services.AddTransient<IUsersService, UsersService>();

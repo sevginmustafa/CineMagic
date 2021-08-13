@@ -15,6 +15,8 @@
 
         public string PosterPath { get; set; }
 
+        public string DirectorName { get; set; }
+
         public ICollection<MovieGenresViewModel> Genres { get; set; }
 
         public ICollection<MovieCountriesViewModel> ProductionCountries { get; set; }
@@ -30,12 +32,6 @@
         public double Revenue { get; set; }
 
         public double Popularity { get; set; }
-
-        public double CurrentAverageVote { get; set; }
-
-        public int CurrentNumberOfVotes { get; set; }
-
-        public string DirectorName { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
