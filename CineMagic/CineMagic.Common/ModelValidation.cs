@@ -123,7 +123,10 @@
 
         public static class Country
         {
+            public const int NameMinLength = 2;
             public const int NameMaxLength = 50;
+
+            public const string NameErrorMessage = "Name should be between {2} and {1} symbols";
 
             public const string CountryDisplayName = "Country";
 
@@ -134,7 +137,10 @@
 
         public static class Language
         {
+            public const int NameMinLength = 3;
             public const int NameMaxLength = 50;
+
+            public const string NameErrorMessage = "Name should be between {2} and {1} symbols";
 
             public const string LanguageDisplayName = "Language";
 
@@ -150,7 +156,10 @@
 
         public static class Genre
         {
+            public const int NameMinLength = 3;
             public const int NameMaxLength = 30;
+
+            public const string NameErrorMessage = "Name should be between {2} and {1} symbols";
 
             public const string GenreDisplayName = "Genre";
 
@@ -181,7 +190,10 @@
 
         public static class Privacy
         {
+            public const int ContentMinLength = 100;
             public const int ContentMaxLength = 20000;
+
+            public const string ContentErrorMessage = "Content should be between {2} and {1} symbols";
         }
     }
 }

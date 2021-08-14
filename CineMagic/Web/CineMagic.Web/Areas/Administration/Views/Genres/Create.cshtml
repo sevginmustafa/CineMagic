@@ -1,0 +1,21 @@
+﻿@model CineMagic.Web.ViewModels.InputModels.Administration.GenreCreateInputModel
+
+@{
+    ViewData["Title"] = "Create Genre";
+    this.ViewData["ActivePage"] = GenreNavPages.Genres;
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-success">Create Genre</button>
+        </form>
+    </div>
+</div>

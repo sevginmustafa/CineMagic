@@ -4,7 +4,7 @@
 @using CineMagic.Web.ViewModels.Countries
 
 @{
-    var genres = await GenresService.GetAllGenresAsync<GenreNavbarViewModel>();
+    var genres = await GenresService.GetAllAsync<GenreNavbarViewModel>();
     var countries = await CountriesService.GetPopularCountriesAsync<CountryNavbarViewModel>();
 }
 

@@ -12,11 +12,11 @@
 
         public static string Directors => "Directors";
 
+        public static string Genres => "Genres";
+
         public static string Countries => "Countries";
 
         public static string Languages => "Languages";
-
-        public static string Genres => "Genres";
 
         public static string Privacy => "Privacy";
 
@@ -28,11 +28,11 @@
 
         public static string DirectorNavClass(ViewContext viewContext) => PageNavClass(viewContext, Directors);
 
+        public static string GenreNavClass(ViewContext viewContext) => PageNavClass(viewContext, Genres);
+
         public static string CountryNavClass(ViewContext viewContext) => PageNavClass(viewContext, Countries);
 
         public static string LanguageNavClass(ViewContext viewContext) => PageNavClass(viewContext, Languages);
-
-        public static string GenreNavClass(ViewContext viewContext) => PageNavClass(viewContext, Genres);
 
         public static string PrivacyNavClass(ViewContext viewContext) => PageNavClass(viewContext, Privacy);
 

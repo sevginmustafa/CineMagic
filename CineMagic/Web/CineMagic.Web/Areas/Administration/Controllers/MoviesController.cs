@@ -119,12 +119,13 @@
         //    return this.RedirectToAction("GetAll", "Actors", new { area = "Administration" });
         //}
 
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    await this.actorsService.DeleteAsync(id);
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.moviesService.DeleteAsync(id);
 
-        //    return this.RedirectToAction("GetAll", "Actors", new { area = "Administration" });
-        //}
+            return this.RedirectToAction("GetAll", "Movies", new { area = "Administration" });
+        }
 
         public async Task<IActionResult> GetAll(int page = 1)
         {

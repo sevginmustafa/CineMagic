@@ -1,7 +1,7 @@
 ﻿namespace CineMagic.Web.ViewModels.Movies
 {
     using System;
-
+    using System.ComponentModel.DataAnnotations;
     using CineMagic.Data.Models;
     using CineMagic.Services.Mapping;
 
@@ -13,6 +13,7 @@
 
         public string PosterPath { get; set; }
 
+        [Display(Name = "Director")]
         public string DirectorName { get; set; }
 
         public DateTime ReleaseDate { get; set; }

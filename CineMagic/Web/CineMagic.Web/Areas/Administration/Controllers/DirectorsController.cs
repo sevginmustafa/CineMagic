@@ -68,6 +68,7 @@
             return this.RedirectToAction("GetAll", "Directors", new { area = "Administration" });
         }
 
+        [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
             await this.directorsService.DeleteAsync(id);

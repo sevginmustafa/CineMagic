@@ -1,0 +1,15 @@
+﻿@{
+    this.ViewData["ActivePage"] = LanguageNavPages.Languages;
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="@LanguageNavPages.CreateLanguageNavClass(ViewContext)"><a asp-controller="Languages" asp-action="Create">Create Language</a></li>
+                <li class="@LanguageNavPages.GetAllNavClass(ViewContext)"><a asp-controller="Languages" asp-action="GetAll">All Languages</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

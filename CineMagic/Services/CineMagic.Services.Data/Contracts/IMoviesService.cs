@@ -45,7 +45,7 @@
 
         Task CreateAsync(MovieCreateInputModel inputModel);
 
-        //Task DeleteAsync(int id);
+        Task DeleteAsync(int id);
 
         //Task EditAsync(DirectorEditViewModel directorEditViewModel);
 

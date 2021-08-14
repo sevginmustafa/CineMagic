@@ -6,7 +6,7 @@
     this.ViewData["ActivePage"] = ActorNavPages.Actors;
 }
 
-<h2>Edit <b>@Model.Name</b> with ID: @Model.Id</h2>
+<h2>Edit Actor <b>@Model.Name</b> with ID: @Model.Id</h2>
 <hr />
 <div class="row">
     <div class="col-md-6">
@@ -51,8 +51,28 @@
                 <input asp-for="Popularity" class="form-control" />
                 <span asp-validation-for="Popularity" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-success">Save changes</button>
+            <button type="submit" class="btn btn-success">Edit Actor</button>
+            <button asp-action="GetAll" class="btn btn-primary">Back to All Actors</button>
         </form>
+        <br />
+        <form asp-action="Delete" asp-route-id="@Model.Id" method="post" id="deleteForm">
+        </form>
+        <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">Delete Actor</button>
+    </div>
+</div>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="modalDelete">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <b class="text-danger">Are you sure you want to delete this actor?</b>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-danger" onclick="deleteForm.submit()">Yes</button>
+            </div>
+        </div>
     </div>
 </div>
 

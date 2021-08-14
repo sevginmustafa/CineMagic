@@ -9,7 +9,7 @@
 
     using static CineMagic.Common.ModelValidation.Person;
 
-    public class ActorEditViewModel:IMapFrom<Actor>
+    public class ActorEditViewModel : IMapFrom<Actor>
     {
         public int Id { get; set; }
 

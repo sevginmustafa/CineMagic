@@ -38,7 +38,7 @@
                                 <th>Budget</th>
                                 <th>Revenue</th>
                                 <th>Popularity</th>
-                                <th>Edit / Delete</th>
+                                <th>Edit</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,11 +55,8 @@
                                     <td>@movie.Popularity.ToString("f2")</td>
                                     <td>
                                         <form asp-action="Edit" asp-route-id="@movie.Id" method="get">
-                                            <button type="submit" class="badge badge-warning">Edit</button>
+                                            <button type="submit" class="badge-warning">Edit</button>
                                         </form>
-                                        <form asp-action="Delete" asp-route-id="@movie.Id" method="post" id="deleteForm">
-                                        </form>
-                                        <button type="submit" class="badge badge-danger" data-toggle="modal" data-target="#modalDelete">Delete</button>
                                     </td>
                                 </tr>
 
@@ -116,17 +113,3 @@
         </ul>
     </div>
 }
-
-<div class="modal" tabindex="-1" role="dialog" id="modalDelete">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <b>Are you sure you want to delete this movie?</b>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
-                <button type="button" class="btn btn-danger" onclick="deleteForm.submit()">Yes</button>
-            </div>
-        </div>
-    </div>
-</div>

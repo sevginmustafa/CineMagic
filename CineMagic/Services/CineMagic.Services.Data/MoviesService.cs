@@ -269,5 +269,24 @@
             await this.moviesRepository.AddAsync(movie);
             await this.moviesRepository.SaveChangesAsync();
         }
+
+        public async Task DeleteAsync(int id)
+        {
+            var findMovie = await this.moviesRepository
+               .AllAsNoTracking()
+               .FirstOrDefaultAsync(x => x.Id == id);
+
+            // if (findDirector == null)
+            // {
+            //     throw new ArgumentException(
+            //string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
+            // }
+
+            findMovie.IsDeleted = true;
+            findMovie.DeletedOn = DateTime.UtcNow;
+
+            this.moviesRepository.Update(findMovie);
+            await this.moviesRepository.SaveChangesAsync();
+        }
     }
 }
