@@ -620,6 +620,9 @@ namespace CineMagic.Data.Migrations
                     b.Property<int>("Runtime")
                         .HasColumnType("int");
 
+                    b.Property<int>("TMDBId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Tagline")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");

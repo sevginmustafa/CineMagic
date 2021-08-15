@@ -22,6 +22,8 @@
 
         public static string Contacts => "Contacts";
 
+        public static string GatherMovies => "GatherMovies";
+
         public static string MovieNavClass(ViewContext viewContext) => PageNavClass(viewContext, Movies);
 
         public static string ActorNavClass(ViewContext viewContext) => PageNavClass(viewContext, Actors);
@@ -37,6 +39,8 @@
         public static string PrivacyNavClass(ViewContext viewContext) => PageNavClass(viewContext, Privacy);
 
         public static string ContactNavClass(ViewContext viewContext) => PageNavClass(viewContext, Contacts);
+
+        public static string GatherMoviesNavClass(ViewContext viewContext) => PageNavClass(viewContext, GatherMovies);
 
         protected static string PageNavClass(ViewContext viewContext, string page)
         {

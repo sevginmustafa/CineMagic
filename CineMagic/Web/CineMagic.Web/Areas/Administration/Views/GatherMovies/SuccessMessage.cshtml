@@ -1,0 +1,15 @@
+﻿@{
+    this.ViewData["Title"] = "Gather Movies";
+    this.ViewData["ActivePage"] = GatherMovieNavPages.GatherMovies;
+}
+
+<br />
+<div class="container-fluid text-center">
+    <h1 class="display-4"><span>Congratulations!</span></h1>
+    <br />
+    <p class="lead">You have successfully gathered the data you requested from TMDB.com!</p>
+    <br />
+    <p class="lead">
+        <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-primary" role="button">Back to Home Page</a>
+    </p>
+</div>

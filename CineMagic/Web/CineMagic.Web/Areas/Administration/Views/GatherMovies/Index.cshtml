@@ -1,0 +1,30 @@
+﻿@model CineMagic.Web.ViewModels.InputModels.Administration.GatherMoviesInputModel
+
+@{
+    this.ViewData["ActivePage"] = GatherMovieNavPages.GatherMovies;
+    ViewData["Title"] = "Gather Movies";
+}
+
+<h2>Gather Data From <b>TMDB.com</b></h2>
+<br />
+<i>The last movie you have gathered is with id: @(Model.StartIndex-1),</i>
+<br /><i>therefore the Start Index will be automaticaly gathered for your convenience.</i>
+<br /><i>You can still change it but be aware that you risk duplicating or skipping certain movies from the site!</i>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Index" method="post">
+            <div class="form-group">
+                <label asp-for="StartIndex"></label>
+                <input asp-for="StartIndex" class="form-control" />
+                <span asp-validation-for="StartIndex" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndIndex"></label>
+                <input asp-for="EndIndex" class="form-control" />
+                <span asp-validation-for="EndIndex" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-danger">Gather Data</button>
+        </form>
+    </div>
+</div>

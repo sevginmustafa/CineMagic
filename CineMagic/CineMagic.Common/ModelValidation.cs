@@ -190,5 +190,11 @@
 
             public const string ContentErrorMessage = "Content should be between {2} and {1} symbols";
         }
+
+        public static class GatherMovies
+        {
+            public const string StartIndexDisplayName = "Start Index";
+            public const string EndIndexDisplayName = "End Index";
+        }
     }
 }

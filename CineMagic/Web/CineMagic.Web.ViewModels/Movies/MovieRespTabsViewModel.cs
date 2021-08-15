@@ -20,8 +20,6 @@
 
         public DateTime ReleaseDate { get; set; }
 
-        public double CurrentAverageVote { get; set; }
-
         public string Overview { get; set; }
 
         public double Rating { get; set; }

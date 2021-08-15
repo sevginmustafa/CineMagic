@@ -66,6 +66,7 @@
                         PosterPath = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2" + movieDTO.PosterPath,
                         TrailerPath = trailer,
                         IMDBLink = "https://www.imdb.com/title/" + movieDTO.IMDBId,
+                        TMDBId = movieDTO.Id,
                         ReleaseDate = DateTime.ParseExact(movieDTO.ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
                         Runtime = movieDTO.Runtime.Value,
                         Tagline = movieDTO.Tagline,
@@ -190,6 +191,21 @@
                     await this.moviesRepository.SaveChangesAsync();
                 }
             }
+        }
+
+        public int GetLastMovieAddedTmdbId()
+        {
+            var lastAddedMovie = this.moviesRepository
+                .AllAsNoTracking()
+                .OrderBy(x => x.Id)
+                .LastOrDefault();
+
+            if (lastAddedMovie != null)
+            {
+                return lastAddedMovie.TMDBId;
+            }
+
+            return 0;
         }
     }
 }

@@ -215,7 +215,8 @@
                 movies = movies.Where(x => x.Genres.Any(x => x.GenreId == genreId));
             }
 
-            return await movies
+            return await movies.
+                Where(x => x.Id != movieId)
                 .Take(count)
                 .To<T>()
                 .ToListAsync();

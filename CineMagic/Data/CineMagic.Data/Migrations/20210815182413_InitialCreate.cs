@@ -449,6 +449,7 @@ namespace CineMagic.Data.Migrations
                     PosterPath = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     TrailerPath = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     IMDBLink = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    TMDBId = table.Column<int>(type: "int", nullable: false),
                     ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Runtime = table.Column<int>(type: "int", nullable: false),
                     Tagline = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),

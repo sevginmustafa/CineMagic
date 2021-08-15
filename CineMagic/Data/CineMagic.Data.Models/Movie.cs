@@ -38,6 +38,8 @@
         [MaxLength(IMDBLinkMaxLength)]
         public string IMDBLink { get; set; }
 
+        public int TMDBId { get; set; }
+
         public DateTime ReleaseDate { get; set; }
 
         public int Runtime { get; set; }

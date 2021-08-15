@@ -5,5 +5,7 @@
     public interface IFillDatabaseService
     {
         Task AddDataToDBAsync(int startIndex, int endIndex);
+
+        int GetLastMovieAddedTmdbId();
     }
 }
