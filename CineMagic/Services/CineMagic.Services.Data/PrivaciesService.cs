@@ -1,13 +1,11 @@
 ﻿namespace CineMagic.Services.Data
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
     using CineMagic.Data.Common.Repositories;
     using CineMagic.Data.Models;
+    using CineMagic.Services.Data.Common;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Services.Mapping;
     using CineMagic.Web.ViewModels.InputModels.Administration;
@@ -31,16 +29,14 @@
 
         public async Task CreateAsync(PrivacyCreateInputModel inputModel)
         {
-            if (this.privaciesRepository.AllAsNoTracking().Any())
-            {
-                // TODO
-            }
+            bool findPrivacy = await this.privaciesRepository
+                .AllAsNoTracking()
+                .AnyAsync(x => x.Content == inputModel.Content);
 
-            //if (findDirector)
-            //{
-            //    throw new ArgumentException(
-            //        string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            //}
+            if (findPrivacy)
+            {
+                throw new ArgumentException(ExceptionMessages.PrivacyAlreadyExists);
+            }
 
             var privacy = new Privacy
             {
@@ -53,38 +49,38 @@
 
         public async Task DeleteAsync(int id)
         {
-            var findPrivacy = await this.privaciesRepository
+            var privacy = await this.privaciesRepository
                            .AllAsNoTracking()
                            .FirstOrDefaultAsync(x => x.Id == id);
 
-            // if (findDirector == null)
-            // {
-            //     throw new ArgumentException(
-            //string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            // }
+            if (privacy == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.PrivacyNotFound, id));
+            }
 
-            findPrivacy.IsDeleted = true;
-            findPrivacy.DeletedOn = DateTime.UtcNow;
+            privacy.IsDeleted = true;
+            privacy.DeletedOn = DateTime.UtcNow;
 
-            this.privaciesRepository.Update(findPrivacy);
+            this.privaciesRepository.Update(privacy);
             await this.privaciesRepository.SaveChangesAsync();
         }
 
         public async Task EditAsync(PrivacyEditViewModel privacyEditViewModel)
         {
-            var findPrivacy = await this.privaciesRepository
+            var privacy = await this.privaciesRepository
                 .AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == privacyEditViewModel.Id);
 
-            // if (findActor == null)
-            // {
-            //     throw new ArgumentException(
-            //string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            // }
+            if (privacy == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.PrivacyNotFound, privacyEditViewModel.Id));
+            }
 
-            findPrivacy.Content = privacyEditViewModel.Content;
+            privacy.Content = privacyEditViewModel.Content;
 
-            this.privaciesRepository.Update(findPrivacy);
+            this.privaciesRepository.Update(privacy);
             await this.privaciesRepository.SaveChangesAsync();
         }
 
@@ -95,10 +91,10 @@
                 .To<T>()
                 .FirstOrDefaultAsync();
 
-            //if (director == null)
-            //{
-            //    throw new NullReferenceException(string.Format(ExceptionMessages.MovieNotFound, id));
-            //}
+            if (privacy == null)
+            {
+                throw new NullReferenceException(ExceptionMessages.PrivacyViewModelNotFound);
+            }
 
             return privacy;
         }

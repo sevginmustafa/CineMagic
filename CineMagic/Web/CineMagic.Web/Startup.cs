@@ -13,6 +13,7 @@
     using CineMagic.Services.GetDataFromTMDB;
     using CineMagic.Services.Mapping;
     using CineMagic.Services.Messaging;
+    using CineMagic.Web.CustomMiddlewares;
     using CineMagic.Web.ViewModels;
 
     using Microsoft.AspNetCore.Builder;
@@ -108,6 +109,8 @@
                 app.UseHsts();
             }
 
+            app.UseStatusCodePagesWithRedirects("/Home/HandleError/{0}");
+
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
                 DefaultRequestCulture = new RequestCulture("en"),
@@ -121,6 +124,7 @@
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseCreateAdminCustomMiddleware();
 
             app.UseEndpoints(
                 endpoints =>

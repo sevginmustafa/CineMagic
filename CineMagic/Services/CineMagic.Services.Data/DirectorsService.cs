@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
     using CineMagic.Data.Common.Repositories;
     using CineMagic.Data.Models;
+    using CineMagic.Services.Data.Common;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Services.Mapping;
     using CineMagic.Web.ViewModels.Directors;
@@ -24,11 +24,21 @@
         }
 
         public async Task<T> GetDirectorByIdAsync<T>(int id)
-        => await this.directorsRepository
-            .AllAsNoTracking()
-            .Where(x => x.Id == id)
-            .To<T>()
-            .FirstOrDefaultAsync();
+        {
+            var director = await this.directorsRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
+
+            if (director == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.DirectorNotFound, id));
+            }
+
+            return director;
+        }
 
         public IQueryable<T> GetDirectorsBornTodayAsQueryable<T>(int gender)
         {
@@ -85,11 +95,11 @@
                    .AllAsNoTracking()
                    .AnyAsync(x => x.Name == inputModel.Name);
 
-            //if (findDirector)
-            //{
-            //    throw new ArgumentException(
-            //        string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            //}
+            if (findDirector)
+            {
+                throw new ArgumentException(
+                    string.Format(ExceptionMessages.DirectorAlreadyExists, inputModel.Name));
+            }
 
             var director = new Director
             {
@@ -115,45 +125,45 @@
 
         public async Task DeleteAsync(int id)
         {
-            var findDirector = await this.directorsRepository
+            var director = await this.directorsRepository
                 .AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            // if (findDirector == null)
-            // {
-            //     throw new ArgumentException(
-            //string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            // }
+            if (director == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.DirectorNotFound, id));
+            }
 
-            findDirector.IsDeleted = true;
-            findDirector.DeletedOn = DateTime.UtcNow;
+            director.IsDeleted = true;
+            director.DeletedOn = DateTime.UtcNow;
 
-            this.directorsRepository.Update(findDirector);
+            this.directorsRepository.Update(director);
             await this.directorsRepository.SaveChangesAsync();
         }
 
         public async Task EditAsync(DirectorEditViewModel directorEditViewModel)
         {
-            var findDirector = await this.directorsRepository
+            var director = await this.directorsRepository
                 .AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == directorEditViewModel.Id);
 
-            // if (findActor == null)
-            // {
-            //     throw new ArgumentException(
-            //string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            // }
+            if (director == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.DirectorNotFound, directorEditViewModel.Id));
+            }
 
-            findDirector.Name = directorEditViewModel.Name;
-            findDirector.ProfilePicPath = directorEditViewModel.ProfilePicPath;
-            findDirector.Biography = directorEditViewModel.Biography;
-            findDirector.Gender = directorEditViewModel.Gender;
-            findDirector.Birthday = directorEditViewModel.Birthday;
-            findDirector.Deathday = directorEditViewModel.Deathday;
-            findDirector.Birthplace = directorEditViewModel.Birthplace;
-            findDirector.Popularity = directorEditViewModel.Popularity;
+            director.Name = directorEditViewModel.Name;
+            director.ProfilePicPath = directorEditViewModel.ProfilePicPath;
+            director.Biography = directorEditViewModel.Biography;
+            director.Gender = directorEditViewModel.Gender;
+            director.Birthday = directorEditViewModel.Birthday;
+            director.Deathday = directorEditViewModel.Deathday;
+            director.Birthplace = directorEditViewModel.Birthplace;
+            director.Popularity = directorEditViewModel.Popularity;
 
-            this.directorsRepository.Update(findDirector);
+            this.directorsRepository.Update(director);
             await this.directorsRepository.SaveChangesAsync();
         }
 
@@ -165,10 +175,11 @@
                  .To<T>()
                  .FirstOrDefaultAsync();
 
-            //if (director == null)
-            //{
-            //    throw new NullReferenceException(string.Format(ExceptionMessages.MovieNotFound, id));
-            //}
+            if (director == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.DirectorNotFound, id));
+            }
 
             return director;
         }

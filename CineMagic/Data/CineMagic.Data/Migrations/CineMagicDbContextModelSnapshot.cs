@@ -28,13 +28,15 @@ namespace CineMagic.Data.Migrations
 
                     b.Property<string>("Biography")
                         .IsRequired()
+                        .HasMaxLength(20000)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Birthday")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Birthplace")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -143,6 +145,10 @@ namespace CineMagic.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("To")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -408,13 +414,15 @@ namespace CineMagic.Data.Migrations
 
                     b.Property<string>("Biography")
                         .IsRequired()
+                        .HasMaxLength(20000)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Birthday")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Birthplace")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -610,7 +618,6 @@ namespace CineMagic.Data.Migrations
                         .HasColumnType("float");
 
                     b.Property<int>("Runtime")
-                        .HasMaxLength(10)
                         .HasColumnType("int");
 
                     b.Property<string>("Tagline")
@@ -686,7 +693,9 @@ namespace CineMagic.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Path")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.HasKey("Id");
 

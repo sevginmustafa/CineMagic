@@ -7,6 +7,7 @@
 
     using CineMagic.Data.Common.Repositories;
     using CineMagic.Data.Models;
+    using CineMagic.Services.Data.Common;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Services.Mapping;
     using CineMagic.Web.ViewModels.InputModels.Administration;
@@ -35,11 +36,11 @@
                    .AllAsNoTracking()
                    .AnyAsync(x => x.Name == inputModel.Name);
 
-            //if (findDirector)
-            //{
-            //    throw new ArgumentException(
-            //        string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            //}
+            if (findLanguage)
+            {
+                throw new ArgumentException(
+                    string.Format(ExceptionMessages.LanguageAlreadyExists, inputModel.Name));
+            }
 
             var language = new Language
             {
@@ -58,38 +59,38 @@
 
         public async Task DeleteAsync(int id)
         {
-            var findLanguage = await this.languagesRepository
+            var language = await this.languagesRepository
                 .AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            // if (findDirector == null)
-            // {
-            //     throw new ArgumentException(
-            //string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            // }
+            if (language == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.LanguageNotFound, id));
+            }
 
-            findLanguage.IsDeleted = true;
-            findLanguage.DeletedOn = DateTime.UtcNow;
+            language.IsDeleted = true;
+            language.DeletedOn = DateTime.UtcNow;
 
-            this.languagesRepository.Update(findLanguage);
+            this.languagesRepository.Update(language);
             await this.languagesRepository.SaveChangesAsync();
         }
 
         public async Task EditAsync(LanguageEditViewModel languageEditViewModel)
         {
-            var findLanguage = await this.languagesRepository
+            var language = await this.languagesRepository
                 .AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == languageEditViewModel.Id);
 
-            // if (findActor == null)
-            // {
-            //     throw new ArgumentException(
-            //string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            // }
+            if (language == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.LanguageNotFound, languageEditViewModel.Id));
+            }
 
-            findLanguage.Name = languageEditViewModel.Name;
+            language.Name = languageEditViewModel.Name;
 
-            this.languagesRepository.Update(findLanguage);
+            this.languagesRepository.Update(language);
             await this.languagesRepository.SaveChangesAsync();
         }
 
@@ -101,10 +102,11 @@
                  .To<T>()
                  .FirstOrDefaultAsync();
 
-            //if (director == null)
-            //{
-            //    throw new NullReferenceException(string.Format(ExceptionMessages.MovieNotFound, id));
-            //}
+            if (language == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.LanguageNotFound, id));
+            }
 
             return language;
         }

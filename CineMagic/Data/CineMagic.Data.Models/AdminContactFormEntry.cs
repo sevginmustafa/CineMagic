@@ -16,9 +16,9 @@
         [EmailAddress]
         public string Email { get; set; }
 
-        //[Required]
-        //[EmailAddress]
-        //public string To { get; set; }
+        [Required]
+        [EmailAddress]
+        public string To { get; set; }
 
         [Required]
         [MaxLength(SubjectMaxLength)]

@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
     using CineMagic.Data.Common.Repositories;
     using CineMagic.Data.Models;
+    using CineMagic.Services.Data.Common;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Services.Mapping;
     using CineMagic.Web.ViewModels.Genres;
@@ -47,11 +47,11 @@
                    .AllAsNoTracking()
                    .AnyAsync(x => x.Name == inputModel.Name);
 
-            //if (findDirector)
-            //{
-            //    throw new ArgumentException(
-            //        string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            //}
+            if (findGenre)
+            {
+                throw new ArgumentException(
+                    string.Format(ExceptionMessages.GenreAlreadyExists, inputModel.Name));
+            }
 
             var genre = new Genre
             {
@@ -70,38 +70,38 @@
 
         public async Task DeleteAsync(int id)
         {
-            var findGenre = await this.genresRepository
+            var genre = await this.genresRepository
                 .AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            // if (findDirector == null)
-            // {
-            //     throw new ArgumentException(
-            //string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            // }
+            if (genre == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.GenreNotFound, id));
+            }
 
-            findGenre.IsDeleted = true;
-            findGenre.DeletedOn = DateTime.UtcNow;
+            genre.IsDeleted = true;
+            genre.DeletedOn = DateTime.UtcNow;
 
-            this.genresRepository.Update(findGenre);
+            this.genresRepository.Update(genre);
             await this.genresRepository.SaveChangesAsync();
         }
 
         public async Task EditAsync(GenreEditViewModel genreEditViewModel)
         {
-            var findGenre = await this.genresRepository
+            var genre = await this.genresRepository
                 .AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == genreEditViewModel.Id);
 
-            // if (findActor == null)
-            // {
-            //     throw new ArgumentException(
-            //string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            // }
+            if (genre == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.GenreNotFound, genreEditViewModel.Id));
+            }
 
-            findGenre.Name = genreEditViewModel.Name;
+            genre.Name = genreEditViewModel.Name;
 
-            this.genresRepository.Update(findGenre);
+            this.genresRepository.Update(genre);
             await this.genresRepository.SaveChangesAsync();
         }
 
@@ -113,10 +113,11 @@
                  .To<T>()
                  .FirstOrDefaultAsync();
 
-            //if (director == null)
-            //{
-            //    throw new NullReferenceException(string.Format(ExceptionMessages.MovieNotFound, id));
-            //}
+            if (genre == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.GenreNotFound, id));
+            }
 
             return genre;
         }

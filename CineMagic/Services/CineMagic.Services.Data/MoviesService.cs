@@ -7,6 +7,7 @@
 
     using CineMagic.Data.Common.Repositories;
     using CineMagic.Data.Models;
+    using CineMagic.Services.Data.Common;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Services.Mapping;
     using CineMagic.Web.ViewModels.InputModels.Administration;
@@ -160,11 +161,21 @@
             .To<T>();
 
         public async Task<T> GetMovieByIdAsync<T>(int id)
-            => await this.moviesRepository
-            .AllAsNoTracking()
-            .Where(x => x.Id == id)
-            .To<T>()
-            .FirstOrDefaultAsync();
+        {
+            var movie = await this.moviesRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
+
+            if (movie == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.MovieNotFound, id));
+            }
+
+            return movie;
+        }
 
         public async Task AddToUserWatchlistAsync(int movieId, string userId)
         {
@@ -194,12 +205,6 @@
             var movie = await this.moviesRepository
                 .AllAsNoTracking().Include(x => x.Genres)
                 .FirstOrDefaultAsync(x => x.Id == movieId);
-
-            // TODO: Make 404 Not Found
-            if (movie == null)
-            {
-                return Enumerable.Empty<T>();
-            }
 
             var genresIds = movie.Genres.Select(x => x.GenreId).ToList();
 
@@ -236,13 +241,14 @@
 
         public async Task CreateAsync(MovieCreateInputModel inputModel)
         {
-            var findMovie = await this.moviesRepository
+            bool findMovie = await this.moviesRepository
                 .AllAsNoTracking()
                 .AnyAsync(x => x.Title == inputModel.Title);
 
             if (findMovie)
             {
-                // throw error
+                throw new ArgumentException(
+                    string.Format(ExceptionMessages.MovieAlreadyExists, inputModel.Title));
             }
 
             var movie = new Movie
@@ -282,47 +288,87 @@
 
         public async Task DeleteAsync(int id)
         {
-            var findMovie = await this.moviesRepository
+            var movie = await this.moviesRepository
                .AllAsNoTracking()
                .FirstOrDefaultAsync(x => x.Id == id);
 
-            // if (findDirector == null)
-            // {
-            //     throw new ArgumentException(
-            //string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            // }
+            if (movie == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.MovieNotFound, id));
+            }
 
-            findMovie.IsDeleted = true;
-            findMovie.DeletedOn = DateTime.UtcNow;
+            movie.IsDeleted = true;
+            movie.DeletedOn = DateTime.UtcNow;
 
-            this.moviesRepository.Update(findMovie);
+            this.moviesRepository.Update(movie);
             await this.moviesRepository.SaveChangesAsync();
+
+            var movieGenres = await this.movieGenresRepository
+                .All()
+                .Where(m => m.MovieId == id)
+                .ToListAsync();
+
+            var movieCountries = await this.movieCountriesRepository
+                .All()
+                .Where(m => m.MovieId == id)
+                .ToListAsync();
+
+            var movieLanguages = await this.movieLanguagesRepository
+                 .All()
+                 .Where(m => m.MovieId == id)
+                 .ToListAsync();
+
+            foreach (var movieGenre in movieGenres)
+            {
+                movieGenre.IsDeleted = true;
+                movieGenre.DeletedOn = DateTime.UtcNow;
+                this.movieGenresRepository.Update(movieGenre);
+            }
+
+            foreach (var movieCountry in movieCountries)
+            {
+                movieCountry.IsDeleted = true;
+                movieCountry.DeletedOn = DateTime.UtcNow;
+                this.movieCountriesRepository.Update(movieCountry);
+            }
+
+            foreach (var movieLanguage in movieLanguages)
+            {
+                movieLanguage.IsDeleted = true;
+                movieLanguage.DeletedOn = DateTime.UtcNow;
+                this.movieLanguagesRepository.Update(movieLanguage);
+            }
+
+            await this.movieGenresRepository.SaveChangesAsync();
+            await this.movieCountriesRepository.SaveChangesAsync();
+            await this.movieLanguagesRepository.SaveChangesAsync();
         }
 
         public async Task EditAsync(MovieEditViewModel movieEditViewModel)
         {
-            var findMovie = await this.moviesRepository
+            var movie = await this.moviesRepository
                 .AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == movieEditViewModel.Id);
 
-            // if (findActor == null)
-            // {
-            //     throw new ArgumentException(
-            //string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            // }
+            if (movie == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.MovieNotFound, movieEditViewModel.Id));
+            }
 
-            findMovie.Title = movieEditViewModel.Title;
-            findMovie.PosterPath = movieEditViewModel.PosterPath;
-            findMovie.TrailerPath = movieEditViewModel.TrailerPath;
-            findMovie.IMDBLink = movieEditViewModel.IMDBLink;
-            findMovie.ReleaseDate = movieEditViewModel.ReleaseDate;
-            findMovie.Runtime = movieEditViewModel.Runtime;
-            findMovie.Tagline = movieEditViewModel.Tagline;
-            findMovie.Overview = movieEditViewModel.Overview;
-            findMovie.Budget = movieEditViewModel.Budget;
-            findMovie.Revenue = movieEditViewModel.Revenue;
-            findMovie.Popularity = movieEditViewModel.Popularity;
-            findMovie.DirectorId = movieEditViewModel.DirectorId;
+            movie.Title = movieEditViewModel.Title;
+            movie.PosterPath = movieEditViewModel.PosterPath;
+            movie.TrailerPath = movieEditViewModel.TrailerPath;
+            movie.IMDBLink = movieEditViewModel.IMDBLink;
+            movie.ReleaseDate = movieEditViewModel.ReleaseDate;
+            movie.Runtime = movieEditViewModel.Runtime;
+            movie.Tagline = movieEditViewModel.Tagline;
+            movie.Overview = movieEditViewModel.Overview;
+            movie.Budget = movieEditViewModel.Budget;
+            movie.Revenue = movieEditViewModel.Revenue;
+            movie.Popularity = movieEditViewModel.Popularity;
+            movie.DirectorId = movieEditViewModel.DirectorId;
 
             var movieGenres = await this.movieGenresRepository
                 .AllAsNoTracking()
@@ -337,11 +383,11 @@
                 }
 
                 await this.movieGenresRepository.SaveChangesAsync();
-                await this.EditMovieGenres(movieEditViewModel, findMovie);
+                await this.EditMovieGenres(movieEditViewModel, movie);
             }
             else
             {
-                await this.EditMovieGenres(movieEditViewModel, findMovie);
+                await this.EditMovieGenres(movieEditViewModel, movie);
             }
 
             var movieCountries = await this.movieCountriesRepository
@@ -357,11 +403,11 @@
                 }
 
                 await this.movieCountriesRepository.SaveChangesAsync();
-                await this.EditMovieCountries(movieEditViewModel, findMovie);
+                await this.EditMovieCountries(movieEditViewModel, movie);
             }
             else
             {
-                await this.EditMovieCountries(movieEditViewModel, findMovie);
+                await this.EditMovieCountries(movieEditViewModel, movie);
             }
 
             var movieLanguages = await this.movieLanguagesRepository
@@ -377,14 +423,14 @@
                 }
 
                 await this.movieLanguagesRepository.SaveChangesAsync();
-                await this.EditMovieLanguages(movieEditViewModel, findMovie);
+                await this.EditMovieLanguages(movieEditViewModel, movie);
             }
             else
             {
-                await this.EditMovieLanguages(movieEditViewModel, findMovie);
+                await this.EditMovieLanguages(movieEditViewModel, movie);
             }
 
-            this.moviesRepository.Update(findMovie);
+            this.moviesRepository.Update(movie);
             await this.moviesRepository.SaveChangesAsync();
         }
 
@@ -396,10 +442,11 @@
                  .To<T>()
                  .FirstOrDefaultAsync();
 
-            //if (director == null)
-            //{
-            //    throw new NullReferenceException(string.Format(ExceptionMessages.MovieNotFound, id));
-            //}
+            if (movie == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.MovieNotFound, id));
+            }
 
             return movie;
         }

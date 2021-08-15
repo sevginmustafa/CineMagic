@@ -7,6 +7,7 @@
 
     using CineMagic.Data.Common.Repositories;
     using CineMagic.Data.Models;
+    using CineMagic.Services.Data.Common;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Services.Mapping;
     using CineMagic.Web.ViewModels.Countries;
@@ -49,11 +50,11 @@
                    .AllAsNoTracking()
                    .AnyAsync(x => x.Name == inputModel.Name);
 
-            //if (findDirector)
-            //{
-            //    throw new ArgumentException(
-            //        string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            //}
+            if (findCountry)
+            {
+                throw new ArgumentException(
+                    string.Format(ExceptionMessages.CountryAlreadyExists, inputModel.Name));
+            }
 
             var country = new Country
             {
@@ -72,38 +73,38 @@
 
         public async Task DeleteAsync(int id)
         {
-            var findCountry = await this.countriesRepository
-                .AllAsNoTracking()
-                .FirstOrDefaultAsync(x => x.Id == id);
+            var country = await this.countriesRepository
+                    .AllAsNoTracking()
+                    .FirstOrDefaultAsync(x => x.Id == id);
 
-            // if (findDirector == null)
-            // {
-            //     throw new ArgumentException(
-            //string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            // }
+            if (country == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.CountryNotFound, id));
+            }
 
-            findCountry.IsDeleted = true;
-            findCountry.DeletedOn = DateTime.UtcNow;
+            country.IsDeleted = true;
+            country.DeletedOn = DateTime.UtcNow;
 
-            this.countriesRepository.Update(findCountry);
+            this.countriesRepository.Update(country);
             await this.countriesRepository.SaveChangesAsync();
         }
 
         public async Task EditAsync(CountryEditViewModel countryEditViewModel)
         {
-            var findCountry = await this.countriesRepository
+            var country = await this.countriesRepository
                 .AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == countryEditViewModel.Id);
 
-            // if (findActor == null)
-            // {
-            //     throw new ArgumentException(
-            //string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            // }
+            if (country == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.CountryNotFound, countryEditViewModel.Id));
+            }
 
-            findCountry.Name = countryEditViewModel.Name;
+            country.Name = countryEditViewModel.Name;
 
-            this.countriesRepository.Update(findCountry);
+            this.countriesRepository.Update(country);
             await this.countriesRepository.SaveChangesAsync();
         }
 
@@ -115,10 +116,11 @@
                  .To<T>()
                  .FirstOrDefaultAsync();
 
-            //if (director == null)
-            //{
-            //    throw new NullReferenceException(string.Format(ExceptionMessages.MovieNotFound, id));
-            //}
+            if (country == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.CountryNotFound, id));
+            }
 
             return country;
         }

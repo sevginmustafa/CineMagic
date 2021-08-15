@@ -1,11 +1,9 @@
 ﻿namespace CineMagic.Services.Data.Contracts
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using CineMagic.Web.ViewModels.Actors;
+
     using CineMagic.Web.ViewModels.InputModels.Administration;
 
     public interface IActorsService

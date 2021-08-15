@@ -1,13 +1,12 @@
 ﻿namespace CineMagic.Services.Data
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
     using CineMagic.Data.Common.Repositories;
     using CineMagic.Data.Models;
+    using CineMagic.Services.Data.Common;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Services.Mapping;
     using CineMagic.Web.ViewModels.Actors;
@@ -24,11 +23,21 @@
         }
 
         public async Task<T> GetActorByIdAsync<T>(int id)
-         => await this.actorsRepository
+        {
+            var actor = await this.actorsRepository
             .AllAsNoTracking()
             .Where(x => x.Id == id)
             .To<T>()
             .FirstOrDefaultAsync();
+
+            if (actor == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.ActorNotFound, id));
+            }
+
+            return actor;
+        }
 
         public IQueryable<T> GetActorsBornTodayAsQueryable<T>(int gender)
         {
@@ -85,11 +94,11 @@
                   .AllAsNoTracking()
                   .AnyAsync(x => x.Name == inputModel.Name);
 
-            //if (findActor)
-            //{
-            //    throw new ArgumentException(
-            //        string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            //}
+            if (findActor)
+            {
+                throw new ArgumentException(
+                    string.Format(ExceptionMessages.ActorAlreadyExists, inputModel.Name));
+            }
 
             var actor = new Actor
             {
@@ -115,45 +124,45 @@
 
         public async Task DeleteAsync(int id)
         {
-            var findActor = await this.actorsRepository
+            var actor = await this.actorsRepository
                 .AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            // if (findActor == null)
-            // {
-            //     throw new ArgumentException(
-            //string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            // }
+            if (actor == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.ActorNotFound, id));
+            }
 
-            findActor.IsDeleted = true;
-            findActor.DeletedOn = DateTime.UtcNow;
+            actor.IsDeleted = true;
+            actor.DeletedOn = DateTime.UtcNow;
 
-            this.actorsRepository.Update(findActor);
+            this.actorsRepository.Update(actor);
             await this.actorsRepository.SaveChangesAsync();
         }
 
         public async Task EditAsync(ActorEditViewModel actorEditViewModel)
         {
-            var findActor = await this.actorsRepository
+            var actor = await this.actorsRepository
                 .AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == actorEditViewModel.Id);
 
-            // if (findActor == null)
-            // {
-            //     throw new ArgumentException(
-            //string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            // }
+            if (actor == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.ActorNotFound, actorEditViewModel.Id));
+            }
 
-            findActor.Name = actorEditViewModel.Name;
-            findActor.ProfilePicPath = actorEditViewModel.ProfilePicPath;
-            findActor.Biography = actorEditViewModel.Biography;
-            findActor.Gender = actorEditViewModel.Gender;
-            findActor.Birthday = actorEditViewModel.Birthday;
-            findActor.Deathday = actorEditViewModel.Deathday;
-            findActor.Birthplace = actorEditViewModel.Birthplace;
-            findActor.Popularity = actorEditViewModel.Popularity;
+            actor.Name = actorEditViewModel.Name;
+            actor.ProfilePicPath = actorEditViewModel.ProfilePicPath;
+            actor.Biography = actorEditViewModel.Biography;
+            actor.Gender = actorEditViewModel.Gender;
+            actor.Birthday = actorEditViewModel.Birthday;
+            actor.Deathday = actorEditViewModel.Deathday;
+            actor.Birthplace = actorEditViewModel.Birthplace;
+            actor.Popularity = actorEditViewModel.Popularity;
 
-            this.actorsRepository.Update(findActor);
+            this.actorsRepository.Update(actor);
             await this.actorsRepository.SaveChangesAsync();
         }
 
@@ -165,10 +174,11 @@
                  .To<T>()
                  .FirstOrDefaultAsync();
 
-            //if (actor == null)
-            //{
-            //    throw new NullReferenceException(string.Format(ExceptionMessages.MovieNotFound, id));
-            //}
+            if (actor == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.ActorNotFound, id));
+            }
 
             return actor;
         }

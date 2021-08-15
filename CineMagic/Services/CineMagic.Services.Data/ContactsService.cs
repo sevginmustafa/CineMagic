@@ -1,18 +1,18 @@
 ﻿namespace CineMagic.Services.Data
 {
-    using System.Collections.Generic;
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
     using CineMagic.Common;
     using CineMagic.Data.Common.Repositories;
     using CineMagic.Data.Models;
+    using CineMagic.Services.Data.Common;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Services.Mapping;
     using CineMagic.Services.Messaging;
     using CineMagic.Web.ViewModels.InputModels.Administration;
     using CineMagic.Web.ViewModels.InputModels.Contacts;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 
     public class ContactsService : IContactsService
@@ -74,17 +74,17 @@
 
         public async Task DeleteAsync(int id)
         {
-            var findEnquiry = await this.userContactsRepository
+            var enquiry = await this.userContactsRepository
                 .AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            // if (findDirector == null)
-            // {
-            //     throw new ArgumentException(
-            //string.Format(ExceptionMessages.DirectorAlreadyExists, actor.FirstName, actor.LastName));
-            // }
+            if (enquiry == null)
+            {
+                throw new NullReferenceException(
+                   string.Format(ExceptionMessages.EnquiryNotFound, id));
+            }
 
-            this.userContactsRepository.Delete(findEnquiry);
+            this.userContactsRepository.Delete(enquiry);
             await this.userContactsRepository.SaveChangesAsync();
         }
 
@@ -96,17 +96,28 @@
                  .To<T>()
                  .FirstOrDefaultAsync();
 
-            //if (director == null)
-            //{
-            //    throw new NullReferenceException(string.Format(ExceptionMessages.MovieNotFound, id));
-            //}
+            if (enquiry == null)
+            {
+                throw new NullReferenceException(
+                   string.Format(ExceptionMessages.EnquiryNotFound, id));
+            }
 
             return enquiry;
         }
 
         public ContactFormEntry GetEnquiryById(int id)
-        => this.userContactsRepository
-            .AllAsNoTracking()
-            .FirstOrDefault(x => x.Id == id);
+        {
+            var enquiry = this.userContactsRepository
+               .AllAsNoTracking()
+               .FirstOrDefault(x => x.Id == id);
+
+            if (enquiry == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.EnquiryNotFound, id));
+            }
+
+            return enquiry;
+        }
     }
 }
