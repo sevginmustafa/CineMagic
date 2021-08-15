@@ -1,9 +1,11 @@
 ﻿namespace CineMagic.Services.Data.Contracts
 {
-    using CineMagic.Web.ViewModels.InputModels.Administration;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using CineMagic.Web.ViewModels.InputModels.Administration;
+    using CineMagic.Web.ViewModels.Movies;
 
     public interface IMoviesService
     {
@@ -27,8 +29,6 @@
 
         IQueryable<T> GetMoviesByReleaseYearAsQueryable<T>(int year);
 
-        IQueryable<T> GetAllMoviesAsQueryable<T>();
-
         Task<T> GetMovieByIdAsync<T>(int id);
 
         Task AddToUserWatchlistAsync(int movieId, string userId);
@@ -47,10 +47,16 @@
 
         Task DeleteAsync(int id);
 
-        //Task EditAsync(DirectorEditViewModel directorEditViewModel);
+        Task EditAsync(MovieEditViewModel movieEditViewModel);
 
-        //Task<T> GetViewModelByIdAsync<T>(int id);
+        IQueryable<T> GetAllMoviesAsQueryable<T>();
 
-        //IQueryable<T> GetAllDirectorsAsQueryable<T>();
+        Task<T> GetViewModelByIdAsync<T>(int id);
+
+        Task<IEnumerable<T>> GetAllMovieGenresAsync<T>(int movieId);
+
+        Task<IEnumerable<T>> GetAllMovieCountriesAsync<T>(int movieId);
+
+        Task<IEnumerable<T>> GetAllMovieLanguagesAsync<T>(int movieId);
     }
 }

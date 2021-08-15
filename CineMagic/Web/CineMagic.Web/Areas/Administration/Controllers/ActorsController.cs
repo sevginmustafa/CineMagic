@@ -11,8 +11,7 @@
     using CineMagic.Web.ViewModels.InputModels.Administration;
     using Microsoft.AspNetCore.Mvc;
 
-    [Area("Administration")]
-    public class ActorsController : Controller
+    public class ActorsController : AdministrationController
     {
         private readonly IDeletableEntityRepository<Actor> actorsRepository;
         private readonly IActorsService actorsService;

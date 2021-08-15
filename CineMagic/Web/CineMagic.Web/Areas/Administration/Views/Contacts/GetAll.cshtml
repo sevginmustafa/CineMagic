@@ -1,0 +1,107 @@
+﻿@using CineMagic.Web.ViewModels.Contacts
+@model PaginatedList<ContactsAdministrationViewModel>
+
+@{
+    this.ViewData["Title"] = "All Enquiries";
+    this.ViewData["ActivePage"] = ContactNavPages.Contacts;
+}
+
+@{
+    int counter = 1;
+
+    if (Model.PageNumber > 1)
+    {
+        counter = Model.PageNumber * 10 - 9;
+    }
+}
+
+<div class="w3_content_agilleinfo_inner">
+    <div class="agile_featured_movies">
+        <div class="inner-agile-w3l-part-head">
+            <h3 class="w3l-inner-h-title">@this.ViewData["Title"]</h3>
+        </div>
+        <div class="w3ls-news-result">
+            <h4>Results Returned: <span>@Model.Count</span></h4>
+        </div>
+
+        <div id="myTabContent" class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
+                <div class="agile-news-table">
+                    <table id="table-breakpoint">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>From</th>
+                                <th>Email</th>
+                                <th>Subject</th>
+                                <th>Open</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var enquiry in Model)
+                            {
+                                <tr>
+                                    <td>@counter</td>
+                                    <td>@enquiry.Name</td>
+                                    <td>@enquiry.Email</td>
+                                    <td>@enquiry.Subject</td>
+                                    <td>
+                                        <form asp-action="Details" asp-route-id="@enquiry.Id" method="get">
+                                            <button type="submit" class="badge-warning">Open</button>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                                counter++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.TotalPages > 1)
+{
+    <div class="blog-pagenat-wthree">
+        <ul class="pagination">
+            <li class="page-item @if (!Model.HasPreviousPage) {<text>disabled</text>}">
+                <a class="page-link" asp-area="Administration" asp-controller="Genres" asp-action="GetAll">First</a>
+            </li>
+            <li class="page-item @if (!Model.HasPreviousPage) {<text>disabled</text>}">
+                <a class="page-link" asp-area="Administration" asp-controller="Genres" asp-action="GetAll" asp-route-page="@Model.PreviousPage">Previous</a>
+            </li>
+            @for (int i = Model.PageNumber - 3; i < Model.PageNumber; i++)
+            {
+                if (i > 0)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-area="Administration" asp-controller="Genres" asp-action="GetAll" asp-route-page="@i">@i</a>
+                    </li>
+                }
+            }
+            <li class="page-item active">
+                <span class="page-link">
+                    @Model.PageNumber
+                    <span class="sr-only">(current)</span>
+                </span>
+            </li>
+            @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + 3; i++)
+            {
+                if (i <= Model.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-area="Administration" asp-controller="Genres" asp-action="GetAll" asp-route-page="@i">@i</a>
+                    </li>
+                }
+            }
+            <li class="page-item @if (!Model.HasNextPage) {<text>disabled</text>}">
+                <a class="page-link" asp-area="Administration" asp-controller="Genres" asp-action="GetAll" asp-route-page="@Model.NextPage">Next</a>
+            </li>
+            <li class="page-item @if (!Model.HasNextPage) {<text>disabled</text>}">
+                <a class="page-link" asp-area="Administration" asp-controller="Genres" asp-action="GetAll" asp-route-page="@Model.TotalPages">Last</a>
+            </li>
+        </ul>
+    </div>
+}

@@ -1,11 +1,8 @@
 ﻿namespace CineMagic.Web.Areas.Administration.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
+
     using CineMagic.Common;
-    using CineMagic.Data;
     using CineMagic.Data.Common.Repositories;
     using CineMagic.Data.Models;
     using CineMagic.Services.Data.Contracts;
@@ -17,11 +14,8 @@
     using CineMagic.Web.ViewModels.Languages;
     using CineMagic.Web.ViewModels.Movies;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Rendering;
-    using Microsoft.EntityFrameworkCore;
 
-    [Area("Administration")]
-    public class MoviesController : Controller
+    public class MoviesController : AdministrationController
     {
         private readonly IDeletableEntityRepository<Movie> moviesRepository;
         private readonly IMoviesService moviesService;
@@ -53,21 +47,21 @@
 
         public async Task<IActionResult> Create()
         {
-            var directors = await this.directorsService
+            var allDirectors = await this.directorsService
                    .GetAllAsync<DirectorSimpleViewModel>();
-            var genres = await this.genresService
+            var allGenres = await this.genresService
                 .GetAllAsync<GenreSimpleViewModel>();
-            var countries = await this.countriesService
+            var allCountries = await this.countriesService
                 .GetAllAsync<CountrySimpleViewModel>();
-            var languages = await this.languagesService
+            var allLanguages = await this.languagesService
                  .GetAllAsync<LanguageSimpleViewModel>();
 
             var model = new MovieCreateInputModel
             {
-                Directors = directors,
-                Genres = genres,
-                ProductionCountries = countries,
-                Languages = languages,
+                AllDirectors = allDirectors,
+                AllGenres = allGenres,
+                AllCountries = allCountries,
+                AllLanguages = allLanguages,
             };
 
             return this.View(model);
@@ -78,19 +72,19 @@
         {
             if (!this.ModelState.IsValid)
             {
-                var directors = await this.directorsService
+                var allDirectors = await this.directorsService
                     .GetAllAsync<DirectorSimpleViewModel>();
-                var genres = await this.genresService
+                var allGenres = await this.genresService
                     .GetAllAsync<GenreSimpleViewModel>();
-                var countries = await this.countriesService
+                var allCountries = await this.countriesService
                     .GetAllAsync<CountrySimpleViewModel>();
-                var languages = await this.languagesService
+                var allLanguages = await this.languagesService
                      .GetAllAsync<LanguageSimpleViewModel>();
 
-                inputModel.Directors = directors;
-                inputModel.Genres = genres;
-                inputModel.ProductionCountries = countries;
-                inputModel.Languages = languages;
+                inputModel.AllDirectors = allDirectors;
+                inputModel.AllGenres = allGenres;
+                inputModel.AllCountries = allCountries;
+                inputModel.AllLanguages = allLanguages;
 
                 return this.View(inputModel);
             }
@@ -99,25 +93,58 @@
             return this.RedirectToAction("GetAll", "Movies", new { area = "Administration" });
         }
 
-        //public async Task<IActionResult> Edit(int id)
-        //{
-        //    var viewModel = await this.actorsService.GetViewModelByIdAsync<ActorEditViewModel>(id);
+        public async Task<IActionResult> Edit(int id)
+        {
+            var viewModel = await this.moviesService.GetViewModelByIdAsync<MovieEditViewModel>(id);
 
-        //    return this.View(viewModel);
-        //}
+            var allDirectors = await this.directorsService.GetAllAsync<DirectorSimpleViewModel>();
+            var alllGenres = await this.genresService.GetAllAsync<GenreSimpleViewModel>();
+            var allCountries = await this.countriesService.GetAllAsync<CountrySimpleViewModel>();
+            var allLanguages = await this.languagesService.GetAllAsync<LanguageSimpleViewModel>();
+            var genres = await this.moviesService.GetAllMovieGenresAsync<MovieGenresViewModel>(id);
+            var countries = await this.moviesService.GetAllMovieCountriesAsync<MovieCountriesViewModel>(id);
+            var languages = await this.moviesService.GetAllMovieLanguagesAsync<MovieLanguagesViewModel>(id);
 
-        //[HttpPost]
-        //public async Task<IActionResult> Edit(ActorEditViewModel actorEditViewModel)
-        //{
-        //    if (!this.ModelState.IsValid)
-        //    {
-        //        return this.View(actorEditViewModel);
-        //    }
+            viewModel.AllDirectors = allDirectors;
+            viewModel.AllGenres = alllGenres;
+            viewModel.AllCountries = allCountries;
+            viewModel.AllLanguages = allLanguages;
+            viewModel.Genres = genres;
+            viewModel.ProductionCountries = countries;
+            viewModel.Languages = languages;
 
-        //    await this.actorsService.EditAsync(actorEditViewModel);
+            return this.View(viewModel);
+        }
 
-        //    return this.RedirectToAction("GetAll", "Actors", new { area = "Administration" });
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Edit(MovieEditViewModel movieEditViewModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                var allDirectors = await this.directorsService.GetAllAsync<DirectorSimpleViewModel>();
+                var allGenres = await this.genresService.GetAllAsync<GenreSimpleViewModel>();
+                var allCountries = await this.countriesService.GetAllAsync<CountrySimpleViewModel>();
+                var allLanguages = await this.languagesService.GetAllAsync<LanguageSimpleViewModel>();
+
+                var genres = await this.moviesService.GetAllMovieGenresAsync<MovieGenresViewModel>(movieEditViewModel.Id);
+                var countries = await this.moviesService.GetAllMovieCountriesAsync<MovieCountriesViewModel>(movieEditViewModel.Id);
+                var languages = await this.moviesService.GetAllMovieLanguagesAsync<MovieLanguagesViewModel>(movieEditViewModel.Id);
+
+                movieEditViewModel.AllDirectors = allDirectors;
+                movieEditViewModel.AllGenres = allGenres;
+                movieEditViewModel.AllCountries = allCountries;
+                movieEditViewModel.AllLanguages = allLanguages;
+                movieEditViewModel.Genres = genres;
+                movieEditViewModel.ProductionCountries = countries;
+                movieEditViewModel.Languages = languages;
+
+                return this.View(movieEditViewModel);
+            }
+
+            await this.moviesService.EditAsync(movieEditViewModel);
+
+            return this.RedirectToAction("GetAll", "Movies", new { area = "Administration" });
+        }
 
         [HttpPost]
         public async Task<IActionResult> Delete(int id)

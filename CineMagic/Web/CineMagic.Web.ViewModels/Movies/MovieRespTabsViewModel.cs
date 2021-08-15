@@ -28,6 +28,8 @@
 
         public ICollection<MovieGenresViewModel> Genres { get; set; }
 
+        public ICollection<MovieLanguagesViewModel> Languages { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Movie, MovieRespTabsViewModel>()

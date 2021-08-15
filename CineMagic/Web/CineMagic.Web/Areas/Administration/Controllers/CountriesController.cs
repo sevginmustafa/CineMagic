@@ -11,8 +11,7 @@
     using CineMagic.Web.ViewModels.InputModels.Administration;
     using Microsoft.AspNetCore.Mvc;
 
-    [Area("Administration")]
-    public class CountriesController : Controller
+    public class CountriesController : AdministrationController
     {
         private readonly IDeletableEntityRepository<Country> countriesRepository;
         private readonly ICountriesService countriesService;

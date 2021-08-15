@@ -9,8 +9,7 @@
     using CineMagic.Web.ViewModels.Privacies;
     using Microsoft.AspNetCore.Mvc;
 
-    [Area("Administration")]
-    public class PrivaciesController : Controller
+    public class PrivaciesController : AdministrationController
     {
         private readonly IDeletableEntityRepository<Privacy> privaciesRepository;
         private readonly IPrivaciesService privaciesService;

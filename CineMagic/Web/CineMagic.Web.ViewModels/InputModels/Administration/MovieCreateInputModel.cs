@@ -55,14 +55,6 @@
         [Display(Name = Person.DirectorDisplayName)]
         public int DirectorId { get; set; }
 
-        public IEnumerable<GenreSimpleViewModel> Genres { get; set; }
-
-        public IEnumerable<DirectorSimpleViewModel> Directors { get; set; }
-
-        public IEnumerable<CountrySimpleViewModel> ProductionCountries { get; set; }
-
-        public IEnumerable<LanguageSimpleViewModel> Languages { get; set; }
-
         [Required(ErrorMessage = Genre.GenreIdError)]
         [Display(Name = Genre.GenresDisplayName)]
         public IList<int> SelectedGenres { get; set; }
@@ -74,5 +66,13 @@
         [Required(ErrorMessage = Country.CountryIdError)]
         [Display(Name = Language.LanguagesDisplayName)]
         public IList<int> SelectedLanguages { get; set; }
+
+        public IEnumerable<DirectorSimpleViewModel> AllDirectors { get; set; }
+
+        public IEnumerable<GenreSimpleViewModel> AllGenres { get; set; }
+
+        public IEnumerable<CountrySimpleViewModel> AllCountries { get; set; }
+
+        public IEnumerable<LanguageSimpleViewModel> AllLanguages { get; set; }
     }
 }

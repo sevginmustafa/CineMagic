@@ -11,8 +11,7 @@
     using CineMagic.Web.ViewModels.Languages;
     using Microsoft.AspNetCore.Mvc;
 
-    [Area("Administration")]
-    public class LanguagesController : Controller
+    public class LanguagesController : AdministrationController
     {
         private readonly IDeletableEntityRepository<Language> languagesRepository;
         private readonly ILanguagesService languagesService;

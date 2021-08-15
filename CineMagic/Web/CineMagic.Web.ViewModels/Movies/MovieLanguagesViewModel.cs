@@ -3,12 +3,12 @@
     using CineMagic.Data.Models;
     using CineMagic.Services.Mapping;
 
-    public class MovieGenresViewModel : IMapFrom<MovieGenre>
+    public class MovieLanguagesViewModel : IMapFrom<MovieLanguage>
     {
         public int MovieId { get; set; }
 
-        public int GenreId { get; set; }
+        public int LanguageId { get; set; }
 
-        public string GenreName { get; set; }
+        public string LanguageName { get; set; }
     }
 }

@@ -5,7 +5,7 @@
 @{
     var genres = await GenresService.GetPopularGenresAsync<GenreNavbarViewModel>();
     var latestMovies = await MoviesService.GetLatestMoviesAsync<MovieFooterViewModel>(3);
-    var popularMovies = await MoviesService.GetPopularMoviesAsync<MovieFooterViewModel>(6);
+    var popularMovies = await MoviesService.GetPopularMoviesAsync<MovieFooterViewModel>(12);
 }
 
 <!--/footer-bottom-->
@@ -58,7 +58,7 @@
                 {
                     <div class="footer-grid1">
                         <div class="footer-grid1-left">
-                            <a asp-area="" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id"><img src="@movie.PosterPath" style="width:90px; height:75px;" class="img-responsive"></a>
+                            <a asp-area="" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id"><img src="@movie.BackdropPath" class="img-responsive"></a>
                         </div>
                         <div class="footer-grid1-right">
                             <a class="word-wrap" asp-area="" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a>
@@ -73,7 +73,7 @@
                 @foreach (var movie in popularMovies)
                 {
                     <div class="footer-grid-instagram">
-                        <a asp-area="" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id"><img src="@movie.PosterPath" class="img-responsive"></a>
+                        <a asp-area="" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id"><img src="@movie.BackdropPath" class="img-responsive"></a>
                     </div>
                 }
                 <div class="clearfix"> </div>

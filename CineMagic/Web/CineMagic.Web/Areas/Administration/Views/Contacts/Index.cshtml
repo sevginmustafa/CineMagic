@@ -1,0 +1,15 @@
+﻿@{
+    this.ViewData["ActivePage"] = ContactNavPages.Contacts;
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="@ContactNavPages.CreateContactNavClass(ViewContext)"><a asp-controller="Contacts" asp-action="Create">Send Email</a></li>
+                <li class="@ContactNavPages.GetAllNavClass(ViewContext)"><a asp-controller="Contacts" asp-action="GetAll">All Enquries</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+﻿@{
+    this.ViewData["Title"] = "Contacts";
+    this.ViewData["ActivePage"] = ContactNavPages.Contacts;
+}
+
+<br />
+<div class="container-fluid text-center">
+    <h1 class="display-4"><span>Your message was delivered!</span></h1>
+    <br />
+    <p class="lead">The enquiries will not be deleted automaticaly after reply! However, if you do not want them to be displayed, you have to delete them manually! </p>
+    <br />
+    <p class="lead">
+        <a asp-action="GetAll" class="btn btn-primary" role="button">Back to All Enquiries</a>
+    </p>
+</div>

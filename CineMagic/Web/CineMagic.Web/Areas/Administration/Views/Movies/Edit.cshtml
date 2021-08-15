@@ -1,121 +1,161 @@
-﻿@model CineMagic.Data.Models.Movie
+﻿@model CineMagic.Web.ViewModels.Movies.MovieEditViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    this.ViewData["Title"] = "Edit Movie";
+    this.ViewData["ActivePage"] = MovieNavPages.Movies;
+
+    var allDirectors = Model.AllDirectors.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var allGenres = Model.AllGenres.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var allCountries = Model.AllCountries.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var allLanguages = Model.AllLanguages.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
 }
 
-<h2>Edit</h2>
-
-<h4>Movie</h4>
+<h2>Edit Movie <b>@Model.Title</b> with ID: @Model.Id</h2>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col-md-6">
+        <form asp-action="Edit" method="post">
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
+                <label asp-for="Title"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PosterPath" class="control-label"></label>
+                <label asp-for="PosterPath"></label>
                 <input asp-for="PosterPath" class="form-control" />
                 <span asp-validation-for="PosterPath" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TrailerPath" class="control-label"></label>
+                <label asp-for="TrailerPath"></label>
                 <input asp-for="TrailerPath" class="form-control" />
                 <span asp-validation-for="TrailerPath" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IMDBLink" class="control-label"></label>
+                <label asp-for="IMDBLink"></label>
                 <input asp-for="IMDBLink" class="form-control" />
                 <span asp-validation-for="IMDBLink" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ReleaseDate" class="control-label"></label>
+                <label asp-for="ReleaseDate"></label>
                 <input asp-for="ReleaseDate" class="form-control" />
                 <span asp-validation-for="ReleaseDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Runtime" class="control-label"></label>
+                <label asp-for="Runtime"></label>
                 <input asp-for="Runtime" class="form-control" />
                 <span asp-validation-for="Runtime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Tagline" class="control-label"></label>
+                <label asp-for="Tagline"></label>
                 <input asp-for="Tagline" class="form-control" />
                 <span asp-validation-for="Tagline" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Overview" class="control-label"></label>
-                <input asp-for="Overview" class="form-control" />
+                <label asp-for="Overview"></label>
+                <textarea asp-for="Overview" class="form-control"></textarea>
                 <span asp-validation-for="Overview" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Budget" class="control-label"></label>
+                <label asp-for="Budget"></label>
                 <input asp-for="Budget" class="form-control" />
                 <span asp-validation-for="Budget" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Revenue" class="control-label"></label>
+                <label asp-for="Revenue"></label>
                 <input asp-for="Revenue" class="form-control" />
                 <span asp-validation-for="Revenue" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Popularity" class="control-label"></label>
+                <label asp-for="Popularity"></label>
                 <input asp-for="Popularity" class="form-control" />
                 <span asp-validation-for="Popularity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CurrentAverageVote" class="control-label"></label>
-                <input asp-for="CurrentAverageVote" class="form-control" />
-                <span asp-validation-for="CurrentAverageVote" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CurrentNumberOfVotes" class="control-label"></label>
-                <input asp-for="CurrentNumberOfVotes" class="form-control" />
-                <span asp-validation-for="CurrentNumberOfVotes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DirectorId" class="control-label"></label>
-                <select asp-for="DirectorId" class="form-control" asp-items="ViewBag.DirectorId"></select>
+                <label asp-for="DirectorId"></label>
+                <select class="multiple-select" asp-for="DirectorId" asp-items="allDirectors">
+                </select>
                 <span asp-validation-for="DirectorId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
-                    </label>
-                </div>
+                <label asp-for="SelectedGenres"></label>
+                <select multiple="multiple" class="multiple-select" asp-for="SelectedGenres">
+                    @foreach (var genre in Model.AllGenres)
+                    {
+                        @if (Model.Genres.Any(x => x.MovieId == Model.Id && x.GenreId == genre.Id))
+                        {
+                            <option value="@genre.Id" selected="selected">@genre.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@genre.Id">@genre.Name</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="SelectedGenres" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DeletedOn" class="control-label"></label>
-                <input asp-for="DeletedOn" class="form-control" />
-                <span asp-validation-for="DeletedOn" class="text-danger"></span>
+                <label asp-for="SelectedCountries"></label>
+                <select multiple="multiple" class="multiple-select" asp-for="SelectedCountries">
+                    @foreach (var country in Model.AllCountries)
+                    {
+                        @if (Model.ProductionCountries.Any(x => x.MovieId == Model.Id && x.CountryId == country.Id))
+                        {
+                            <option value="@country.Id" selected="selected">@country.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@country.Id">@country.Name</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="SelectedCountries" class="text-danger"></span>
             </div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="CreatedOn" class="control-label"></label>
-                <input asp-for="CreatedOn" class="form-control" />
-                <span asp-validation-for="CreatedOn" class="text-danger"></span>
+                <label asp-for="SelectedLanguages"></label>
+                <select multiple="multiple" class="multiple-select" asp-for="SelectedLanguages">
+                    @foreach (var language in Model.AllLanguages)
+                    {
+                        @if (Model.Languages.Any(x => x.MovieId == Model.Id && x.LanguageId == language.Id))
+                        {
+                            <option value="@language.Id" selected="selected">@language.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@language.Id">@language.Name</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="SelectedLanguages" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ModifiedOn" class="control-label"></label>
-                <input asp-for="ModifiedOn" class="form-control" />
-                <span asp-validation-for="ModifiedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+            <button type="submit" class="btn btn-success">Edit Movie</button>
+            <button asp-action="GetAll" class="btn btn-primary">Back to All Movies</button>
         </form>
+        <br />
+        <form asp-action="Delete" asp-route-id="@Model.Id" method="post" id="deleteForm">
+        </form>
+        <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">Delete Movie</button>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+
+<div class="modal" tabindex="-1" role="dialog" id="modalDelete">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <b class="text-danger">Are you sure you want to delete this movie?</b>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-danger" onclick="deleteForm.submit()">Yes</button>
+            </div>
+        </div>
+    </div>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@section Scripts{
+    <script>
+        $(function () {
+            $('.multiple-select').multipleSelect()
+        })
+    </script>
 }

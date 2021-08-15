@@ -23,14 +23,14 @@
             public const int SubjectMinLength = 5;
             public const int SubjectMaxLength = 100;
 
-            public const int MessageMinLength = 5;
+            public const int MessageMinLength = 10;
             public const int MessageMaxLength = 5000;
 
             public const string NameErrorMessage = "Name should be between {2} and {1} symbols";
 
             public const string SubjectErrorMessage = "Subject should be between {2} and {1} symbols";
 
-            public const string MessageErrorMessage = "Message should be between {2} and {1} symbols";
+            public const string MessageErrorMessage = "Message should be less than {1} symbols long";
         }
 
         public static class Movie
@@ -147,11 +147,6 @@
             public const string LanguagesDisplayName = "Languages";
 
             public const string LanguageIdError = "Please select language.";
-        }
-
-        public static class City
-        {
-            public const int NameMaxLength = 90;
         }
 
         public static class Genre

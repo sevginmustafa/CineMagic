@@ -1,20 +1,24 @@
-﻿namespace CineMagic.Web.ViewModels.InputModels.Contacts
+﻿namespace CineMagic.Web.ViewModels.InputModels.Administration
 {
     using System.ComponentModel.DataAnnotations;
 
     using static CineMagic.Common.ModelValidation.ContactForm;
 
-    public class ContactFormInputModel
+    public class AdminContactFormInputModel
     {
-        [Required(ErrorMessage = "- The Name field is required.")]
+        [Required]
         [StringLength(NameMaxLength, ErrorMessage = NameErrorMessage, MinimumLength = NameMinLength)]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "- The Email field is required.")]
+        [Required]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "- The Subject field is required.")]
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        public string To { get; set; }
+
+        [Required]
         [StringLength(SubjectMaxLength, ErrorMessage = SubjectErrorMessage, MinimumLength = SubjectMinLength)]
         public string Subject { get; set; }
 

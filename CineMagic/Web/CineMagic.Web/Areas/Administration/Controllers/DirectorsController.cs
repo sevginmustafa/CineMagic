@@ -11,8 +11,7 @@
     using CineMagic.Web.ViewModels.InputModels.Administration;
     using Microsoft.AspNetCore.Mvc;
 
-    [Area("Administration")]
-    public class DirectorsController : Controller
+    public class DirectorsController : AdministrationController
     {
         private readonly IDeletableEntityRepository<Director> directorsRepository;
         private readonly IDirectorsService directorsService;

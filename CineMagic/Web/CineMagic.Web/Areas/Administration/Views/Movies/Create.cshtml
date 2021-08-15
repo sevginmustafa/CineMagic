@@ -4,10 +4,10 @@
     ViewData["Title"] = "Create Movie";
     this.ViewData["ActivePage"] = MovieNavPages.Movies;
 
-    var directors = Model.Directors.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
-    var genres = Model.Genres.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
-    var countries = Model.ProductionCountries.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
-    var languages = Model.Languages.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var directors = Model.AllDirectors.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var genres = Model.AllGenres.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var countries = Model.AllCountries.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var languages = Model.AllLanguages.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
 }
 
 <h2>@ViewData["Title"]</h2>
