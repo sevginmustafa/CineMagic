@@ -37,7 +37,10 @@
         {
             var options = new DbContextOptionsBuilder<CineMagicDbContext>()
                 .UseInMemoryDatabase(databaseName: "SettingsTestDb").Options;
+
             using var dbContext = new CineMagicDbContext(options);
+
+
             dbContext.Settings.Add(new Setting());
             dbContext.Settings.Add(new Setting());
             dbContext.Settings.Add(new Setting());
