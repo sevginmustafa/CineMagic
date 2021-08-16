@@ -11,57 +11,57 @@
     using CineMagic.Data.Repositories;
     using CineMagic.Services.Data.Common;
     using CineMagic.Services.Mapping;
-    using CineMagic.Web.ViewModels.Actors;
+    using CineMagic.Web.ViewModels.Directors;
     using CineMagic.Web.ViewModels.InputModels.Administration;
     using Microsoft.EntityFrameworkCore;
     using Xunit;
 
-    public class ActorsServiceTests
+    public class DirectorsServiceTests
     {
-        public ActorsServiceTests()
+        public DirectorsServiceTests()
         {
             this.InitializeMapper();
         }
 
         [Fact]
-        public async Task MethodGetActorByIdAsyncShouldReturnCorrectActor()
+        public async Task MethodGetDirectorByIdAsyncShouldReturnCorrectDirector()
         {
             // Arrange
             using var dbContext = this.InitializeDatabase();
 
-            await dbContext.Actors.AddAsync(new Actor { Name = "Test1" });
-            await dbContext.Actors.AddAsync(new Actor { Name = "Test2" });
+            await dbContext.Directors.AddAsync(new Director { Name = "Test1" });
+            await dbContext.Directors.AddAsync(new Director { Name = "Test2" });
             await dbContext.SaveChangesAsync();
 
-            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
 
-            var service = new ActorsService(repository);
+            var service = new DirectorsService(repository);
 
             // Act
-            var actualResult = await service.GetActorByIdAsync<ActorSinglePageViewModel>(2);
+            var actualResult = await service.GetDirectorByIdAsync<DirectorSinglePageViewModel>(2);
 
             // Assert
             Assert.Equal(2, actualResult.Id);
         }
 
         [Fact]
-        public async Task MethodGetActorByIdAsyncShouldThrowExceptionWhenInvalidIdIsGiven()
+        public async Task MethodGetDirectorByIdAsyncShouldThrowExceptionWhenInvalidIdIsGiven()
         {
             // Arrange
             using var dbContext = this.InitializeDatabase();
 
-            dbContext.Actors.Add(new Actor { });
+            dbContext.Directors.Add(new Director { });
             await dbContext.SaveChangesAsync();
 
-            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
 
-            var service = new ActorsService(repository);
+            var service = new DirectorsService(repository);
 
             // Act - Assert
             var exception = await Assert.ThrowsAsync<NullReferenceException>(()
-                 => service.GetActorByIdAsync<ActorSinglePageViewModel>(2));
+                 => service.GetDirectorByIdAsync<DirectorSinglePageViewModel>(2));
 
-            Assert.Equal(string.Format(ExceptionMessages.ActorNotFound, 2), exception.Message);
+            Assert.Equal(string.Format(ExceptionMessages.DirectorNotFound, 2), exception.Message);
         }
 
         [Theory]
@@ -69,18 +69,18 @@
         [InlineData(1, 1)]
         [InlineData(2, 0)]
         [InlineData(5, 0)]
-        public async Task GetActorsBornTodayAsQueryableShouldReturnTheCorrectActorsWithCorrectGender(int gender, int expected)
+        public async Task GetDirectorsBornTodayAsQueryableShouldReturnTheCorrectDirectorsWithCorrectGender(int gender, int expected)
         {
             // Arrange
             using var dbContext = this.InitializeDatabase();
 
-            dbContext.Actors.Add(new Actor
+            dbContext.Directors.Add(new Director
             {
                 Birthday = DateTime.Now,
                 Gender = Gender.Female,
             });
 
-            dbContext.Actors.Add(new Actor
+            dbContext.Directors.Add(new Director
             {
                 Birthday = DateTime.Now.AddDays(-5),
                 Gender = Gender.Female,
@@ -88,38 +88,38 @@
 
             await dbContext.SaveChangesAsync();
 
-            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
 
-            var service = new ActorsService(repository);
+            var service = new DirectorsService(repository);
 
             // Act
-            var actualResult = service.GetActorsBornTodayAsQueryable<ActorStandartViewModel>(gender).Count();
+            var actualResult = service.GetDirectorsBornTodayAsQueryable<DirectorStandartViewModel>(gender).Count();
 
             // Assert
             Assert.Equal(expected, actualResult);
         }
 
         [Fact]
-        public async Task GetActorsBornTodayAsQueryableShouldReturnActorsInCorrectOrder()
+        public async Task GetDirectorsBornTodayAsQueryableShouldReturnDirectorsInCorrectOrder()
         {
             // Arrange
             using var dbContext = this.InitializeDatabase();
 
-            dbContext.Actors.Add(new Actor
+            dbContext.Directors.Add(new Director
             {
                 Name = "CTest",
                 Birthday = DateTime.Now,
                 Gender = Gender.Female,
             });
 
-            dbContext.Actors.Add(new Actor
+            dbContext.Directors.Add(new Director
             {
                 Name = "BTest",
                 Birthday = DateTime.Now.AddDays(-5),
                 Gender = Gender.Female,
             });
 
-            dbContext.Actors.Add(new Actor
+            dbContext.Directors.Add(new Director
             {
                 Name = "ATest",
                 Birthday = DateTime.Now,
@@ -128,12 +128,12 @@
 
             await dbContext.SaveChangesAsync();
 
-            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
 
-            var service = new ActorsService(repository);
+            var service = new DirectorsService(repository);
 
             // Act
-            var actualResult = service.GetActorsBornTodayAsQueryable<ActorStandartViewModel>(1).FirstOrDefault().Name;
+            var actualResult = service.GetDirectorsBornTodayAsQueryable<DirectorStandartViewModel>(1).FirstOrDefault().Name;
 
             // Assert
             Assert.Equal("ATest", actualResult);
@@ -145,26 +145,26 @@
         [InlineData(1, 1, 1)]
         [InlineData(3, 5, 0)]
         [InlineData(2, 1, 1)]
-        public async Task GetMostPopularActorsAsQueryableShouldReturnTheCorrectActorsWithCorrectGenderAndCount(int gender, int count, int expected)
+        public async Task GetMostPopularDirectorsAsQueryableShouldReturnTheCorrectDirectorsWithCorrectGenderAndCount(int gender, int count, int expected)
         {
             // Arrange
             using var dbContext = this.InitializeDatabase();
 
-            dbContext.Actors.Add(new Actor
+            dbContext.Directors.Add(new Director
             {
                 Name = "ATest",
                 Gender = Gender.Female,
                 Popularity = 1,
             });
 
-            dbContext.Actors.Add(new Actor
+            dbContext.Directors.Add(new Director
             {
                 Name = "BTest",
                 Gender = Gender.Male,
                 Popularity = 2,
             });
 
-            dbContext.Actors.Add(new Actor
+            dbContext.Directors.Add(new Director
             {
                 Name = "CTest",
                 Gender = Gender.Male,
@@ -173,30 +173,30 @@
 
             await dbContext.SaveChangesAsync();
 
-            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
 
-            var service = new ActorsService(repository);
+            var service = new DirectorsService(repository);
 
             // Act
-            var actualResult = service.GetMostPopularActorsAsQueryable<ActorStandartViewModel>(gender, count).Count();
+            var actualResult = service.GetMostPopularDirectorsAsQueryable<DirectorStandartViewModel>(gender, count).Count();
 
             // Assert
             Assert.Equal(expected, actualResult);
         }
 
         [Fact]
-        public async Task GetMostPopularActorsAsQueryableShouldReturnActorsInCorrectOrder()
+        public async Task GetMostPopularDirectorsAsQueryableShouldReturnDirectorsInCorrectOrder()
         {
             // Arrange
             using var dbContext = this.InitializeDatabase();
 
-            dbContext.Actors.Add(new Actor
+            dbContext.Directors.Add(new Director
             {
                 Gender = Gender.Female,
                 Popularity = 1,
             });
 
-            dbContext.Actors.Add(new Actor
+            dbContext.Directors.Add(new Director
             {
                 Gender = Gender.Female,
                 Popularity = 2,
@@ -204,12 +204,12 @@
 
             await dbContext.SaveChangesAsync();
 
-            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
 
-            var service = new ActorsService(repository);
+            var service = new DirectorsService(repository);
 
             // Act
-            var actualResult = service.GetMostPopularActorsAsQueryable<ActorStandartViewModel>(1, 5).FirstOrDefault().Popularity;
+            var actualResult = service.GetMostPopularDirectorsAsQueryable<DirectorStandartViewModel>(1, 5).FirstOrDefault().Popularity;
 
             // Assert
             Assert.Equal(2, actualResult);
@@ -221,18 +221,18 @@
             // Arrange
             using var dbContext = this.InitializeDatabase();
 
-            var actor = new ActorCreateInputModel
+            var director = new DirectorCreateInpuModel
             {
                 Gender = Gender.Female,
                 Popularity = 1,
             };
 
-            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
 
-            var service = new ActorsService(repository);
+            var service = new DirectorsService(repository);
 
             // Act
-            await service.CreateAsync(actor);
+            await service.CreateAsync(director);
 
             var actualResult = repository.AllAsNoTracking().Count();
 
@@ -241,39 +241,39 @@
         }
 
         [Fact]
-        public async Task CreateAsyncShouldThrowExceptionWhenActorWithGivenNameAlreadyExists()
+        public async Task CreateAsyncShouldThrowExceptionWhenDirectorWithGivenNameAlreadyExists()
         {
             // Arrange
             using var dbContext = this.InitializeDatabase();
 
-            dbContext.Actors.Add(new Actor
+            dbContext.Directors.Add(new Director
             {
                 Name = "Test",
             });
 
             await dbContext.SaveChangesAsync();
 
-            var testActor = new ActorCreateInputModel
+            var testDirector = new DirectorCreateInpuModel
             {
                 Name = "Test",
             };
 
-            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
 
-            var service = new ActorsService(repository);
+            var service = new DirectorsService(repository);
 
             // Act - Assert
             await Assert.ThrowsAsync<ArgumentException>(()
-                => service.CreateAsync(testActor));
+                => service.CreateAsync(testDirector));
         }
 
         [Fact]
-        public async Task CreateAsyncShouldCreateActorWithCorrectProperties()
+        public async Task CreateAsyncShouldCreateDirectorWithCorrectProperties()
         {
             // Arrange
             using var dbContext = this.InitializeDatabase();
 
-            var actor = new ActorCreateInputModel
+            var director = new DirectorCreateInpuModel
             {
                 Name = "Pesho",
                 ProfilePicPath = "www.google.com",
@@ -285,12 +285,12 @@
                 Popularity = 5,
             };
 
-            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
 
-            var service = new ActorsService(repository);
+            var service = new DirectorsService(repository);
 
             // Act
-            await service.CreateAsync(actor);
+            await service.CreateAsync(director);
 
             var actualResult = repository.AllAsNoTracking().FirstOrDefault();
 
@@ -306,22 +306,22 @@
         }
 
         [Fact]
-        public async Task GetAllActorsAsQueryableShouldReturnCorrectCount()
+        public async Task GetAllDirectorsAsQueryableShouldReturnCorrectCount()
         {
             // Arrange
             using var dbContext = this.InitializeDatabase();
 
-            await dbContext.Actors.AddAsync(new Actor { Name = "Test" });
-            await dbContext.Actors.AddAsync(new Actor { Name = "Tet2" });
+            await dbContext.Directors.AddAsync(new Director { Name = "Test" });
+            await dbContext.Directors.AddAsync(new Director { Name = "Tet2" });
 
             await dbContext.SaveChangesAsync();
 
-            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
 
-            var service = new ActorsService(repository);
+            var service = new DirectorsService(repository);
 
             // Act
-            var actualResult = service.GetAllActorsAsQueryable<ActorStandartViewModel>().Count();
+            var actualResult = service.GetAllDirectorsAsQueryable<DirectorStandartViewModel>().Count();
 
             // Assert
             Assert.Equal(2, actualResult);
@@ -333,15 +333,15 @@
             // Arrange
             using var dbContext = this.InitializeDatabase();
 
-            await dbContext.Actors.AddAsync(new Actor { Name = "Test" });
+            await dbContext.Directors.AddAsync(new Director { Name = "Test" });
 
             await dbContext.SaveChangesAsync();
 
-            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
 
-            var service = new ActorsService(repository);
+            var service = new DirectorsService(repository);
 
-            var entity = await dbContext.Actors.FindAsync(1);
+            var entity = await dbContext.Directors.FindAsync(1);
             dbContext.Entry(entity).State = EntityState.Detached;
 
             // Act
@@ -359,13 +359,13 @@
             // Arrange
             using var dbContext = this.InitializeDatabase();
 
-            await dbContext.Actors.AddAsync(new Actor { Name = "Test" });
+            await dbContext.Directors.AddAsync(new Director { Name = "Test" });
 
             await dbContext.SaveChangesAsync();
 
-            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
 
-            var service = new ActorsService(repository);
+            var service = new DirectorsService(repository);
 
             // Act - Assert
             await Assert.ThrowsAsync<NullReferenceException>(()
@@ -373,12 +373,12 @@
         }
 
         [Fact]
-        public async Task EditAsyncShouldChangeActorProperties()
+        public async Task EditAsyncShouldChangeDirectorProperties()
         {
             // Arrange
             using var dbContext = this.InitializeDatabase();
 
-            var actor = new Actor
+            var director = new Director
             {
                 Name = "Pesho",
                 ProfilePicPath = "www.google.com",
@@ -390,18 +390,18 @@
                 Popularity = 5,
             };
 
-            await dbContext.Actors.AddAsync(actor);
+            await dbContext.Directors.AddAsync(director);
             await dbContext.SaveChangesAsync();
 
-            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
 
-            var service = new ActorsService(repository);
+            var service = new DirectorsService(repository);
 
-            var entity = await dbContext.Actors.FindAsync(1);
+            var entity = await dbContext.Directors.FindAsync(1);
             dbContext.Entry(entity).State = EntityState.Detached;
 
             // Act
-            var actorEditViewModel = new ActorEditViewModel
+            var directorEditViewModel = new DirectorEditViewModel
             {
                 Id = 1,
                 Name = "PeshoCopy",
@@ -414,7 +414,7 @@
                 Popularity = 2,
             };
 
-            await service.EditAsync(actorEditViewModel);
+            await service.EditAsync(directorEditViewModel);
 
             var actualResult = repository.AllAsNoTracking().FirstOrDefault();
 
@@ -435,23 +435,23 @@
             // Arrange
             using var dbContext = this.InitializeDatabase();
 
-            var actor = new ActorEditViewModel
+            var director = new DirectorEditViewModel
             {
                 Id = 5,
                 Name = "Test",
             };
 
-            await dbContext.Actors.AddAsync(new Actor { Name = "Test" });
+            await dbContext.Directors.AddAsync(new Director { Name = "Test" });
 
             await dbContext.SaveChangesAsync();
 
-            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
 
-            var service = new ActorsService(repository);
+            var service = new DirectorsService(repository);
 
             // Act - Assert
             await Assert.ThrowsAsync<NullReferenceException>(()
-                => service.EditAsync(actor));
+                => service.EditAsync(director));
         }
 
         [Fact]
@@ -460,19 +460,19 @@
             // Arrange
             using var dbContext = this.InitializeDatabase();
 
-            await dbContext.Actors.AddAsync(new Actor { Name = "Test" });
+            await dbContext.Directors.AddAsync(new Director { Name = "Test" });
 
             await dbContext.SaveChangesAsync();
 
-            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
 
-            var service = new ActorsService(repository);
+            var service = new DirectorsService(repository);
 
             // Act
-            var actualResult = await service.GetViewModelByIdAsync<ActorEditViewModel>(1);
+            var actualResult = await service.GetViewModelByIdAsync<DirectorEditViewModel>(1);
 
             // Assert
-            Assert.IsType<ActorEditViewModel>(actualResult);
+            Assert.IsType<DirectorEditViewModel>(actualResult);
         }
 
         [Fact]
@@ -481,17 +481,39 @@
             // Arrange
             using var dbContext = this.InitializeDatabase();
 
-            await dbContext.Actors.AddAsync(new Actor { Name = "Test" });
+            await dbContext.Directors.AddAsync(new Director { Name = "Test" });
 
             await dbContext.SaveChangesAsync();
 
-            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
 
-            var service = new ActorsService(repository);
+            var service = new DirectorsService(repository);
 
             // Act - Assert
             await Assert.ThrowsAsync<NullReferenceException>(()
-                => service.GetViewModelByIdAsync<ActorStandartViewModel>(5));
+                => service.GetViewModelByIdAsync<DirectorStandartViewModel>(5));
+        }
+
+        [Fact]
+        public async Task GetAllAsyncShouldReturnCorrectCount()
+        {
+            // Arrange
+            using var dbContext = this.InitializeDatabase();
+
+            await dbContext.Directors.AddAsync(new Director { Name = "Test" });
+            await dbContext.Directors.AddAsync(new Director { Name = "Tet2" });
+
+            await dbContext.SaveChangesAsync();
+
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
+
+            var service = new DirectorsService(repository);
+
+            // Act
+            var actualResult = await service.GetAllAsync<DirectorStandartViewModel>();
+
+            // Assert
+            Assert.Equal(2, actualResult.Count());
         }
 
         private CineMagicDbContext InitializeDatabase()
