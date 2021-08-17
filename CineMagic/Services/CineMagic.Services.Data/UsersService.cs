@@ -1,9 +1,6 @@
 ﻿namespace CineMagic.Services.Data
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
 
     using CineMagic.Data.Common.Repositories;
     using CineMagic.Data.Models;
