@@ -29,6 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\CineMagic.Data\CineMagic.Data.csproj" />
     <ProjectReference Include="..\..\Services\CineMagic.Services.Data\CineMagic.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\CineMagic.Services\CineMagic.Services.csproj" />
   </ItemGroup>
 
 </Project>

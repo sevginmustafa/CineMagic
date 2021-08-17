@@ -163,7 +163,7 @@
         public async Task<T> GetMovieByIdAsync<T>(int id)
         {
             var movie = await this.moviesRepository
-                .AllAsNoTracking()
+                .All()
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstOrDefaultAsync();
