@@ -37,6 +37,7 @@
 
         public async Task<IActionResult> Index()
         {
+            const string bannerSectionMovieMovieCacheKey = "BannerSectionMovieMovieCacheKey";
             const string mostRecentMovieCacheKey = "MostRecentMovieCacheKey";
             const string recentMoviesCacheKey = "RecentMoviesCacheKey";
             const string mostPopularMovieCacheKey = "MostPopularMovieCacheKey";
@@ -46,7 +47,17 @@
             const string latestMoviesCacheKey = "LatestMoviesCacheKey";
 
             var cacheOptions = new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromDays(1));
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(1));
+
+            var bannerSectionMovie = this.cache.Get<MovieHomePageBannerViewModel>(bannerSectionMovieMovieCacheKey);
+
+            if (bannerSectionMovie == null)
+            {
+                bannerSectionMovie = await this.moviesService
+                    .GetBannerSectionMovieAsync<MovieHomePageBannerViewModel>();
+
+                this.cache.Set(bannerSectionMovieMovieCacheKey, bannerSectionMovie, cacheOptions);
+            }
 
             var mostRecentMovie = this.cache.Get<IEnumerable<MovieRespTabsViewModel>>(mostRecentMovieCacheKey);
 
@@ -120,7 +131,6 @@
 
             var userId = this.User.GetId();
 
-            var bannerSectionMovie = await this.moviesService.GetBannerSectionMovieAsync<MovieHomePageBannerViewModel>();
             var watchlistMovies = await this.moviesService.GetWatchlistMoviesAsync<MovieWatchlistViewModel>(userId, HomePageWatchlistMoviesCount);
 
             var viewModels = new HomePageViewModelsList

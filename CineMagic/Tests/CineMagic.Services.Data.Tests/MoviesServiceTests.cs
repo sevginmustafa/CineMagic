@@ -515,7 +515,7 @@
         }
 
         [Fact]
-        public async Task GetAllMoviesAsQueryableShoudReturnCorrectCountAndInCorrectOrder()
+        public async Task GetAllMoviesAsQueryableOrderedByTitleShoudReturnCorrectCountAndInCorrectOrder()
         {
             using var dbContext = this.InitializeDatabase();
 
@@ -548,7 +548,49 @@
                 fakeWatchlistsRepository.Object);
 
             // Act
-            var movies = service.GetAllMoviesAsQueryable<MovieStandartViewModel>();
+            var movies = service.GetAllMoviesAsQueryableOrderedByTitle<MovieStandartViewModel>();
+            var actualResult = movies.FirstOrDefault().Title;
+
+            // Assert
+            Assert.Equal(2, movies.Count());
+            Assert.Equal("A Quiet Place 2", actualResult);
+        }
+
+        [Fact]
+        public async Task GetAllMoviesAsQueryableOrderedByCreatedOnShoudReturnCorrectCountAndInCorrectOrder()
+        {
+            using var dbContext = this.InitializeDatabase();
+
+            var movieFirst = new Movie
+            {
+                Title = "Lights Out",
+            };
+
+            var movieSecond = new Movie
+            {
+                Title = "A Quiet Place 2",
+            };
+
+            await dbContext.Movies.AddAsync(movieFirst);
+            await dbContext.Movies.AddAsync(movieSecond);
+
+            await dbContext.SaveChangesAsync();
+
+            using var moviesRepository = new EfDeletableEntityRepository<Movie>(dbContext);
+            var fakeMovieGenresRepository = new Moq.Mock<IDeletableEntityRepository<MovieGenre>>();
+            var fakeMovieCountriesRepository = new Moq.Mock<IDeletableEntityRepository<MovieCountry>>();
+            var fakeMovieLanguagesRepository = new Moq.Mock<IDeletableEntityRepository<MovieLanguage>>();
+            var fakeWatchlistsRepository = new Moq.Mock<IRepository<Watchlist>>();
+
+            var service = new MoviesService(
+                moviesRepository,
+                fakeMovieGenresRepository.Object,
+                fakeMovieCountriesRepository.Object,
+                fakeMovieLanguagesRepository.Object,
+                fakeWatchlistsRepository.Object);
+
+            // Act
+            var movies = service.GetAllMoviesAsQueryableOrderedByCreatedOn<MovieStandartViewModel>();
             var actualResult = movies.FirstOrDefault().Title;
 
             // Assert

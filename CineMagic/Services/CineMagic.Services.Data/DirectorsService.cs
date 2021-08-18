@@ -164,12 +164,6 @@
             await this.directorsRepository.SaveChangesAsync();
         }
 
-        public IQueryable<T> GetAllDirectorsAsQueryable<T>()
-        => this.directorsRepository
-            .AllAsNoTracking()
-            .OrderByDescending(x => x.CreatedOn)
-            .To<T>();
-
         public async Task DeleteAsync(int id)
         {
             var director = await this.directorsRepository

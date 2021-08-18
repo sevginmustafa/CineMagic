@@ -24,7 +24,7 @@
         }
 
         [Fact]
-        public async Task MethodGetActorByIdAsyncShouldReturnCorrectActor()
+        public async Task GetActorByIdAsyncShouldReturnCorrectActor()
         {
             // Arrange
             using var dbContext = this.InitializeDatabase();
@@ -45,7 +45,7 @@
         }
 
         [Fact]
-        public async Task MethodGetActorByIdAsyncShouldThrowExceptionWhenInvalidIdIsGiven()
+        public async Task GetActorByIdAsyncShouldThrowExceptionWhenInvalidIdIsGiven()
         {
             // Arrange
             using var dbContext = this.InitializeDatabase();
@@ -62,6 +62,66 @@
                  => service.GetActorByIdAsync<ActorSinglePageViewModel>(2));
 
             Assert.Equal(string.Format(ExceptionMessages.ActorNotFound, 2), exception.Message);
+        }
+
+        [Theory]
+        [InlineData("i", 4)]
+        [InlineData("2", 0)]
+        [InlineData("  ", 4)]
+        [InlineData("BraD p", 1)]
+        [InlineData("ly Blu", 1)]
+        [InlineData(null, 4)]
+        [InlineData("j", 2)]
+        public async Task SearchActorsByTitleAsQueryableShoudReturnCorrectCount(string title, int expectedResult)
+        {
+            using var dbContext = this.InitializeDatabase();
+
+            await dbContext.Actors.AddAsync(new Actor { Name = "Brad Pitt" });
+            await dbContext.Actors.AddAsync(new Actor { Name = "Angelina Jolie" });
+            await dbContext.Actors.AddAsync(new Actor { Name = "Jackie Chan" });
+            await dbContext.Actors.AddAsync(new Actor { Name = "Emily Blunt" });
+
+            await dbContext.SaveChangesAsync();
+
+            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+
+            var service = new ActorsService(repository);
+
+            // Act
+            var actualResult = service.SearchActorsByTitleAsQueryable<ActorDetailedViewModel>(title).Count();
+
+            // Assert
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Theory]
+        [InlineData("i", 0)]
+        [InlineData("0 - 9", 0)]
+        [InlineData("All", 4)]
+        [InlineData("   ", 4)]
+        [InlineData("j", 1)]
+        [InlineData(null, 4)]
+        [InlineData("B", 1)]
+        public async Task GetActorsByLetterAsQueryableShoudReturnCorrectCount(string letter, int expectedResult)
+        {
+            using var dbContext = this.InitializeDatabase();
+
+            await dbContext.Actors.AddAsync(new Actor { Name = "Brad Pitt" });
+            await dbContext.Actors.AddAsync(new Actor { Name = "Angelina Jolie" });
+            await dbContext.Actors.AddAsync(new Actor { Name = "Jackie Chan" });
+            await dbContext.Actors.AddAsync(new Actor { Name = "Emily Blunt" });
+
+            await dbContext.SaveChangesAsync();
+
+            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+
+            var service = new ActorsService(repository);
+
+            // Act
+            var actualResult = service.GetActorsByLetterAsQueryable<ActorDetailedViewModel>(letter).Count();
+
+            // Assert
+            Assert.Equal(expectedResult, actualResult);
         }
 
         [Theory]
@@ -306,13 +366,13 @@
         }
 
         [Fact]
-        public async Task GetAllActorsAsQueryableShouldReturnCorrectCount()
+        public async Task GetAllActorsAsQueryableOrderedByNameShouldReturnCorrectCountAndInCorrectOrder()
         {
             // Arrange
             using var dbContext = this.InitializeDatabase();
 
             await dbContext.Actors.AddAsync(new Actor { Name = "Test" });
-            await dbContext.Actors.AddAsync(new Actor { Name = "Tet2" });
+            await dbContext.Actors.AddAsync(new Actor { Name = "Test2" });
 
             await dbContext.SaveChangesAsync();
 
@@ -321,10 +381,36 @@
             var service = new ActorsService(repository);
 
             // Act
-            var actualResult = service.GetAllActorsAsQueryable<ActorStandartViewModel>().Count();
+            var actors = service.GetAllActorsAsQueryableOrderedByName<ActorStandartViewModel>();
+            var actualResult = actors.FirstOrDefault().Name;
 
             // Assert
-            Assert.Equal(2, actualResult);
+            Assert.Equal(2, actors.Count());
+            Assert.Equal("Test", actualResult);
+        }
+
+        [Fact]
+        public async Task GetAllActorsAsQueryableOrderedByCreatedOnShouldReturnCorrectCountAndInCorrectOrder()
+        {
+            // Arrange
+            using var dbContext = this.InitializeDatabase();
+
+            await dbContext.Actors.AddAsync(new Actor { Name = "Test" });
+            await dbContext.Actors.AddAsync(new Actor { Name = "Test2" });
+
+            await dbContext.SaveChangesAsync();
+
+            using var repository = new EfDeletableEntityRepository<Actor>(dbContext);
+
+            var service = new ActorsService(repository);
+
+            // Act
+            var actors = service.GetAllActorsAsQueryableOrderedByCreatedOn<ActorStandartViewModel>();
+            var actualResult = actors.FirstOrDefault().Name;
+
+            // Assert
+            Assert.Equal(2, actors.Count());
+            Assert.Equal("Test2", actualResult);
         }
 
         [Fact]

@@ -65,6 +65,66 @@
         }
 
         [Theory]
+        [InlineData("j", 2)]
+        [InlineData("2", 0)]
+        [InlineData(" ", 4)]
+        [InlineData("a", 3)]
+        [InlineData("bERg", 1)]
+        [InlineData(null, 4)]
+        [InlineData("Q", 1)]
+        public async Task SearchActorsByTitleAsQueryableShoudReturnCorrectCount(string title, int expectedResult)
+        {
+            using var dbContext = this.InitializeDatabase();
+
+            await dbContext.Directors.AddAsync(new Director { Name = "John Krasinski" });
+            await dbContext.Directors.AddAsync(new Director { Name = "James Cameron" });
+            await dbContext.Directors.AddAsync(new Director { Name = "Steven Spielberg" });
+            await dbContext.Directors.AddAsync(new Director { Name = "Quentin Tarantino" });
+
+            await dbContext.SaveChangesAsync();
+
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
+
+            var service = new DirectorsService(repository);
+
+            // Act
+            var actualResult = service.SearchDirectorsByTitleAsQueryable<DirectorDetailedViewModel>(title).Count();
+
+            // Assert
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Theory]
+        [InlineData("i", 0)]
+        [InlineData("0 - 9", 0)]
+        [InlineData("All", 4)]
+        [InlineData("   ", 4)]
+        [InlineData("j", 2)]
+        [InlineData(null, 4)]
+        [InlineData("B", 0)]
+        public async Task GetActorsByLetterAsQueryableShoudReturnCorrectCount(string letter, int expectedResult)
+        {
+            using var dbContext = this.InitializeDatabase();
+
+            await dbContext.Directors.AddAsync(new Director { Name = "John Krasinski" });
+            await dbContext.Directors.AddAsync(new Director { Name = "James Cameron" });
+            await dbContext.Directors.AddAsync(new Director { Name = "Steven Spielberg" });
+            await dbContext.Directors.AddAsync(new Director { Name = "Quentin Tarantino" });
+
+            await dbContext.SaveChangesAsync();
+
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
+
+            var service = new DirectorsService(repository);
+
+            // Act
+            var actualResult = service.GetDirectorsByLetterAsQueryable<DirectorDetailedViewModel>(letter).Count();
+
+            // Assert
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Theory]
         [InlineData(0, 1)]
         [InlineData(1, 1)]
         [InlineData(2, 0)]
@@ -306,13 +366,13 @@
         }
 
         [Fact]
-        public async Task GetAllDirectorsAsQueryableShouldReturnCorrectCount()
+        public async Task GetAllDirectorsAsQueryableOrderedByNameShouldReturnCorrectCountAndInCorrectOrder()
         {
             // Arrange
             using var dbContext = this.InitializeDatabase();
 
             await dbContext.Directors.AddAsync(new Director { Name = "Test" });
-            await dbContext.Directors.AddAsync(new Director { Name = "Tet2" });
+            await dbContext.Directors.AddAsync(new Director { Name = "Test2" });
 
             await dbContext.SaveChangesAsync();
 
@@ -321,10 +381,36 @@
             var service = new DirectorsService(repository);
 
             // Act
-            var actualResult = service.GetAllDirectorsAsQueryable<DirectorStandartViewModel>().Count();
+            var directors = service.GetAllDirectorsAsQueryableOrderedByName<DirectorStandartViewModel>();
+            var actualResult = directors.FirstOrDefault().Name;
 
             // Assert
-            Assert.Equal(2, actualResult);
+            Assert.Equal(2, directors.Count());
+            Assert.Equal("Test", actualResult);
+        }
+
+        [Fact]
+        public async Task GetAllDirectorsAsQueryableOrderedByCreatedOnShouldReturnCorrectCountAndInCorrectOrder()
+        {
+            // Arrange
+            using var dbContext = this.InitializeDatabase();
+
+            await dbContext.Directors.AddAsync(new Director { Name = "Test" });
+            await dbContext.Directors.AddAsync(new Director { Name = "Test2" });
+
+            await dbContext.SaveChangesAsync();
+
+            using var repository = new EfDeletableEntityRepository<Director>(dbContext);
+
+            var service = new DirectorsService(repository);
+
+            // Act
+            var directors = service.GetAllDirectorsAsQueryableOrderedByCreatedOn<DirectorStandartViewModel>();
+            var actualResult = directors.FirstOrDefault().Name;
+
+            // Assert
+            Assert.Equal(2, directors.Count());
+            Assert.Equal("Test2", actualResult);
         }
 
         [Fact]
