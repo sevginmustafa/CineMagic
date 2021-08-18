@@ -1,5 +1,4 @@
 # ASP.Net Core CineMagic
-[![Build Status]()]()
 [![GitHub license](https://img.shields.io/github/license/sevginmustafa/CineMagic?color=brightgreen)](https://github.com/sevginmustafa/CineMagic/blob/main/LICENSE)
 
 **CineMagic** is my defense project for **ASP.NET Core** course at [SoftUni](https://softuni.bg/). It is a ready-to-use ASP.NET Core application.
@@ -32,7 +31,7 @@ Here, like any admin area, users who are registered as site administrators can c
 
 ## Unit tests Code coverage
 
-![Code coverage]()
+![Code coverage](https://github.com/sevginmustafa/CineMagic/blob/main/test%20coverage.png)
 
 ## :hammer_and_wrench: Build with
 * [ASP.NET CORE 5.0](https://github.com/dotnet/aspnetcore)
@@ -52,8 +51,8 @@ Here, like any admin area, users who are registered as site administrators can c
 * In-Memmory Cache
 
 
-## :floppy_disk: Database Diagram
-![]()
+## :floppy_disk: DB Diagram
+![](https://github.com/sevginmustafa/CineMagic/blob/main/CineMagicDbDiagram.png)
 
 ## Author
 
