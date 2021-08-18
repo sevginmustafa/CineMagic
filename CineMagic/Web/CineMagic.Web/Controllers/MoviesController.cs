@@ -1,9 +1,8 @@
 ﻿namespace CineMagic.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using CineMagic.Common;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Web.Infrastructure;
@@ -27,14 +26,17 @@
 
             if (letter != null)
             {
-                movies = this.moviesService.GetMoviesByLetterAsQueryable<MovieDetailedViewModel>(letter);
+                movies = this.moviesService
+                    .GetMoviesByLetterAsQueryable<MovieDetailedViewModel>(letter);
             }
             else
             {
-                movies = this.moviesService.SearchMoviesByTitleAsQueryable<MovieDetailedViewModel>(searchByTitle);
+                movies = this.moviesService
+                    .SearchMoviesByTitleAsQueryable<MovieDetailedViewModel>(searchByTitle);
             }
 
-            var moviesPaginated = await PaginatedList<MovieDetailedViewModel>.CreateAsync(movies, page, GlobalConstants.PaginatedTableItemsPerPageCount);
+            var moviesPaginated = await PaginatedList<MovieDetailedViewModel>
+                .CreateAsync(movies, page, GlobalConstants.PaginatedTableItemsPerPageCount);
 
             var alphabetPagingViewModel = new AlphabetPagingViewModel
             {
@@ -53,9 +55,11 @@
 
         public async Task<IActionResult> Details(int id)
         {
-            var movie = await this.moviesService.GetMovieByIdAsync<MovieSinglePageViewModel>(id);
+            var movie = await this.moviesService
+                .GetMovieByIdAsync<MovieSinglePageViewModel>(id);
 
-            var similarMovies = await this.moviesService.GetSimilarMoviesAsync<SimilarMoviesViewModel>(id, GlobalConstants.SinglePageRighSectionMoviesCount);
+            var similarMovies = await this.moviesService
+                .GetSimilarMoviesAsync<SimilarMoviesViewModel>(id, GlobalConstants.SinglePageRighSectionMoviesCount);
 
             var viewModel = new MovieSinglePageListViewModel
             {

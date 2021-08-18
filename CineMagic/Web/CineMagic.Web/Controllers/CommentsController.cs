@@ -25,7 +25,8 @@
                 return this.View(inputModel);
             }
 
-            await this.commentsService.CreateMovieCommentAsync(inputModel);
+            await this.commentsService
+                .CreateMovieCommentAsync(inputModel);
 
             return this.RedirectToAction("Details", "Movies", new { id = inputModel.MovieId });
         }
@@ -39,7 +40,8 @@
                 return this.View(inputModel);
             }
 
-            await this.commentsService.CreateActorCommentAsync(inputModel);
+            await this.commentsService
+                .CreateActorCommentAsync(inputModel);
 
             return this.RedirectToAction("Details", "Actors", new { id = inputModel.ActorId });
         }
@@ -53,7 +55,8 @@
                 return this.View(inputModel);
             }
 
-            await this.commentsService.CreateDirectorCommentAsync(inputModel);
+            await this.commentsService
+                .CreateDirectorCommentAsync(inputModel);
 
             return this.RedirectToAction("Details", "Directors", new { id = inputModel.DirectorId });
         }

@@ -3,8 +3,6 @@
     using System.Threading.Tasks;
 
     using CineMagic.Common;
-    using CineMagic.Data.Common.Repositories;
-    using CineMagic.Data.Models;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Web.ViewModels;
     using CineMagic.Web.ViewModels.Countries;
@@ -13,14 +11,10 @@
 
     public class CountriesController : AdministrationController
     {
-        private readonly IDeletableEntityRepository<Country> countriesRepository;
         private readonly ICountriesService countriesService;
 
-        public CountriesController(
-            IDeletableEntityRepository<Country> countriesRepository,
-            ICountriesService countriesService)
+        public CountriesController(ICountriesService countriesService)
         {
-            this.countriesRepository = countriesRepository;
             this.countriesService = countriesService;
         }
 

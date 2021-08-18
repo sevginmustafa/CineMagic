@@ -3,8 +3,6 @@
     using System.Threading.Tasks;
 
     using CineMagic.Common;
-    using CineMagic.Data.Common.Repositories;
-    using CineMagic.Data.Models;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Web.ViewModels;
     using CineMagic.Web.ViewModels.Directors;
@@ -13,14 +11,10 @@
 
     public class DirectorsController : AdministrationController
     {
-        private readonly IDeletableEntityRepository<Director> directorsRepository;
         private readonly IDirectorsService directorsService;
 
-        public DirectorsController(
-            IDeletableEntityRepository<Director> directorsRepository,
-            IDirectorsService directorsService)
+        public DirectorsController(IDirectorsService directorsService)
         {
-            this.directorsRepository = directorsRepository;
             this.directorsService = directorsService;
         }
 
@@ -49,7 +43,8 @@
 
         public async Task<IActionResult> Edit(int id)
         {
-            var viewModel = await this.directorsService.GetViewModelByIdAsync<DirectorEditViewModel>(id);
+            var viewModel = await this.directorsService
+                .GetViewModelByIdAsync<DirectorEditViewModel>(id);
 
             return this.View(viewModel);
         }
@@ -77,7 +72,8 @@
 
         public async Task<IActionResult> GetAll(int page = 1)
         {
-            var directors = this.directorsService.GetAllDirectorsAsQueryableOrderedByCreatedOn<DirectorsAdministrationViewModel>();
+            var directors = this.directorsService
+                .GetAllDirectorsAsQueryableOrderedByCreatedOn<DirectorsAdministrationViewModel>();
 
             var paginatedList = await PaginatedList<DirectorsAdministrationViewModel>
                 .CreateAsync(directors, page, GlobalConstants.AdministrationItemsPerPage);

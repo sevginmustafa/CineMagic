@@ -3,8 +3,6 @@
     using System.Threading.Tasks;
 
     using CineMagic.Common;
-    using CineMagic.Data.Common.Repositories;
-    using CineMagic.Data.Models;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Web.ViewModels;
     using CineMagic.Web.ViewModels.Countries;
@@ -17,7 +15,6 @@
 
     public class MoviesController : AdministrationController
     {
-        private readonly IDeletableEntityRepository<Movie> moviesRepository;
         private readonly IMoviesService moviesService;
         private readonly IDirectorsService directorsService;
         private readonly IGenresService genresService;
@@ -25,14 +22,12 @@
         private readonly ILanguagesService languagesService;
 
         public MoviesController(
-            IDeletableEntityRepository<Movie> moviesRepository,
             IMoviesService moviesService,
             IDirectorsService directorsService,
             IGenresService genresService,
             ICountriesService countriesService,
             ILanguagesService languagesService)
         {
-            this.moviesRepository = moviesRepository;
             this.moviesService = moviesService;
             this.directorsService = directorsService;
             this.genresService = genresService;
@@ -95,15 +90,23 @@
 
         public async Task<IActionResult> Edit(int id)
         {
-            var viewModel = await this.moviesService.GetViewModelByIdAsync<MovieEditViewModel>(id);
+            var viewModel = await this.moviesService
+                .GetViewModelByIdAsync<MovieEditViewModel>(id);
 
-            var allDirectors = await this.directorsService.GetAllAsync<DirectorSimpleViewModel>();
-            var alllGenres = await this.genresService.GetAllAsync<GenreSimpleViewModel>();
-            var allCountries = await this.countriesService.GetAllAsync<CountrySimpleViewModel>();
-            var allLanguages = await this.languagesService.GetAllAsync<LanguageSimpleViewModel>();
-            var genres = await this.moviesService.GetAllMovieGenresAsync<MovieGenresViewModel>(id);
-            var countries = await this.moviesService.GetAllMovieCountriesAsync<MovieCountriesViewModel>(id);
-            var languages = await this.moviesService.GetAllMovieLanguagesAsync<MovieLanguagesViewModel>(id);
+            var allDirectors = await this.directorsService
+                .GetAllAsync<DirectorSimpleViewModel>();
+            var alllGenres = await this.genresService
+                .GetAllAsync<GenreSimpleViewModel>();
+            var allCountries = await this.countriesService
+                .GetAllAsync<CountrySimpleViewModel>();
+            var allLanguages = await this.languagesService
+                .GetAllAsync<LanguageSimpleViewModel>();
+            var genres = await this.moviesService
+                .GetAllMovieGenresAsync<MovieGenresViewModel>(id);
+            var countries = await this.moviesService
+                .GetAllMovieCountriesAsync<MovieCountriesViewModel>(id);
+            var languages = await this.moviesService
+                .GetAllMovieLanguagesAsync<MovieLanguagesViewModel>(id);
 
             viewModel.AllDirectors = allDirectors;
             viewModel.AllGenres = alllGenres;
@@ -121,14 +124,21 @@
         {
             if (!this.ModelState.IsValid)
             {
-                var allDirectors = await this.directorsService.GetAllAsync<DirectorSimpleViewModel>();
-                var allGenres = await this.genresService.GetAllAsync<GenreSimpleViewModel>();
-                var allCountries = await this.countriesService.GetAllAsync<CountrySimpleViewModel>();
-                var allLanguages = await this.languagesService.GetAllAsync<LanguageSimpleViewModel>();
+                var allDirectors = await this.directorsService
+                    .GetAllAsync<DirectorSimpleViewModel>();
+                var allGenres = await this.genresService
+                    .GetAllAsync<GenreSimpleViewModel>();
+                var allCountries = await this.countriesService
+                    .GetAllAsync<CountrySimpleViewModel>();
+                var allLanguages = await this.languagesService
+                    .GetAllAsync<LanguageSimpleViewModel>();
 
-                var genres = await this.moviesService.GetAllMovieGenresAsync<MovieGenresViewModel>(movieEditViewModel.Id);
-                var countries = await this.moviesService.GetAllMovieCountriesAsync<MovieCountriesViewModel>(movieEditViewModel.Id);
-                var languages = await this.moviesService.GetAllMovieLanguagesAsync<MovieLanguagesViewModel>(movieEditViewModel.Id);
+                var genres = await this.moviesService
+                    .GetAllMovieGenresAsync<MovieGenresViewModel>(movieEditViewModel.Id);
+                var countries = await this.moviesService
+                    .GetAllMovieCountriesAsync<MovieCountriesViewModel>(movieEditViewModel.Id);
+                var languages = await this.moviesService
+                    .GetAllMovieLanguagesAsync<MovieLanguagesViewModel>(movieEditViewModel.Id);
 
                 movieEditViewModel.AllDirectors = allDirectors;
                 movieEditViewModel.AllGenres = allGenres;
@@ -156,7 +166,8 @@
 
         public async Task<IActionResult> GetAll(int page = 1)
         {
-            var movies = this.moviesService.GetAllMoviesAsQueryableOrderedByCreatedOn<MoviesAdministrationViewModel>();
+            var movies = this.moviesService
+                .GetAllMoviesAsQueryableOrderedByCreatedOn<MoviesAdministrationViewModel>();
 
             var paginatedList = await PaginatedList<MoviesAdministrationViewModel>
                 .CreateAsync(movies, page, GlobalConstants.AdministrationItemsPerPage);

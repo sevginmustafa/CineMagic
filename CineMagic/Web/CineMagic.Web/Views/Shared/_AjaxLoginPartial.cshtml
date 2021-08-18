@@ -31,40 +31,42 @@
     </div>
 </div>
 
-<script>
-    $('#formLoginAjax').submit(function (event) {
-        event.preventDefault();
-        var json = { success: false, message: '', action: '' };
-        $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            url: $('#formLoginAjax').attr('action'),
-            xhrFields: {
-                withCredentials: true
-            },
-            data: $('#formLoginAjax').serialize(),
-            beforeSend: function () {
-                $('.shadow').show(900);
-            },
-            success: function (data) {
-                json = data;
-            },
-            error: function (errorThrown) {
-                json.message = 'Request failed: ' + errorThrown;
-            },
-            complete: function () {
-                $('.shadow').hide(900);
-                if (json.success) {
-                    $('#myModal4').modal('hide');
-                    window.location.href = json.action;
+@section Scripts{
+    <script>
+        $('#formLoginAjax').submit(function (event) {
+            event.preventDefault();
+            var json = { success: false, message: '', action: '' };
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: $('#formLoginAjax').attr('action'),
+                xhrFields: {
+                    withCredentials: true
+                },
+                data: $('#formLoginAjax').serialize(),
+                beforeSend: function () {
+                    $('.shadow').show(900);
+                },
+                success: function (data) {
+                    json = data;
+                },
+                error: function (errorThrown) {
+                    json.message = 'Request failed: ' + errorThrown;
+                },
+                complete: function () {
+                    $('.shadow').hide(900);
+                    if (json.success) {
+                        $('#myModal4').modal('hide');
+                        window.location.href = json.action;
+                    }
+                    else {
+                        let span = document.getElementById("login-error");
+                        span.style.display = "block";
+                        span.style.marginBottom = "2.5vh"; // 2,5% from virtual screen
+                        span.innerHTML = json.message;
+                    }
                 }
-                else {
-                    let span = document.getElementById("login-error");
-                    span.style.display = "block";
-                    span.style.marginBottom = "2.5vh"; // 2,5% from virtual screen
-                    span.innerHTML = json.message;
-                }
-            }
+            });
         });
-    });
-</script> 
+    </script> 
+}

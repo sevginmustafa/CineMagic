@@ -1,7 +1,5 @@
 ﻿namespace CineMagic.Services.GetDataFromTMDB
 {
-    using System.Collections.Generic;
-
     using CineMagic.Services.GetDataFromTMDB.DTOs;
 
     public interface IGetDataFromTMDBService

@@ -3,8 +3,6 @@
     using System.Threading.Tasks;
 
     using CineMagic.Common;
-    using CineMagic.Data.Common.Repositories;
-    using CineMagic.Data.Models;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Web.ViewModels;
     using CineMagic.Web.ViewModels.InputModels.Administration;
@@ -13,14 +11,10 @@
 
     public class LanguagesController : AdministrationController
     {
-        private readonly IDeletableEntityRepository<Language> languagesRepository;
         private readonly ILanguagesService languagesService;
 
-        public LanguagesController(
-            IDeletableEntityRepository<Language> languagesRepository,
-            ILanguagesService languagesService)
+        public LanguagesController(ILanguagesService languagesService)
         {
-            this.languagesRepository = languagesRepository;
             this.languagesService = languagesService;
         }
 
@@ -49,7 +43,8 @@
 
         public async Task<IActionResult> Edit(int id)
         {
-            var viewModel = await this.languagesService.GetViewModelByIdAsync<LanguageEditViewModel>(id);
+            var viewModel = await this.languagesService
+                .GetViewModelByIdAsync<LanguageEditViewModel>(id);
 
             return this.View(viewModel);
         }
@@ -77,7 +72,8 @@
 
         public async Task<IActionResult> GetAll(int page = 1)
         {
-            var languages = this.languagesService.GetAllLanguagesAsQueryable<LanguageSimpleViewModel>();
+            var languages = this.languagesService
+                .GetAllLanguagesAsQueryable<LanguageSimpleViewModel>();
 
             var paginatedList = await PaginatedList<LanguageSimpleViewModel>
                 .CreateAsync(languages, page, GlobalConstants.AdministrationItemsPerPage);

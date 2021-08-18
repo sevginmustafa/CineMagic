@@ -3,8 +3,6 @@
     using System.Threading.Tasks;
 
     using CineMagic.Common;
-    using CineMagic.Data.Common.Repositories;
-    using CineMagic.Data.Models;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Web.ViewModels;
     using CineMagic.Web.ViewModels.Genres;
@@ -13,14 +11,10 @@
 
     public class GenresController : AdministrationController
     {
-        private readonly IDeletableEntityRepository<Genre> genresRepository;
         private readonly IGenresService genresService;
 
-        public GenresController(
-            IDeletableEntityRepository<Genre> genresRepository,
-            IGenresService genresService)
+        public GenresController( IGenresService genresService)
         {
-            this.genresRepository = genresRepository;
             this.genresService = genresService;
         }
 
@@ -49,7 +43,8 @@
 
         public async Task<IActionResult> Edit(int id)
         {
-            var viewModel = await this.genresService.GetViewModelByIdAsync<GenreEditViewModel>(id);
+            var viewModel = await this.genresService
+                .GetViewModelByIdAsync<GenreEditViewModel>(id);
 
             return this.View(viewModel);
         }
@@ -77,7 +72,8 @@
 
         public async Task<IActionResult> GetAll(int page = 1)
         {
-            var genres = this.genresService.GetAllGenresAsQueryable<GenreSimpleViewModel>();
+            var genres = this.genresService
+                .GetAllGenresAsQueryable<GenreSimpleViewModel>();
 
             var paginatedList = await PaginatedList<GenreSimpleViewModel>
                 .CreateAsync(genres, page, GlobalConstants.AdministrationItemsPerPage);

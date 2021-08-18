@@ -1,8 +1,5 @@
 ﻿namespace CineMagic.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using CineMagic.Common;
@@ -22,9 +19,11 @@
 
         public async Task<IActionResult> ByName(string name, int page = 1)
         {
-            var movies = this.moviesService.GetMoviesByCountryNameAsQueryable<MovieStandartViewModel>(name);
+            var movies = this.moviesService
+                .GetMoviesByCountryNameAsQueryable<MovieStandartViewModel>(name);
 
-            var moviesPaginated = await PaginatedList<MovieStandartViewModel>.CreateAsync(movies, page, GlobalConstants.ItemsStandartCountPagination);
+            var moviesPaginated = await PaginatedList<MovieStandartViewModel>
+                .CreateAsync(movies, page, GlobalConstants.ItemsStandartCountPagination);
 
             this.TempData["CountryName"] = name;
 

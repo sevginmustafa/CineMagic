@@ -43,7 +43,8 @@
 
         public async Task<IActionResult> Edit(int id)
         {
-            var viewModel = await this.actorsService.GetViewModelByIdAsync<ActorEditViewModel>(id);
+            var viewModel = await this.actorsService
+                .GetViewModelByIdAsync<ActorEditViewModel>(id);
 
             return this.View(viewModel);
         }
@@ -71,7 +72,8 @@
 
         public async Task<IActionResult> GetAll(int page = 1)
         {
-            var actors = this.actorsService.GetAllActorsAsQueryableOrderedByCreatedOn<ActorsAdministrationViewModel>();
+            var actors = this.actorsService
+                .GetAllActorsAsQueryableOrderedByCreatedOn<ActorsAdministrationViewModel>();
 
             var paginatedList = await PaginatedList<ActorsAdministrationViewModel>
                 .CreateAsync(actors, page, GlobalConstants.AdministrationItemsPerPage);

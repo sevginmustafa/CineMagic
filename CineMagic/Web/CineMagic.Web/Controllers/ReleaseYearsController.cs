@@ -1,8 +1,5 @@
 ﻿namespace CineMagic.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using CineMagic.Common;
@@ -24,7 +21,8 @@
         {
             var movies = this.moviesService.GetMoviesByReleaseYearAsQueryable<MovieStandartViewModel>(year);
 
-            var moviesPaginated = await PaginatedList<MovieStandartViewModel>.CreateAsync(movies, page, GlobalConstants.ItemsStandartCountPagination);
+            var moviesPaginated = await PaginatedList<MovieStandartViewModel>
+                .CreateAsync(movies, page, GlobalConstants.ItemsStandartCountPagination);
 
             this.TempData["ReleaseYear"] = year;
 

@@ -1,16 +1,13 @@
 ﻿namespace CineMagic.Web.Areas.Administration.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
+
     using CineMagic.Common;
     using CineMagic.Data.Models;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Web.ViewModels;
     using CineMagic.Web.ViewModels.Contacts;
     using CineMagic.Web.ViewModels.InputModels.Administration;
-    using CineMagic.Web.ViewModels.InputModels.Contacts;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
@@ -103,14 +100,16 @@
 
         public async Task<IActionResult> Details(int id)
         {
-            var viewModel = await this.contactsService.GetViewModelByIdAsync<ContactDetailedViewModel>(id);
+            var viewModel = await this.contactsService
+                .GetViewModelByIdAsync<ContactDetailedViewModel>(id);
 
             return this.View(viewModel);
         }
 
         public async Task<IActionResult> GetAll(int page = 1)
         {
-            var enquiries = this.contactsService.GetAllEnquiriesFromUsersAsQueryable<ContactsAdministrationViewModel>();
+            var enquiries = this.contactsService
+                .GetAllEnquiriesFromUsersAsQueryable<ContactsAdministrationViewModel>();
 
             var paginatedList = await PaginatedList<ContactsAdministrationViewModel>
                 .CreateAsync(enquiries, page, GlobalConstants.AdministrationItemsPerPage);

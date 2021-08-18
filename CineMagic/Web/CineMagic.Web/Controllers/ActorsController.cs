@@ -29,14 +29,17 @@
 
             if (letter != null)
             {
-                actors = this.actorsService.GetActorsByLetterAsQueryable<ActorDetailedViewModel>(letter);
+                actors = this.actorsService
+                    .GetActorsByLetterAsQueryable<ActorDetailedViewModel>(letter);
             }
             else
             {
-                actors = this.actorsService.SearchActorsByTitleAsQueryable<ActorDetailedViewModel>(searchByName);
+                actors = this.actorsService
+                    .SearchActorsByTitleAsQueryable<ActorDetailedViewModel>(searchByName);
             }
 
-            var actorsPaginated = await PaginatedList<ActorDetailedViewModel>.CreateAsync(actors, page, GlobalConstants.PaginatedTableItemsPerPageCount);
+            var actorsPaginated = await PaginatedList<ActorDetailedViewModel>
+                .CreateAsync(actors, page, GlobalConstants.PaginatedTableItemsPerPageCount);
 
             var alphabetPagingViewModel = new AlphabetPagingViewModel
             {
@@ -55,7 +58,8 @@
 
         public async Task<IActionResult> BornToday(int gender, int page = 1)
         {
-            var actors = this.actorsService.GetActorsBornTodayAsQueryable<ActorStandartViewModel>(gender);
+            var actors = this.actorsService
+                .GetActorsBornTodayAsQueryable<ActorStandartViewModel>(gender);
 
             var actorsPaginated = await PaginatedList<ActorStandartViewModel>
                 .CreateAsync(actors, page, GlobalConstants.ItemsStandartCountPagination);
@@ -71,7 +75,8 @@
 
         public async Task<IActionResult> MostPopularActors(int gender, int page = 1)
         {
-            var actors = this.actorsService.GetMostPopularActorsAsQueryable<ActorStandartViewModel>(gender, GlobalConstants.MostPopularPeopleCount);
+            var actors = this.actorsService
+                .GetMostPopularActorsAsQueryable<ActorStandartViewModel>(gender, GlobalConstants.MostPopularPeopleCount);
 
             var actorsPaginated = await PaginatedList<ActorStandartViewModel>
                 .CreateAsync(actors, page, GlobalConstants.ItemsStandartCountPagination);
@@ -87,7 +92,8 @@
 
         public async Task<IActionResult> Details(int id)
         {
-            var actor = await this.actorsService.GetActorByIdAsync<ActorSinglePageViewModel>(id);
+            var actor = await this.actorsService
+                .GetActorByIdAsync<ActorSinglePageViewModel>(id);
 
             var movies = await this.moviesService
                 .GetActorMostPopularMoviesAsync<ActorMostPopularMoviesViewModel>(id, GlobalConstants.SinglePageRighSectionMoviesCount);

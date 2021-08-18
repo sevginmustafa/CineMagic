@@ -5,7 +5,6 @@
 
     using CineMagic.Data.Common.Repositories;
     using CineMagic.Data.Models;
-    using CineMagic.Services.Data;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Web.ViewModels.Settings;
     using Microsoft.AspNetCore.Mvc;

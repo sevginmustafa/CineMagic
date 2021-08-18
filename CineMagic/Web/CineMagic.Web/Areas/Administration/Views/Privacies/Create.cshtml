@@ -5,15 +5,6 @@
     this.ViewData["ActivePage"] = PrivacyNavPages.Privacy;
 }
 
-<script src="/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
-<script type="text/javascript">
-    tinymce.init({
-        selector: "textarea",
-        plugins: [
-            "image paste table link code media"
-        ]
-    });
-</script>
 
 <h2>@ViewData["Title"]</h2>
 <hr />
@@ -29,3 +20,15 @@
         </form>
     </div>
 </div>
+
+@section Scripts{
+    <script src="/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea",
+            plugins: [
+                "image paste table link code media"
+            ]
+        });
+    </script>
+} 

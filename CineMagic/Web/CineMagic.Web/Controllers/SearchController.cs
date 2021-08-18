@@ -23,9 +23,11 @@
         {
             this.TempData["SearchString"] = title;
 
-            var movies = this.searchService.SearchMoviesAsQueryable<MovieStandartViewModel>(title);
+            var movies = this.searchService
+                .SearchMoviesAsQueryable<MovieStandartViewModel>(title);
 
-            var moviesPaginated = await PaginatedList<MovieStandartViewModel>.CreateAsync(movies, page, GlobalConstants.ItemsStandartCountPagination);
+            var moviesPaginated = await PaginatedList<MovieStandartViewModel>
+                .CreateAsync(movies, page, GlobalConstants.ItemsStandartCountPagination);
 
             return this.View(moviesPaginated);
         }
@@ -34,9 +36,11 @@
         {
             this.TempData["SearchString"] = name;
 
-            var actors = this.searchService.SearchActorsAsQueryable<ActorStandartViewModel>(name);
+            var actors = this.searchService
+                .SearchActorsAsQueryable<ActorStandartViewModel>(name);
 
-            var actorsPaginated = await PaginatedList<ActorStandartViewModel>.CreateAsync(actors, page, GlobalConstants.ItemsStandartCountPagination);
+            var actorsPaginated = await PaginatedList<ActorStandartViewModel>
+                .CreateAsync(actors, page, GlobalConstants.ItemsStandartCountPagination);
 
             return this.View(actorsPaginated);
         }
@@ -45,9 +49,11 @@
         {
             this.TempData["SearchString"] = name;
 
-            var directors = this.searchService.SearchDirectorsAsQueryable<DirectorStandartViewModel>(name);
+            var directors = this.searchService
+                .SearchDirectorsAsQueryable<DirectorStandartViewModel>(name);
 
-            var directorsPaginated = await PaginatedList<DirectorStandartViewModel>.CreateAsync(directors, page, GlobalConstants.ItemsStandartCountPagination);
+            var directorsPaginated = await PaginatedList<DirectorStandartViewModel>
+                .CreateAsync(directors, page, GlobalConstants.ItemsStandartCountPagination);
 
             return this.View(directorsPaginated);
         }

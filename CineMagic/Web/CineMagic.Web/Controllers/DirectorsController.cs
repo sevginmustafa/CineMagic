@@ -1,7 +1,5 @@
 ﻿namespace CineMagic.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -31,14 +29,17 @@
 
             if (letter != null)
             {
-                directors = this.directorsService.GetDirectorsByLetterAsQueryable<DirectorDetailedViewModel>(letter);
+                directors = this.directorsService
+                    .GetDirectorsByLetterAsQueryable<DirectorDetailedViewModel>(letter);
             }
             else
             {
-                directors = this.directorsService.SearchDirectorsByTitleAsQueryable<DirectorDetailedViewModel>(searchByName);
+                directors = this.directorsService
+                    .SearchDirectorsByTitleAsQueryable<DirectorDetailedViewModel>(searchByName);
             }
 
-            var directorsPaginated = await PaginatedList<DirectorDetailedViewModel>.CreateAsync(directors, page, GlobalConstants.PaginatedTableItemsPerPageCount);
+            var directorsPaginated = await PaginatedList<DirectorDetailedViewModel>
+                .CreateAsync(directors, page, GlobalConstants.PaginatedTableItemsPerPageCount);
 
             var alphabetPagingViewModel = new AlphabetPagingViewModel
             {
@@ -57,7 +58,8 @@
 
         public async Task<IActionResult> BornToday(int gender, int page = 1)
         {
-            var directors = this.directorsService.GetDirectorsBornTodayAsQueryable<DirectorStandartViewModel>(gender);
+            var directors = this.directorsService
+                .GetDirectorsBornTodayAsQueryable<DirectorStandartViewModel>(gender);
 
             var directorsPaginated = await PaginatedList<DirectorStandartViewModel>
                 .CreateAsync(directors, page, GlobalConstants.ItemsStandartCountPagination);

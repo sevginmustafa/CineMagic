@@ -2,8 +2,6 @@
 {
     using System.Threading.Tasks;
 
-    using CineMagic.Data.Common.Repositories;
-    using CineMagic.Data.Models;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Web.ViewModels.InputModels.Administration;
     using CineMagic.Web.ViewModels.Privacies;
@@ -11,14 +9,10 @@
 
     public class PrivaciesController : AdministrationController
     {
-        private readonly IDeletableEntityRepository<Privacy> privaciesRepository;
         private readonly IPrivaciesService privaciesService;
 
-        public PrivaciesController(
-             IDeletableEntityRepository<Privacy> privaciesRepository,
-             IPrivaciesService privaciesService)
+        public PrivaciesController(IPrivaciesService privaciesService)
         {
-            this.privaciesRepository = privaciesRepository;
             this.privaciesService = privaciesService;
         }
 
@@ -47,7 +41,8 @@
 
         public async Task<IActionResult> Edit()
         {
-            var viewModel = await this.privaciesService.GetViewModelAsync<PrivacyEditViewModel>();
+            var viewModel = await this.privaciesService
+                .GetViewModelAsync<PrivacyEditViewModel>();
 
             return this.View(viewModel);
         }

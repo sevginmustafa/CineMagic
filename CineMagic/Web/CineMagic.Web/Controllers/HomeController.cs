@@ -131,7 +131,8 @@
 
             var userId = this.User.GetId();
 
-            var watchlistMovies = await this.moviesService.GetWatchlistMoviesAsync<MovieWatchlistViewModel>(userId, HomePageWatchlistMoviesCount);
+            var watchlistMovies = await this.moviesService
+                .GetWatchlistMoviesAsync<MovieWatchlistViewModel>(userId, HomePageWatchlistMoviesCount);
 
             var viewModels = new HomePageViewModelsList
             {
@@ -151,7 +152,8 @@
 
         public async Task<IActionResult> Privacy()
         {
-            var privacy = await this.privaciesService.GetPrivacyContentAsync<PrivacyContentViewModel>();
+            var privacy = await this.privaciesService
+                .GetPrivacyContentAsync<PrivacyContentViewModel>();
 
             return this.View(privacy);
         }
