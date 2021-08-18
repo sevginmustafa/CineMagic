@@ -4,7 +4,7 @@
 
     using static CineMagic.Common.ModelValidation.GatherMovies;
 
-    public class GatherMoviesInputModel
+    public class GatherDataInputModel
     {
         [Display(Name = StartIndexDisplayName)]
         public int StartIndex { get; set; }

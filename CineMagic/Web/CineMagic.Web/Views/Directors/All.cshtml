@@ -1,16 +1,16 @@
-﻿@using CineMagic.Web.ViewModels.Movies
-@model MoviesAlphabetPaginationViewModel
+﻿@using CineMagic.Web.ViewModels.Directors
+@model DirectorsAlphabetPaginationViewModel
 
 @{
-    this.ViewData["Title"] = "Movies";
+    this.ViewData["Title"] = "Directors";
 }
 
 @{
     int counter = 1;
 
-    if (Model.Movies.PageNumber > 1)
+    if (Model.Directors.PageNumber > 1)
     {
-        counter = Model.Movies.PageNumber * 20 - 19;
+        counter = Model.Directors.PageNumber * 20 - 19;
     }
 }
 
@@ -27,7 +27,7 @@
     <div class="agile_featured_movies">
 
         <div class="inner-agile-w3l-part-head">
-            <h3 class="w3l-inner-h-title">Movies List</h3>
+            <h3 class="w3l-inner-h-title">Directors List</h3>
             <p class="w3ls_head_para">From A To Z</p>
         </div>
 
@@ -47,54 +47,57 @@
                 }
             </ul>
 
-            <h4 class="side-t-w3l-agile">Search By <span>Title</span></h4>
+            <h4 class="side-t-w3l-agile">Search By <span>Name</span></h4>
             <div class="side-bar-form">
                 <form asp-action="All" method="get">
-                    <input type="search" name="SearchByTitle" placeholder="Search here...." value="@Model.SearchString">
+                    <input type="search" name="SearchByName" placeholder="Search here...." value="@Model.SearchString">
                     <input type="submit" value=" ">
                 </form>
             </div>
             <div class="w3ls-news-result">
-                <h4>Results Returned: <span>@Model.Movies.Count</span></h4>
+                <h4>Results Returned: <span>@Model.Directors.Count</span></h4>
             </div>
 
             <div id="myTabContent" class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
                     <div class="agile-news-table">
-                        <p><i>You can also type something in the input field below to filter the current page movies:</i></p>
+                        <p><i>You can also type something in the input field below to filter the current page directors:</i></p>
                         <input id="myInput" type="text">
                         <br><br>
                         <table id="table-breakpoint">
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Title</th>
-                                    <th>Director</th>
-                                    <th>Genre</th>
-                                    <th>Year</th>
-                                    <th>Runtime</th>
-                                    <th>Language</th>
-                                    <th>Country</th>
-                                    <th>Budget</th>
-                                    <th>Revenue</th>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                    <th>Birthday</th>
+                                    <th>Deathday</th>
+                                    <th>Birthplace</th>
                                     <th>Popularity</th>
                                 </tr>
                             </thead>
                             <tbody id="myTable">
-                                @foreach (var movie in Model.Movies)
+                                @foreach (var director in Model.Directors)
                                 {
                                     <tr>
                                         <td>@counter</td>
-                                        <td class="w3-list-img"><a asp-action="Details" asp-route-id="@movie.Id"><img src="@movie.PosterPath" /> <span>@movie.Title</span></a></td>
-                                        <td>@movie.DirectorName</td>
-                                        <td class="w3-list-info">@string.Join(", ", movie.Genres.Select(x => x.GenreName))</td>
-                                        <td>@movie.ReleaseDate.Year</td>
-                                        <td>@movie.Runtime min</td>
-                                        <td class="w3-list-info">@string.Join(", ", movie.Languages)</td>
-                                        <td class="w3-list-info">@string.Join(", ", movie.ProductionCountries.Select(x => x.CountryName))</td>
-                                        <td>@movie.Budget</td>
-                                        <td>@movie.Revenue</td>
-                                        <td>@movie.Popularity.ToString("f2")</td>
+                                        <td class="w3-list-img"><a asp-action="Details" asp-route-id="@director.Id"><img src="@director.ProfilePicPath" /> <span>@director.Name</span></a></td>
+                                        <td>@director.Age</td>
+                                        <td>
+                                            @if (director.Birthday.HasValue)
+                                            {
+                                                @director.Birthday.Value.ToString("MMM d, yyyy")
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (director.Deathday.HasValue)
+                                            {
+                                                @director.Deathday.Value.ToString("MMM d, yyyy")
+                                            }
+                                        </td>
+                                        <td>@director.Birthplace</td>
+                                        <td>@director.Popularity.ToString("f2")</td>
+                                        <td>
                                     </tr>
 
                                     counter++;
@@ -108,17 +111,17 @@
     </div>
 </div>
 
-@if (Model.Movies.TotalPages > 1)
+@if (Model.Directors.TotalPages > 1)
 {
     <div class="blog-pagenat-wthree">
         <ul class="pagination">
-            <li class="page-item @if (!Model.Movies.HasPreviousPage) {<text>disabled</text>}">
+            <li class="page-item @if (!Model.Directors.HasPreviousPage) {<text>disabled</text>}">
                 <a class="page-link" asp-action="All" asp-route-letter="@Model.AlphabetPagingViewModel.SelectedLetter">First</a>
             </li>
-            <li class="page-item @if (!Model.Movies.HasPreviousPage) {<text>disabled</text>}">
-                <a class="page-link" asp-action="All" asp-route-letter="@Model.AlphabetPagingViewModel.SelectedLetter" asp-route-page="@Model.Movies.PreviousPage">Previous</a>
+            <li class="page-item @if (!Model.Directors.HasPreviousPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="All" asp-route-letter="@Model.AlphabetPagingViewModel.SelectedLetter" asp-route-page="@Model.Directors.PreviousPage">Previous</a>
             </li>
-            @for (int i = Model.Movies.PageNumber - 3; i < Model.Movies.PageNumber; i++)
+            @for (int i = Model.Directors.PageNumber - 3; i < Model.Directors.PageNumber; i++)
             {
                 if (i > 0)
                 {
@@ -129,24 +132,24 @@
             }
             <li class="page-item active">
                 <span class="page-link">
-                    @Model.Movies.PageNumber
+                    @Model.Directors.PageNumber
                     <span class="sr-only">(current)</span>
                 </span>
             </li>
-            @for (int i = Model.Movies.PageNumber + 1; i <= Model.Movies.PageNumber + 3; i++)
+            @for (int i = Model.Directors.PageNumber + 1; i <= Model.Directors.PageNumber + 3; i++)
             {
-                if (i <= Model.Movies.TotalPages)
+                if (i <= Model.Directors.TotalPages)
                 {
                     <li class="page-item">
                         <a class="page-link" asp-action="All" asp-route-name="@Model.AlphabetPagingViewModel.SelectedLetter" asp-route-page="@i">@i</a>
                     </li>
                 }
             }
-            <li class="page-item @if (!Model.Movies.HasNextPage) {<text>disabled</text>}">
-                <a class="page-link" asp-action="All" asp-route-name="@Model.AlphabetPagingViewModel.SelectedLetter" asp-route-page="@Model.Movies.NextPage">Next</a>
+            <li class="page-item @if (!Model.Directors.HasNextPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="All" asp-route-name="@Model.AlphabetPagingViewModel.SelectedLetter" asp-route-page="@Model.Directors.NextPage">Next</a>
             </li>
-            <li class="page-item @if (!Model.Movies.HasNextPage) {<text>disabled</text>}">
-                <a class="page-link" asp-action="All" asp-route-name="@Model.AlphabetPagingViewModel.SelectedLetter" asp-route-page="@Model.Movies.TotalPages">Last</a>
+            <li class="page-item @if (!Model.Directors.HasNextPage) {<text>disabled</text>}">
+                <a class="page-link" asp-action="All" asp-route-name="@Model.AlphabetPagingViewModel.SelectedLetter" asp-route-page="@Model.Directors.TotalPages">Last</a>
             </li>
         </ul>
     </div>

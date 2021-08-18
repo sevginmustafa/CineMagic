@@ -25,6 +25,36 @@
             this.moviesService = moviesService;
         }
 
+        public async Task<IActionResult> All(string letter, string searchByName, int page = 1)
+        {
+            var directors = Enumerable.Empty<DirectorDetailedViewModel>().AsQueryable();
+
+            if (letter != null)
+            {
+                directors = this.directorsService.GetDirectorsByLetterAsQueryable<DirectorDetailedViewModel>(letter);
+            }
+            else
+            {
+                directors = this.directorsService.SearchDirectorsByTitleAsQueryable<DirectorDetailedViewModel>(searchByName);
+            }
+
+            var directorsPaginated = await PaginatedList<DirectorDetailedViewModel>.CreateAsync(directors, page, GlobalConstants.PaginatedTableItemsPerPageCount);
+
+            var alphabetPagingViewModel = new AlphabetPagingViewModel
+            {
+                SelectedLetter = letter,
+            };
+
+            var viewModel = new DirectorsAlphabetPaginationViewModel
+            {
+                Directors = directorsPaginated,
+                AlphabetPagingViewModel = alphabetPagingViewModel,
+                SearchString = searchByName,
+            };
+
+            return this.View(viewModel);
+        }
+
         public async Task<IActionResult> BornToday(int gender, int page = 1)
         {
             var directors = this.directorsService.GetDirectorsBornTodayAsQueryable<DirectorStandartViewModel>(gender);

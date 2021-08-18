@@ -23,8 +23,6 @@
 
         public async Task<IActionResult> All(string letter, string searchByTitle, int page = 1)
         {
-            const int ItemsPerPage = 20;
-
             var movies = Enumerable.Empty<MovieDetailedViewModel>().AsQueryable();
 
             if (letter != null)
@@ -36,7 +34,7 @@
                 movies = this.moviesService.SearchMoviesByTitleAsQueryable<MovieDetailedViewModel>(searchByTitle);
             }
 
-            var moviesPaginated = await PaginatedList<MovieDetailedViewModel>.CreateAsync(movies, page, ItemsPerPage);
+            var moviesPaginated = await PaginatedList<MovieDetailedViewModel>.CreateAsync(movies, page, GlobalConstants.PaginatedTableItemsPerPageCount);
 
             var alphabetPagingViewModel = new AlphabetPagingViewModel
             {

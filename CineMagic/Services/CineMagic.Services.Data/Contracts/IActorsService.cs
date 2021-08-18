@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using System.Threading.Tasks;
+
     using CineMagic.Web.ViewModels.Actors;
 
     using CineMagic.Web.ViewModels.InputModels.Administration;
@@ -14,6 +15,10 @@
 
         Task<T> GetActorByIdAsync<T>(int id);
 
+        IQueryable<T> GetActorsByLetterAsQueryable<T>(string letter); 
+
+        IQueryable<T> SearchActorsByTitleAsQueryable<T>(string name);
+
         Task CreateAsync(ActorCreateInputModel inputModel);
 
         Task DeleteAsync(int id);
@@ -22,6 +27,8 @@
 
         Task<T> GetViewModelByIdAsync<T>(int id);
 
-        IQueryable<T> GetAllActorsAsQueryable<T>();
+        IQueryable<T> GetAllActorsAsQueryableOrderedByName<T>();
+
+        IQueryable<T> GetAllActorsAsQueryableOrderedByCreatedOn<T>();
     }
 }

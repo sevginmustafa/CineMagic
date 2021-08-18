@@ -2,7 +2,7 @@
 {
     using CineMagic.Web.Areas.Administration.Views.Shared;
 
-    public class GatherMovieNavPages : AdminNavPages
+    public class GatherDataNavPages : AdminNavPages
     {
     }
 }

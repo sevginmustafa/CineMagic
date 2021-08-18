@@ -16,6 +16,9 @@
 
     public class DirectorsService : IDirectorsService
     {
+        private const string AllPaginationFilter = "All";
+        private const string DigitPaginationFilter = "0 - 9";
+
         private readonly IDeletableEntityRepository<Director> directorsRepository;
 
         public DirectorsService(IDeletableEntityRepository<Director> directorsRepository)
@@ -38,6 +41,50 @@
             }
 
             return director;
+        }
+
+        public IQueryable<T> GetDirectorsByLetterAsQueryable<T>(string letter)
+        {
+            var actors = Enumerable.Empty<T>().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(letter) && letter != AllPaginationFilter && letter != DigitPaginationFilter)
+            {
+                actors = this.directorsRepository
+                    .AllAsNoTracking()
+                    .Where(x => x.Name.ToLower().StartsWith(letter.ToLower()))
+                    .OrderBy(x => x.Name)
+                    .To<T>();
+            }
+            else if (letter == DigitPaginationFilter)
+            {
+                var digits = Enumerable.Range(0, 10).Select(x => x.ToString()).ToList();
+
+                actors = this.directorsRepository
+                    .AllAsNoTracking()
+                    .Where(x => digits.Contains(x.Name.Substring(0, 1)))
+                    .OrderBy(x => x.Name)
+                    .To<T>();
+            }
+            else
+            {
+                actors = this.GetAllDirectorsAsQueryableOrderedByName<T>();
+            }
+
+            return actors;
+        }
+
+        public IQueryable<T> SearchDirectorsByTitleAsQueryable<T>(string name)
+        {
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                return this.directorsRepository
+                     .AllAsNoTracking()
+                     .Where(x => x.Name.ToLower().Contains(name.ToLower()))
+                     .OrderBy(x => x.Name)
+                     .To<T>();
+            }
+
+            return this.GetAllDirectorsAsQueryableOrderedByName<T>();
         }
 
         public IQueryable<T> GetDirectorsBornTodayAsQueryable<T>(int gender)
@@ -183,6 +230,18 @@
 
             return director;
         }
+
+        public IQueryable<T> GetAllDirectorsAsQueryableOrderedByName<T>()
+            => this.directorsRepository
+            .AllAsNoTracking()
+            .OrderBy(x => x.Name)
+            .To<T>();
+
+        public IQueryable<T> GetAllDirectorsAsQueryableOrderedByCreatedOn<T>()
+         => this.directorsRepository
+             .AllAsNoTracking()
+             .OrderByDescending(x => x.CreatedOn)
+             .To<T>();
 
         public async Task<IEnumerable<T>> GetAllAsync<T>()
             => await this.directorsRepository

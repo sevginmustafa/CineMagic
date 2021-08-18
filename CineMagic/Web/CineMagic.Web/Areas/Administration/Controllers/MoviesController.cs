@@ -156,7 +156,7 @@
 
         public async Task<IActionResult> GetAll(int page = 1)
         {
-            var movies = this.moviesService.GetAllMoviesAsQueryable<MoviesAdministrationViewModel>();
+            var movies = this.moviesService.GetAllMoviesAsQueryableOrderedByCreatedOn<MoviesAdministrationViewModel>();
 
             var paginatedList = await PaginatedList<MoviesAdministrationViewModel>
                 .CreateAsync(movies, page, GlobalConstants.AdministrationItemsPerPage);

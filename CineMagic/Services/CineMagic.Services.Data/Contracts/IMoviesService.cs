@@ -49,7 +49,9 @@
 
         Task EditAsync(MovieEditViewModel movieEditViewModel);
 
-        IQueryable<T> GetAllMoviesAsQueryable<T>();
+        IQueryable<T> GetAllMoviesAsQueryableOrderedByTitle<T>();
+
+        IQueryable<T> GetAllMoviesAsQueryableOrderedByCreatedOn<T>();
 
         Task<T> GetViewModelByIdAsync<T>(int id);
 

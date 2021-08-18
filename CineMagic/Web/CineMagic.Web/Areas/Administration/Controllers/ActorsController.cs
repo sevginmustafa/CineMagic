@@ -3,8 +3,6 @@
     using System.Threading.Tasks;
 
     using CineMagic.Common;
-    using CineMagic.Data.Common.Repositories;
-    using CineMagic.Data.Models;
     using CineMagic.Services.Data.Contracts;
     using CineMagic.Web.ViewModels;
     using CineMagic.Web.ViewModels.Actors;
@@ -13,14 +11,10 @@
 
     public class ActorsController : AdministrationController
     {
-        private readonly IDeletableEntityRepository<Actor> actorsRepository;
         private readonly IActorsService actorsService;
 
-        public ActorsController(
-            IDeletableEntityRepository<Actor> actorsRepository,
-            IActorsService actorsService)
+        public ActorsController(IActorsService actorsService)
         {
-            this.actorsRepository = actorsRepository;
             this.actorsService = actorsService;
         }
 
@@ -77,7 +71,7 @@
 
         public async Task<IActionResult> GetAll(int page = 1)
         {
-            var actors = this.actorsService.GetAllActorsAsQueryable<ActorsAdministrationViewModel>();
+            var actors = this.actorsService.GetAllActorsAsQueryableOrderedByCreatedOn<ActorsAdministrationViewModel>();
 
             var paginatedList = await PaginatedList<ActorsAdministrationViewModel>
                 .CreateAsync(actors, page, GlobalConstants.AdministrationItemsPerPage);

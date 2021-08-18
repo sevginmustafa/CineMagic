@@ -13,6 +13,10 @@
 
         IQueryable<T> GetMostPopularDirectorsAsQueryable<T>(int gender, int count);
 
+        IQueryable<T> GetDirectorsByLetterAsQueryable<T>(string letter);
+
+        IQueryable<T> SearchDirectorsByTitleAsQueryable<T>(string name);
+
         Task<T> GetDirectorByIdAsync<T>(int id);
 
         Task CreateAsync(DirectorCreateInpuModel inputModel);
@@ -23,8 +27,10 @@
 
         Task<T> GetViewModelByIdAsync<T>(int id);
 
-        IQueryable<T> GetAllDirectorsAsQueryable<T>();
-
         Task<IEnumerable<T>> GetAllAsync<T>();
+
+        IQueryable<T> GetAllDirectorsAsQueryableOrderedByName<T>();
+
+        IQueryable<T> GetAllDirectorsAsQueryableOrderedByCreatedOn<T>();
     }
 }

@@ -1,7 +1,5 @@
 ﻿namespace CineMagic.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -23,6 +21,36 @@
         {
             this.actorsService = actorsService;
             this.moviesService = moviesService;
+        }
+
+        public async Task<IActionResult> All(string letter, string searchByName, int page = 1)
+        {
+            var actors = Enumerable.Empty<ActorDetailedViewModel>().AsQueryable();
+
+            if (letter != null)
+            {
+                actors = this.actorsService.GetActorsByLetterAsQueryable<ActorDetailedViewModel>(letter);
+            }
+            else
+            {
+                actors = this.actorsService.SearchActorsByTitleAsQueryable<ActorDetailedViewModel>(searchByName);
+            }
+
+            var actorsPaginated = await PaginatedList<ActorDetailedViewModel>.CreateAsync(actors, page, GlobalConstants.PaginatedTableItemsPerPageCount);
+
+            var alphabetPagingViewModel = new AlphabetPagingViewModel
+            {
+                SelectedLetter = letter,
+            };
+
+            var viewModel = new ActorsAlphabetPaginationViewModel
+            {
+                Actors = actorsPaginated,
+                AlphabetPagingViewModel = alphabetPagingViewModel,
+                SearchString = searchByName,
+            };
+
+            return this.View(viewModel);
         }
 
         public async Task<IActionResult> BornToday(int gender, int page = 1)

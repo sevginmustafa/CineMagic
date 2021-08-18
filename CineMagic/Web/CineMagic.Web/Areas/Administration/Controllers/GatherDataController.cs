@@ -6,11 +6,11 @@
     using CineMagic.Web.ViewModels.InputModels.Administration;
     using Microsoft.AspNetCore.Mvc;
 
-    public class GatherMoviesController : AdministrationController
+    public class GatherDataController : AdministrationController
     {
         private readonly IFillDatabaseService fillDatabaseService;
 
-        public GatherMoviesController(IFillDatabaseService fillDatabaseService)
+        public GatherDataController(IFillDatabaseService fillDatabaseService)
         {
             this.fillDatabaseService = fillDatabaseService;
         }
@@ -19,13 +19,13 @@
         {
             var lastAdded = this.fillDatabaseService.GetLastMovieAddedTmdbId();
 
-            var viewModel = new GatherMoviesInputModel { StartIndex = lastAdded + 1 };
+            var viewModel = new GatherDataInputModel { StartIndex = lastAdded + 1 };
 
             return this.View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(GatherMoviesInputModel inputModel)
+        public async Task<IActionResult> Index(GatherDataInputModel inputModel)
         {
             await this.fillDatabaseService.AddDataToDBAsync(inputModel.StartIndex, inputModel.EndIndex);
 

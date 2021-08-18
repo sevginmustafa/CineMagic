@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
 
     using CineMagic.Web.ViewModels.Countries;
     using CineMagic.Web.ViewModels.Directors;
@@ -19,6 +18,7 @@
         public string Title { get; set; }
 
         [Required]
+        [Url]
         [StringLength(Movie.PosterPathMaxLength, ErrorMessage = Movie.PosterPathErrorMessage, MinimumLength = Movie.PosterPathMinLength)]
         [Display(Name = Movie.PosterPathDisplayName)]
         public string PosterPath { get; set; }
@@ -27,6 +27,7 @@
         [Display(Name = Movie.TrailerPathDisplayName)]
         public string TrailerPath { get; set; }
 
+        [Required]
         [StringLength(Movie.IMDBLinkMaxLength, ErrorMessage = Movie.IMDBLinkErrorMessage, MinimumLength = Movie.IMDBLinkMinLength)]
         [Display(Name = Movie.IMDBLinkDisplayName)]
         public string IMDBLink { get; set; }
@@ -63,7 +64,7 @@
         [Display(Name = Country.CountriesDisplayName)]
         public IList<int> SelectedCountries { get; set; }
 
-        [Required(ErrorMessage = Country.CountryIdError)]
+        [Required(ErrorMessage = Language.LanguageIdError)]
         [Display(Name = Language.LanguagesDisplayName)]
         public IList<int> SelectedLanguages { get; set; }
 

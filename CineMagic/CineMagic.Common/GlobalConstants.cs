@@ -16,6 +16,8 @@
 
         public const string UserRoleName = "User";
 
+        public const int PaginatedTableItemsPerPageCount = 20;
+
         public const int ItemsStandartCountPagination = 10;
 
         public const int AdministrationItemsPerPage = 10;

@@ -71,7 +71,7 @@
 
         public static class Privacy
         {
-            public const int ContentMaxLength = 20000;
+            public const int ContentMaxLength = 30000;
         }
     }
 }

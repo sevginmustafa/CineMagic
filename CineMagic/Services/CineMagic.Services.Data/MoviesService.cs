@@ -114,7 +114,7 @@
             }
             else
             {
-                movies = this.GetAllMoviesAsQueryable<T>();
+                movies = this.GetAllMoviesAsQueryableOrderedByTitle<T>();
             }
 
             return movies;
@@ -127,10 +127,11 @@
                 return this.moviesRepository
                      .AllAsNoTracking()
                      .Where(x => x.Title.ToLower().Contains(title.ToLower()))
+                     .OrderBy(x => x.Title)
                      .To<T>();
             }
 
-            return this.GetAllMoviesAsQueryable<T>();
+            return this.GetAllMoviesAsQueryableOrderedByTitle<T>();
         }
 
         public IQueryable<T> GetMoviesByGenreNameAsQueryable<T>(string name)
@@ -154,10 +155,16 @@
             .OrderByDescending(x => x.Id)
             .To<T>();
 
-        public IQueryable<T> GetAllMoviesAsQueryable<T>()
+        public IQueryable<T> GetAllMoviesAsQueryableOrderedByTitle<T>()
             => this.moviesRepository
             .AllAsNoTracking()
             .OrderBy(x => x.Title)
+            .To<T>();
+
+        public IQueryable<T> GetAllMoviesAsQueryableOrderedByCreatedOn<T>()
+            => this.moviesRepository
+            .AllAsNoTracking()
+            .OrderByDescending(x => x.CreatedOn)
             .To<T>();
 
         public async Task<T> GetMovieByIdAsync<T>(int id)
@@ -278,7 +285,7 @@
                 movie.ProductionCountries.Add(new MovieCountry { CountryId = countryId });
             }
 
-            foreach (var languageId in inputModel.SelectedGenres)
+            foreach (var languageId in inputModel.SelectedLanguages)
             {
                 movie.Languages.Add(new MovieLanguage { LanguageId = languageId });
             }

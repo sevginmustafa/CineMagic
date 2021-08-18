@@ -77,7 +77,7 @@
 
         public async Task<IActionResult> GetAll(int page = 1)
         {
-            var directors = this.directorsService.GetAllDirectorsAsQueryable<DirectorsAdministrationViewModel>();
+            var directors = this.directorsService.GetAllDirectorsAsQueryableOrderedByCreatedOn<DirectorsAdministrationViewModel>();
 
             var paginatedList = await PaginatedList<DirectorsAdministrationViewModel>
                 .CreateAsync(directors, page, GlobalConstants.AdministrationItemsPerPage);

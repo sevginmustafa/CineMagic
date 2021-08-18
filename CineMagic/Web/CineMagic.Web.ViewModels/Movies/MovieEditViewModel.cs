@@ -21,6 +21,7 @@
         public string Title { get; set; }
 
         [Required]
+        [Url]
         [StringLength(ModelValidation.Movie.PosterPathMaxLength, ErrorMessage = ModelValidation.Movie.PosterPathErrorMessage, MinimumLength = ModelValidation.Movie.PosterPathMinLength)]
         [Display(Name = ModelValidation.Movie.PosterPathDisplayName)]
         public string PosterPath { get; set; }
@@ -29,6 +30,7 @@
         [Display(Name = ModelValidation.Movie.TrailerPathDisplayName)]
         public string TrailerPath { get; set; }
 
+        [Required]
         [StringLength(ModelValidation.Movie.IMDBLinkMaxLength, ErrorMessage = ModelValidation.Movie.IMDBLinkErrorMessage, MinimumLength = ModelValidation.Movie.IMDBLinkMinLength)]
         [Display(Name = ModelValidation.Movie.IMDBLinkDisplayName)]
         public string IMDBLink { get; set; }
@@ -65,7 +67,7 @@
         [Display(Name = ModelValidation.Country.CountriesDisplayName)]
         public IList<int> SelectedCountries { get; set; }
 
-        [Required(ErrorMessage = ModelValidation.Country.CountryIdError)]
+        [Required(ErrorMessage = ModelValidation.Language.LanguageIdError)]
         [Display(Name = ModelValidation.Language.LanguagesDisplayName)]
         public IList<int> SelectedLanguages { get; set; }
 

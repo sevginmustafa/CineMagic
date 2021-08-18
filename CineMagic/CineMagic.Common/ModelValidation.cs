@@ -186,7 +186,7 @@
         public static class Privacy
         {
             public const int ContentMinLength = 100;
-            public const int ContentMaxLength = 20000;
+            public const int ContentMaxLength = 30000;
 
             public const string ContentErrorMessage = "Content should be between {2} and {1} symbols";
         }

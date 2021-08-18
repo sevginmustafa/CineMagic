@@ -57,6 +57,7 @@
             {
                 Name = inputModel.Name,
                 Email = inputModel.Email,
+                To = inputModel.To,
                 Subject = inputModel.Subject,
                 Message = inputModel.Message,
             };
