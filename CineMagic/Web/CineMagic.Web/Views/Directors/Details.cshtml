@@ -48,7 +48,7 @@
     <div class="breadcrumb-inner">
         <ul>
             <li><a asp-controller="Home" asp-action="Index">Home</a><i>//</i></li>
-            <li><a asp-controller="Movies" asp-action="All">@this.ViewData["Title"]</a><i>//</i></li>
+            <li><a asp-controller="Directors" asp-action="All">@this.ViewData["Title"]</a><i>//</i></li>
             <li class="active">@Model.Director.Name</li>
         </ul>
     </div>
@@ -141,11 +141,25 @@
 
                 <div class="response">
                     <h4>Comments</h4>
+                    @if (!Model.Director.Comments.Any())
+                    {
+                        <div><i>No comments for this director yet.</i></div>
+                        <div><i>Be the first to share what you think!</i></div>
+                    }
                     <br />
+
                     @if (this.User.Identity.IsAuthenticated)
                     {
                         <div class="px-4 pt-3">
                             <button type="button" class="btn btn-add-comment float-right" onclick="showCommentForm(0)">
+                                <i class="fa fa-plus"></i>&nbsp; Comment
+                            </button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="px-4 pt-3">
+                            <button type="button" class="btn btn-add-comment float-right" data-toggle="modal" data-target="#myModal4">
                                 <i class="fa fa-plus"></i>&nbsp; Comment
                             </button>
                         </div>

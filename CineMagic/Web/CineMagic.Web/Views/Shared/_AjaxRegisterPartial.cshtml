@@ -36,48 +36,48 @@
     </div>
 </div>
 
-    <script>
-        $('#formRegisterAjax').submit(function (event) {
-            if ($('#terms').is(':checked') == false) {
-                event.preventDefault();
-                let span = document.getElementById("register-error");
-                span.style.display = "block";
-                span.style.marginBottom = "2.5vh"; // 2,5% from virtual screen
-                span.innerHTML = "If you want to sign up, first you have to accept our terms and conditions!";
-                return false;
-            }
+<script>
+    $('#formRegisterAjax').submit(function (event) {
+        if ($('#terms').is(':checked') == false) {
             event.preventDefault();
-            var json = { success: false, message: '', action: '' };
-            $.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: $('#formRegisterAjax').attr('action'),
-                xhrFields: {
-                    withCredentials: true
-                },
-                data: $('#formRegisterAjax').serialize(),
-                beforeSend: function () {
-                    $('.shadow').show(900);
-                },
-                success: function (data) {
-                    json = data;
-                },
-                error: function (errorThrown) {
-                    json.message = 'Request failed: ' + errorThrown;
-                },
-                complete: function () {
-                    $('.shadow').hide(900);
-                    if (json.success) {
-                        $('#myModal5').modal('hide');
-                        window.location.href = json.action;
-                    }
-                    else {
-                        let span = document.getElementById("register-error");
-                        span.style.display = "block";
-                        span.style.marginBottom = "2.5vh"; // 2,5% from virtual screen
-                        span.innerHTML = json.message;
-                    }
+            let span = document.getElementById("register-error");
+            span.style.display = "block";
+            span.style.marginBottom = "2.5vh"; // 2,5% from virtual screen
+            span.innerHTML = "If you want to sign up, first you have to accept our terms and conditions!";
+            return false;
+        }
+        event.preventDefault();
+        var json = { success: false, message: '', action: '' };
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: $('#formRegisterAjax').attr('action'),
+            xhrFields: {
+                withCredentials: true
+            },
+            data: $('#formRegisterAjax').serialize(),
+            beforeSend: function () {
+                $('.shadow').show(900);
+            },
+            success: function (data) {
+                json = data;
+            },
+            error: function (errorThrown) {
+                json.message = 'Request failed: ' + errorThrown;
+            },
+            complete: function () {
+                $('.shadow').hide(900);
+                if (json.success) {
+                    $('#myModal5').modal('hide');
+                    window.location.href = json.action;
                 }
-            });
+                else {
+                    let span = document.getElementById("register-error");
+                    span.style.display = "block";
+                    span.style.marginBottom = "2.5vh"; // 2,5% from virtual screen
+                    span.innerHTML = json.message;
+                }
+            }
         });
-    </script> 
+    });
+</script>
