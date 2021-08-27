@@ -3,7 +3,7 @@
     using CineMagic.Web.Areas.Administration.Views.Shared;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
-    public class ContactNavPages:AdminNavPages
+    public class ContactNavPages : AdminNavPages
     {
         public static string CreateContact => "CreateContact";
 

@@ -10,6 +10,7 @@
 <div class="row">
     <div class="col-md-6">
         <form asp-action="Edit" method="post">
+            <input type="hidden" value="@Model.Id" name="Id" />
             <div class="form-group">
                 <label asp-for="Content"></label>
                 <textarea asp-for="Content" class="form-control"></textarea>

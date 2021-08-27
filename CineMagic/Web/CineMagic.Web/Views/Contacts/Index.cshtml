@@ -38,7 +38,7 @@
                         <input asp-for="@Model.Email" class="input__field input__field--ichiro" id="input-26">
                         <label class="input__label input__label--ichiro" for="input-26">
                             <span class="input__label-content input__label-content--ichiro">
-                                Email                  
+                                Email
                                 <span asp-validation-for="@Model.Email" class="text-danger"></span>
                             </span>
                         </label>
@@ -72,3 +72,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

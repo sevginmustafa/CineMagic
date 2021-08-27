@@ -2,19 +2,6 @@
 {
     public static class ModelValidation
     {
-        public static class User
-        {
-            public const int UsernameMinLength = 3;
-            public const int UsernameMaxLength = 30;
-
-            public const int FullNameMinLength = 5;
-            public const int FullNameMaxLength = 100;
-
-            public const string UsernameErrorMessage = "Username should be between {2} and {1} symbols";
-
-            public const string FullNameErrorMessage = "Full Name should be between {2} and {1} symbols";
-        }
-
         public static class ContactForm
         {
             public const int NameMinLength = 3;

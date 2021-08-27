@@ -36,7 +36,7 @@
 
             await this.privaciesService.CreateAsync(inputModel);
 
-            return this.RedirectToAction("Index", "Privacies");
+            return this.RedirectToAction("Privacy", "Home", new { area = string.Empty });
         }
 
         public async Task<IActionResult> Edit()
@@ -57,7 +57,7 @@
 
             await this.privaciesService.EditAsync(privacyEditViewModel);
 
-            return this.RedirectToAction("Index", "Privacies");
+            return this.RedirectToAction("Privacy", "Home", new { area = string.Empty });
         }
 
         [HttpPost]

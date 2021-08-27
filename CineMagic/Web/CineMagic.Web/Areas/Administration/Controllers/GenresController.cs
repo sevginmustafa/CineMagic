@@ -13,7 +13,7 @@
     {
         private readonly IGenresService genresService;
 
-        public GenresController( IGenresService genresService)
+        public GenresController(IGenresService genresService)
         {
             this.genresService = genresService;
         }
