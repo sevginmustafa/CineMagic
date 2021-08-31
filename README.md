@@ -1,4 +1,5 @@
 # ASP.Net Core CineMagic
+[![Build Status](https://dev.azure.com/sevgin1996/CineMagic/_apis/build/status/sevginmustafa.CineMagic?branchName=main)](https://dev.azure.com/sevgin1996/CineMagic/_build/latest?definitionId=2&branchName=main)
 [![GitHub license](https://img.shields.io/github/license/sevginmustafa/CineMagic?color=brightgreen)](https://github.com/sevginmustafa/CineMagic/blob/main/LICENSE)
 
 **CineMagic** is my defense project for **ASP.NET Core** course at [SoftUni](https://softuni.bg/). It is a ready-to-use ASP.NET Core application.
