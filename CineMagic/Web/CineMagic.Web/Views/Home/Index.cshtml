@@ -66,7 +66,7 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            @if (movie.ReleaseDate.Year == DateTime.Now.Year)
+                                            @if (movie.ReleaseDate.Year == DateTime.UtcNow.Year)
                                             {
                                                 <div class="ribben one">
                                                     <p>NEW</p>
@@ -129,7 +129,7 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            @if (movie.ReleaseDate.Year == DateTime.Now.Year)
+                                            @if (movie.ReleaseDate.Year == DateTime.UtcNow.Year)
                                             {
                                                 <div class="ribben one">
                                                     <p>NEW</p>
@@ -192,7 +192,7 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            @if (movie.ReleaseDate.Year == DateTime.Now.Year)
+                                            @if (movie.ReleaseDate.Year == DateTime.UtcNow.Year)
                                             {
                                                 <div class="ribben one">
                                                     <p>NEW</p>
@@ -234,7 +234,7 @@
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
-                            @if (movie.ReleaseDate.Year == DateTime.Now.Year)
+                            @if (movie.ReleaseDate.Year == DateTime.UtcNow.Year)
                             {
                                 <div class="ribben one">
                                     <p>NEW</p>
@@ -269,7 +269,7 @@
                                 <div class="clearfix"></div>
                             </div>
                         </div>
-                        @if (movie.MovieReleaseDate.Year == DateTime.Now.Year)
+                        @if (movie.MovieReleaseDate.Year == DateTime.UtcNow.Year)
                         {
                             <div class="ribben one">
                                 <p>NEW</p>

@@ -94,7 +94,7 @@
             {
                 actors = this.actorsRepository
                     .AllAsNoTracking()
-                    .Where(x => x.Birthday.Value.DayOfYear == DateTime.Now.DayOfYear)
+                    .Where(x => x.Birthday.Value.DayOfYear == DateTime.UtcNow.DayOfYear)
                     .OrderBy(x => x.Name)
                     .To<T>();
             }
@@ -102,7 +102,7 @@
             {
                 actors = this.actorsRepository
                     .AllAsNoTracking()
-                    .Where(x => x.Birthday.Value.DayOfYear == DateTime.Now.DayOfYear && (int)x.Gender == gender)
+                    .Where(x => x.Birthday.Value.DayOfYear == DateTime.UtcNow.DayOfYear && (int)x.Gender == gender)
                     .OrderBy(x => x.Name)
                     .To<T>();
             }

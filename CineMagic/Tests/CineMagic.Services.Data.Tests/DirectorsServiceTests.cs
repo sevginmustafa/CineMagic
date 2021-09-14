@@ -136,13 +136,13 @@
 
             dbContext.Directors.Add(new Director
             {
-                Birthday = DateTime.Now,
+                Birthday = DateTime.UtcNow,
                 Gender = Gender.Female,
             });
 
             dbContext.Directors.Add(new Director
             {
-                Birthday = DateTime.Now.AddDays(-5),
+                Birthday = DateTime.UtcNow.AddDays(-5),
                 Gender = Gender.Female,
             });
 
@@ -168,21 +168,21 @@
             dbContext.Directors.Add(new Director
             {
                 Name = "CTest",
-                Birthday = DateTime.Now,
+                Birthday = DateTime.UtcNow,
                 Gender = Gender.Female,
             });
 
             dbContext.Directors.Add(new Director
             {
                 Name = "BTest",
-                Birthday = DateTime.Now.AddDays(-5),
+                Birthday = DateTime.UtcNow.AddDays(-5),
                 Gender = Gender.Female,
             });
 
             dbContext.Directors.Add(new Director
             {
                 Name = "ATest",
-                Birthday = DateTime.Now,
+                Birthday = DateTime.UtcNow,
                 Gender = Gender.Female,
             });
 

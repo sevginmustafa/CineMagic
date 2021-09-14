@@ -30,7 +30,9 @@
                         @comment.Content
                     </p>
                     <ul>
-                        <li>@comment.CreatedOn.ToString("MMM d, yyyy")</li>
+                        <li>
+                            <time datetime="@comment.CreatedOn.ToString("O")"></time>
+                        </li>
                         @if (this.User.Identity.IsAuthenticated)
                         {
                             <li><a href="#" onclick="showCommentForm(@comment.Id)"><i class="fa fa-reply" aria-hidden="true"></i> Reply</a></li>
