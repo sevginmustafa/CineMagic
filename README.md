@@ -43,6 +43,7 @@ Here, like any admin area, users who are registered as site administrators can c
 * [SendGrid](https://github.com/sendgrid)
 * [HtmlSanitizer](https://github.com/mganss/HtmlSanitizer)
 * [TinyMCE](https://github.com/tinymce/)
+* [Moment.js](https://github.com/moment/moment)
 * [Bootstrap](https://github.com/twbs/bootstrap)
 * AJAX Requests
 * [jQuery](https://github.com/jquery/jquery) and any kind of jQuery plugins like: [star-rating-svg](https://github.com/nashio/star-rating-svg), [multiple-select](https://github.com/wenzhixin/multiple-select)
