@@ -11,8 +11,6 @@
     using CineMagic.Data.Models;
     using CineMagic.Data.Repositories;
     using CineMagic.Data.Seeding;
-    using CineMagic.Services.Data;
-    using CineMagic.Services.Data.Contracts;
     using CineMagic.Services.Messaging;
 
     using CommandLine;
@@ -53,9 +51,6 @@
         {
             var sw = Stopwatch.StartNew();
 
-            var settingsService = serviceProvider.GetService<ISettingsService>();
-            Console.WriteLine($"Count of settings: {settingsService.GetCount()}");
-
             Console.WriteLine(sw.Elapsed);
             return await Task.FromResult(0);
         }
@@ -82,7 +77,6 @@
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
-            services.AddTransient<ISettingsService, SettingsService>();
         }
     }
 }

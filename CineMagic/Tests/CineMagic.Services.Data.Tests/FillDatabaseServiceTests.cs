@@ -13,7 +13,6 @@
 
     public class FillDatabaseServiceTests
     {
-
         [Fact]
         public async Task AddDataToDBAsyncShouldFillDatabaseWithCorrectData()
         {

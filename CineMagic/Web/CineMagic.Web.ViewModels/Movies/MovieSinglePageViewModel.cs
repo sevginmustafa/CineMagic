@@ -51,8 +51,7 @@
 
         public virtual ICollection<string> WatchlistUsers { get; set; }
 
-        //public virtual ICollection<Review> Reviews { get; set; }
-
+        // public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<MovieCommentsViewModel> Comments { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)

@@ -15,7 +15,7 @@
 
         Task<T> GetActorByIdAsync<T>(int id);
 
-        IQueryable<T> GetActorsByLetterAsQueryable<T>(string letter); 
+        IQueryable<T> GetActorsByLetterAsQueryable<T>(string letter);
 
         IQueryable<T> SearchActorsByTitleAsQueryable<T>(string name);
 

@@ -70,7 +70,6 @@
 
             // Application services
             services.AddTransient<IEmailSender>(x => new SendGridEmailSender(this.configuration["SendGrid:ApiKey"]));
-            services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IGetDataFromTMDBService, GetDataFromTMDBService>();
             services.AddTransient<IFillDatabaseService, FillDatabaseService>();
             services.AddTransient<IMoviesService, MoviesService>();
