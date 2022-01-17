@@ -16,6 +16,10 @@
                 <li class="nav-item">
                     <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
                         <button id="logout_button" type="submit">Logout</button>
+                        @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                        {
+                            <a id="logout_button" style="background-color:#02a388" asp-area="Administration">Admin Area</a>
+                        }
                     </form>
                 </li>
             </ul>
