@@ -126,6 +126,7 @@
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseCreateAdminCustomMiddleware();
+            app.UseCreatePrivacyCustomMiddleware();
 
             app.UseEndpoints(
                 endpoints =>

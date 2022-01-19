@@ -92,8 +92,8 @@
                                         <td>@movie.Runtime min</td>
                                         <td class="w3-list-info">@string.Join(", ", movie.Languages)</td>
                                         <td class="w3-list-info">@string.Join(", ", movie.ProductionCountries.Select(x => x.CountryName))</td>
-                                        <td>@movie.Budget</td>
-                                        <td>@movie.Revenue</td>
+                                        <td>$@movie.Budget</td>
+                                        <td>$@movie.Revenue</td>
                                         <td>@movie.Popularity.ToString("f2")</td>
                                     </tr>
 

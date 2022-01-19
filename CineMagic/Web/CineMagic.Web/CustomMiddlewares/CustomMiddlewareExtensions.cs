@@ -8,5 +8,10 @@
         {
             return builder.UseMiddleware<CreateAdminCustomMiddleware>();
         }
+
+        public static IApplicationBuilder UseCreatePrivacyCustomMiddleware(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<CreatePrivacyCustomMiddleware>();
+        }
     }
 }
