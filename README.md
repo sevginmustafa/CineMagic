@@ -29,7 +29,7 @@ The page consists of a paginated table with 20 movies per page and very detailed
 ![](https://github.com/sevginmustafa/CineMagic/blob/main/CineMagic/CineMagic.%20ScreenShots/moviesPage.png)
 
 ![](https://github.com/sevginmustafa/CineMagic/blob/main/CineMagic/CineMagic.%20ScreenShots/movieDetailsPage.png)
-
+![](https://github.com/sevginmustafa/CineMagic/blob/main/CineMagic/CineMagic.%20ScreenShots/movieDetailsPage%202.png)
 
 **_"Actors" and "Directors" pages description:_**
 Both pages work on the same principle! They can be accessed from the site's navigation bar, and via a drop-down menu the user can choose one of three options:
@@ -41,7 +41,7 @@ Both pages work on the same principle! They can be accessed from the site's navi
 - "Most Popular Actors/Directors!" - a page with the 50 most popular Actors/Directors is displayed.
 
 ![](https://github.com/sevginmustafa/CineMagic/blob/main/CineMagic/CineMagic.%20ScreenShots/actorsDetailsPage.png)
-
+![](https://github.com/sevginmustafa/CineMagic/blob/main/CineMagic/CineMagic.%20ScreenShots/actorsDetailsPage%202.png)
 
 **_"Contacts" page description:_**
 When accessing the page from the navigation bar, a contact form is displayed, through which users can contact the organization or individual providing the website to send their questions, inquiries, as well as to report any problems in their work with the site. The page also provides a phone number and email for feedback!
