@@ -98,7 +98,7 @@
                                 </p>
                             }
                             <p class="text-left"><strong>Birthplace: </strong>@Model.Actor.Birthplace</p>
-                            <p class="addReadMore showlesscontent text-left"><strong>Biography: </strong>@Model.Actor.Biography</p>
+                            <p class="addReadMore showlesscontent text-left">@Model.Actor.Biography</p>
                         </div>
                     </div>
                     <br />
@@ -255,37 +255,25 @@
 @section Scripts{
     <script>
         function AddReadMore() {
-            //This limit you can set after how much characters you want to show Read More.
-            var charLmt = 500;
-            // Text to show when text is collapsed
-            var readMoreTxt = " ... Read More";
-            // Text to show when text is expanded
-            var readLessTxt = " Read Less";
+            var paragraph = document.querySelector('.addReadMore');
+            var bioText = paragraph.textContent;
+            paragraph.innerHTML = '<strong>Biography: </strong>' + bioText.substring(0, 500) + '<a style="cursor:pointer"> ... Read More</a>';
 
+            paragraph.querySelector('a').addEventListener('click', onClick);
 
-            //Traverse all selectors with this class and manupulate HTML part to show Read More
-            $(".addReadMore").each(function () {
-                if ($(this).find(".firstSec").length)
-                    return;
-
-                var allstr = $(this).text();
-                if (allstr.length > charLmt) {
-                    var firstSet = allstr.substring(0, charLmt);
-                    var secdHalf = allstr.substring(charLmt, allstr.length);
-                    var strtoadd = firstSet + "<span id='text_readmore' class='SecSec'>" + secdHalf + "</span><span class='readMore'  title='Click to Show More'>" + readMoreTxt + "</span><span class='readLess' title='Click to Show Less'>" + readLessTxt + "</span>";
-                    $(this).html(strtoadd);
+            function onClick(ev) {
+                if (ev.target.textContent == ' ... Read More') {
+                    paragraph.innerHTML = '<strong>Biography: </strong>' + bioText.replace("Biography: ", "") + '<a style="cursor:pointer"> Read Less</a>';
+                }
+                else {
+                    paragraph.innerHTML = '<strong>Biography: </strong>' + bioText.substring(0, 500) + '<a style="cursor:pointer"> ... Read More</a>';
                 }
 
-            });
-            //Read More and Read Less Click Event binding
-            $(document).on("click", ".readMore,.readLess", function () {
-                $(this).closest(".addReadMore").toggleClass("showlesscontent showmorecontent");
-            });
+                paragraph.querySelector('a').addEventListener('click', onClick);
+            }
         }
-        $(function () {
-            //Calling function after Page Load
-            AddReadMore();
-        });
+
+        AddReadMore();
     </script>
 
     <script>
