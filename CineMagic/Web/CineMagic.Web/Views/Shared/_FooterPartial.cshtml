@@ -10,15 +10,17 @@
 
 <!--/footer-bottom-->
 <div class="contact-w3ls" id="contact">
-    <div class="footer-w3lagile-inner">
+    <div class="footer-w3lagile-inner sendgrid-subscription-widget" id="sendgrid-subscription-widget">
         <h2>SUBSCRIBE TO US</h2>
         <div class="footer-contact">
-            <form action="#" method="post">
-                <input type="email" name="Email" placeholder="Enter your email...." required="">
-                <input type="submit" value="Subscribe">
-            </form>
+            <div id="sendgrid-subscription-widget" class="sendgrid-subscription-widget">
+                <form id="sg-widget" data-token="e2c37163dc95b4351b82ab699ae28b29" onsubmit="return false;">
+                    <div class="sg-response" id="sg-response"></div>
+                    <input id="email" type="email" name="email" placeholder="you@example.com" required>
+                    <input type="submit" id="sg-submit-btn" value="Subscribe">
+                </form>
+            </div>
         </div>
-
         <div class="footer-grids w3-agileits">
             <div class="col-md-2 footer-grid">
                 <h4>Release</h4>
@@ -58,7 +60,7 @@
                 {
                     <div class="footer-grid1">
                         <div class="footer-grid1-left">
-                            <a asp-area="" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id"><img src="@movie.BackdropPath" class="img-responsive" ></a>
+                            <a asp-area="" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id"><img src="@movie.BackdropPath" class="img-responsive"></a>
                         </div>
                         <div class="footer-grid1-right">
                             <a class="word-wrap" asp-area="" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a>
@@ -72,7 +74,7 @@
                 <h4 class="b-log"><a asp-area="" asp-controller="Home" asp-action="Index"><span>C</span>ine<span>M</span>agic<span></span></a></h4>
                 @foreach (var movie in popularMovies)
                 {
-                    <div class="footer-grid-instagram"style="margin-left: 3px;">
+                    <div class="footer-grid-instagram" style="margin-left: 3px;">
                         <a asp-area="" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id"><img src="@movie.BackdropPath" class="img-responsive"></a>
                     </div>
                 }
@@ -97,3 +99,5 @@
 </div>
 
 <a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+
+<script type="text/javascript" src="//sgwidget.leaderapps.co/js/sendgrid-widget.js"></script>
