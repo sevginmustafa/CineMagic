@@ -82,6 +82,7 @@
                             <div data-video="@Model.Movie.TrailerPath" id="video"> <img src="@Model.Movie.PosterPath" class="img-responsive" /></div>
                         </div>
                         <div class="col-md-6">
+
                             @if (this.User.Identity.IsAuthenticated)
                             {
                                 if (Model.Movie.WatchlistUsers.Contains(userId))

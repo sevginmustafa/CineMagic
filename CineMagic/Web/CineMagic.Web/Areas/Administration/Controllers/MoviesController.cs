@@ -1,5 +1,6 @@
 ﻿namespace CineMagic.Web.Areas.Administration.Controllers
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using CineMagic.Common;
@@ -164,15 +165,31 @@
             return this.RedirectToAction("GetAll", "Movies", new { area = "Administration" });
         }
 
-        public async Task<IActionResult> GetAll(int page = 1)
+        public async Task<IActionResult> GetAll(string searchByTitle, int page = 1)
         {
-            var movies = this.moviesService
-                .GetAllMoviesAsQueryableOrderedByCreatedOn<MoviesAdministrationViewModel>();
+            var movies = Enumerable.Empty<MoviesAdministrationViewModel>().AsQueryable();
 
-            var paginatedList = await PaginatedList<MoviesAdministrationViewModel>
+            if (string.IsNullOrWhiteSpace(searchByTitle))
+            {
+                movies = this.moviesService
+                   .GetAllMoviesAsQueryableOrderedByCreatedOn<MoviesAdministrationViewModel>();
+            }
+            else
+            {
+                movies = this.moviesService
+                   .SearchMoviesByTitleAsQueryable<MoviesAdministrationViewModel>(searchByTitle);
+            }
+
+            var moviesPaginated = await PaginatedList<MoviesAdministrationViewModel>
                 .CreateAsync(movies, page, GlobalConstants.AdministrationItemsPerPage);
 
-            return this.View(paginatedList);
+            var viewModel = new MoviesAdministrationPaginationViewModel
+            {
+                Movies = moviesPaginated,
+                SearchString = searchByTitle,
+            };
+
+            return this.View(viewModel);
         }
     }
 }
