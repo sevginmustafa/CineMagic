@@ -255,18 +255,24 @@
 @section Scripts{
     <script>
         function AddReadMore() {
-            var paragraph = document.querySelector('.addReadMore');
-            var bioText = paragraph.textContent;
-            paragraph.innerHTML = '<strong>Biography: </strong>' + bioText.substring(0, 500) + '<a style="cursor:pointer"> ... Read More</a>';
+            const charsCount = 500;
 
-            paragraph.querySelector('a').addEventListener('click', onClick);
+            let paragraph = document.querySelector('.addReadMore');
+            let bioText = paragraph.textContent;
+            paragraph.innerHTML = '<strong>Biography: </strong>' + bioText.substring(0, charsCount);
+
+            if (bioText.length > charsCount) {
+                paragraph.innerHTML += '<a style="cursor:pointer"> ... Read More</a>';
+                paragraph.querySelector('a').addEventListener('click', onClick);
+            }
+
 
             function onClick(ev) {
                 if (ev.target.textContent == ' ... Read More') {
                     paragraph.innerHTML = '<strong>Biography: </strong>' + bioText.replace("Biography: ", "") + '<a style="cursor:pointer"> Read Less</a>';
                 }
                 else {
-                    paragraph.innerHTML = '<strong>Biography: </strong>' + bioText.substring(0, 500) + '<a style="cursor:pointer"> ... Read More</a>';
+                    paragraph.innerHTML = '<strong>Biography: </strong>' + bioText.substring(0, charsCount) + '<a style="cursor:pointer"> ... Read More</a>';
                 }
 
                 paragraph.querySelector('a').addEventListener('click', onClick);
