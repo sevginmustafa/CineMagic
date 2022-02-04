@@ -1,5 +1,5 @@
 ﻿@using CineMagic.Web.ViewModels.Directors
-@model PaginatedList<DirectorsAdministrationViewModel>
+@model DirectorsAdministrationPaginationViewModel
 
 @{
     this.ViewData["Title"] = "All Directors";
@@ -9,9 +9,9 @@
 @{
     int counter = 1;
 
-    if (Model.PageNumber > 1)
+    if (Model.Directors.PageNumber > 1)
     {
-        counter = Model.PageNumber * 10 - 9;
+        counter = Model.Directors.PageNumber * 10 - 9;
     }
 }
 
@@ -20,8 +20,15 @@
         <div class="inner-agile-w3l-part-head">
             <h3 class="w3l-inner-h-title">@this.ViewData["Title"]</h3>
         </div>
+        <h4 class="side-t-w3l-agile">Search By <span>Name</span></h4>
+        <div class="side-bar-form">
+            <form asp-action="GetAll" method="get">
+                <input type="search" name="SearchByName" placeholder="Search here...." value="@Model.SearchString">
+                <input type="submit" value=" ">
+            </form>
+        </div>
         <div class="w3ls-news-result">
-            <h4>Results Returned: <span>@Model.Count</span></h4>
+            <h4>Results Returned: <span>@Model.Directors.Count</span></h4>
         </div>
 
         <div id="myTabContent" class="tab-content">
@@ -44,7 +51,7 @@
                             </tr>
                         </thead>
                         <tbody id="myTable">
-                            @foreach (var director in Model)
+                            @foreach (var director in Model.Directors)
                             {
                                 <tr>
                                     <td>@counter</td>
@@ -81,45 +88,45 @@
     </div>
 </div>
 
-@if (Model.TotalPages > 1)
+@if (Model.Directors.TotalPages > 1)
 {
     <div class="blog-pagenat-wthree">
         <ul class="pagination">
-            <li class="page-item @if (!Model.HasPreviousPage) {<text>disabled</text>}">
-                <a class="page-link" asp-area="Administration" asp-controller="Directors" asp-action="GetAll">First</a>
+            <li class="page-item @if (!Model.Directors.HasPreviousPage) {<text>disabled</text>}">
+                <a class="page-link" asp-area="Administration" asp-controller="Directors" asp-action="GetAll" asp-route-searchByName="@Model.SearchString">First</a>
             </li>
-            <li class="page-item @if (!Model.HasPreviousPage) {<text>disabled</text>}">
-                <a class="page-link" asp-area="Administration" asp-controller="Directors" asp-action="GetAll" asp-route-page="@Model.PreviousPage">Previous</a>
+            <li class="page-item @if (!Model.Directors.HasPreviousPage) {<text>disabled</text>}">
+                <a class="page-link" asp-area="Administration" asp-controller="Directors" asp-action="GetAll" asp-route-searchByName="@Model.SearchString" asp-route-page="@Model.Directors.PreviousPage">Previous</a>
             </li>
-            @for (int i = Model.PageNumber - 3; i < Model.PageNumber; i++)
+            @for (int i = Model.Directors.PageNumber - 3; i < Model.Directors.PageNumber; i++)
             {
                 if (i > 0)
                 {
                     <li class="page-item">
-                        <a class="page-link" asp-area="Administration" asp-controller="Directors" asp-action="GetAll" asp-route-page="@i">@i</a>
+                        <a class="page-link" asp-area="Administration" asp-controller="Directors" asp-action="GetAll" asp-route-searchByName="@Model.SearchString" asp-route-page="@i">@i</a>
                     </li>
                 }
             }
             <li class="page-item active">
                 <span class="page-link">
-                    @Model.PageNumber
+                    @Model.Directors.PageNumber
                     <span class="sr-only">(current)</span>
                 </span>
             </li>
-            @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + 3; i++)
+            @for (int i = Model.Directors.PageNumber + 1; i <= Model.Directors.PageNumber + 3; i++)
             {
-                if (i <= Model.TotalPages)
+                if (i <= Model.Directors.TotalPages)
                 {
                     <li class="page-item">
-                        <a class="page-link" asp-area="Administration" asp-controller="Directors" asp-action="GetAll" asp-route-page="@i">@i</a>
+                        <a class="page-link" asp-area="Administration" asp-controller="Directors" asp-action="GetAll" asp-route-searchByName="@Model.SearchString" asp-route-page="@i">@i</a>
                     </li>
                 }
             }
-            <li class="page-item @if (!Model.HasNextPage) {<text>disabled</text>}">
-                <a class="page-link" asp-area="Administration" asp-controller="Directors" asp-action="GetAll" asp-route-page="@Model.NextPage">Next</a>
+            <li class="page-item @if (!Model.Directors.HasNextPage) {<text>disabled</text>}">
+                <a class="page-link" asp-area="Administration" asp-controller="Directors" asp-action="GetAll" asp-route-searchByName="@Model.SearchString" asp-route-page="@Model.Directors.NextPage">Next</a>
             </li>
-            <li class="page-item @if (!Model.HasNextPage) {<text>disabled</text>}">
-                <a class="page-link" asp-area="Administration" asp-controller="Directors" asp-action="GetAll" asp-route-page="@Model.TotalPages">Last</a>
+            <li class="page-item @if (!Model.Directors.HasNextPage) {<text>disabled</text>}">
+                <a class="page-link" asp-area="Administration" asp-controller="Directors" asp-action="GetAll" asp-route-searchByName="@Model.SearchString" asp-route-page="@Model.Directors.TotalPages">Last</a>
             </li>
         </ul>
     </div>

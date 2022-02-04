@@ -35,7 +35,7 @@
             else
             {
                 actors = this.actorsService
-                    .SearchActorsByTitleAsQueryable<ActorDetailedViewModel>(searchByName);
+                    .SearchActorsByNameAsQueryable<ActorDetailedViewModel>(searchByName);
             }
 
             var actorsPaginated = await PaginatedList<ActorDetailedViewModel>

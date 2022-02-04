@@ -17,7 +17,7 @@
 
         IQueryable<T> GetActorsByLetterAsQueryable<T>(string letter);
 
-        IQueryable<T> SearchActorsByTitleAsQueryable<T>(string name);
+        IQueryable<T> SearchActorsByNameAsQueryable<T>(string name);
 
         Task CreateAsync(ActorCreateInputModel inputModel);
 

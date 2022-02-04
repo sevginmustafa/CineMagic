@@ -35,7 +35,7 @@
             else
             {
                 directors = this.directorsService
-                    .SearchDirectorsByTitleAsQueryable<DirectorDetailedViewModel>(searchByName);
+                    .SearchDirectorsByNameAsQueryable<DirectorDetailedViewModel>(searchByName);
             }
 
             var directorsPaginated = await PaginatedList<DirectorDetailedViewModel>

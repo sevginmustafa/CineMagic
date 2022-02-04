@@ -15,7 +15,7 @@
 
         IQueryable<T> GetDirectorsByLetterAsQueryable<T>(string letter);
 
-        IQueryable<T> SearchDirectorsByTitleAsQueryable<T>(string name);
+        IQueryable<T> SearchDirectorsByNameAsQueryable<T>(string name);
 
         Task<T> GetDirectorByIdAsync<T>(int id);
 

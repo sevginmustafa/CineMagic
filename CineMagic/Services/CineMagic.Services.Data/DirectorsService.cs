@@ -73,7 +73,7 @@
             return actors;
         }
 
-        public IQueryable<T> SearchDirectorsByTitleAsQueryable<T>(string name)
+        public IQueryable<T> SearchDirectorsByNameAsQueryable<T>(string name)
         {
             if (!string.IsNullOrWhiteSpace(name))
             {

@@ -88,7 +88,7 @@
             var service = new DirectorsService(repository);
 
             // Act
-            var actualResult = service.SearchDirectorsByTitleAsQueryable<DirectorDetailedViewModel>(title).Count();
+            var actualResult = service.SearchDirectorsByNameAsQueryable<DirectorDetailedViewModel>(title).Count();
 
             // Assert
             Assert.Equal(expectedResult, actualResult);

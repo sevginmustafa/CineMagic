@@ -88,7 +88,7 @@
             var service = new ActorsService(repository);
 
             // Act
-            var actualResult = service.SearchActorsByTitleAsQueryable<ActorDetailedViewModel>(title).Count();
+            var actualResult = service.SearchActorsByNameAsQueryable<ActorDetailedViewModel>(title).Count();
 
             // Assert
             Assert.Equal(expectedResult, actualResult);
