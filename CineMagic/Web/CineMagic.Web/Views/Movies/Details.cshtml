@@ -70,7 +70,7 @@
             }
             else
             {
-                <div class="rating-disabled" data-toggle="modal" data-target="#myModal4"></div><span id="averageRating">@Model.Movie.Rating.ToString("f2")</span><span> / 5.00</span>
+                <div class="rating-disabled"></div><span id="averageRating">@Model.Movie.Rating.ToString("f2")</span><span> / 5.00</span>
             }
         </div>
 
@@ -287,6 +287,19 @@
            initialRating: @Model.Movie.Rating,
            readOnly: true,
         });
+    </script>
+
+    <script>
+        function RateMovie() {
+            const stars = document.getElementsByClassName('jq-star');
+
+            for (const star of stars) {
+                star.setAttribute('data-toggle', 'modal');
+                star.setAttribute('data-target', '#myModal4');
+            }
+        }
+
+        RateMovie();
     </script>
 
     <script>
