@@ -4,6 +4,12 @@
 
 **CineMagic** is my defense project for **ASP.NET Core** course at [SoftUni](https://softuni.bg/). It is a ready-to-use ASP.NET Core application.
 
+**Аccess to Admin Area:**
+<br />
+Username: admin
+<br />
+Password: 123456
+
 # Link
 https://cinemagic.azurewebsites.net
 
